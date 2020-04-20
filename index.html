@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <!-- Start of Baidu Transcode -->
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="MobileOptimized" content="width">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="mobile-agent" content="format=html5;url=https://miraiexp.com/">
+  <meta name="baidu-site-verification" content="9NVaj6cusz" />
+  <!-- End of Baidu Transcode -->
+  <meta name="description" content="妖灵会馆传送系统为各位小伙伴提供快速便捷的会馆传送通道，找到属于自己的组织，同时也可在系统上查阅会馆的有关信息。">
+  <meta name="keywords" content="妖灵会馆,妖灵会馆传送系统,小黑的木头板,罗小黑战记">
+  <meta name="author" content="Aubrey Tang">
+  <title> 小黑的木头板 </title>
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <style type="text/css">
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9998;
+      background-color: #fff;
+    }
+
+    .base {
+      height: 9em;
+      left: 50%;
+      margin: -7.5em;
+      padding: 3em;
+      position: absolute;
+      top: 50%;
+      width: 9em;
+      transform: rotateX(45deg) rotateZ(45deg);
+      transform-style: preserve-3d;
+    }
+
+    .cube, .cube:after, .cube:before {
+      content: '';
+      float: left;
+      height: 3em;
+      position: absolute;
+      width: 3em;
+    }
+
+    .cube {
+      background-color: #05afd1;
+      position: relative;
+      transform: translateZ(3em);
+      transform-style: preserve-3d;
+      transition: .25s;
+      box-shadow: 13em 13em 1.5em rgba(0, 0, 0, 0.1);
+      animation: anim 1s infinite;
+    }
+
+    .cube:after {
+      background-color: #049dbc;
+      transform: rotateX(-90deg) translateY(3em);
+      transform-origin: 100% 100%;
+    }
+
+    .cube:before {
+      background-color: #048ca7;
+      transform: rotateY(90deg) translateX(3em);
+      transform-origin: 100% 0;
+    }
+
+    .cube:nth-child(1) {
+      animation-delay: 0.05s;
+    }
+
+    .cube:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .cube:nth-child(3) {
+      animation-delay: 0.15s;
+    }
+
+    .cube:nth-child(4) {
+      animation-delay: 0.2s;
+    }
+
+    .cube:nth-child(5) {
+      animation-delay: 0.25s;
+    }
+
+    .cube:nth-child(6) {
+      animation-delay: 0.3s;
+    }
+
+    .cube:nth-child(7) {
+      animation-delay: 0.35s;
+    }
+
+    .cube:nth-child(8) {
+      animation-delay: 0.4s;
+    }
+
+    .cube:nth-child(9) {
+      animation-delay: 0.45s;
+    }
+
+    @keyframes anim {
+      50% {
+        transform: translateZ(0.5em);
+      }
+    }
+
+    .icon {
+      width: 1em;
+      height: 1em;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
+    }
+  </style>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/this.css" />
+  <script type="text/javascript" src="./js/fun.js"></script>
+  <script>
+    var $$ = mdui.JQ;
+    document.onreadystatechange = documentReadyState;
+    loading();
+
+    function documentReadyState() {
+      if (document.readyState == "complete") {
+        completed();
+      }
+    }
+
+    function loading() {
+      $$('.loader').show();
+    }
+
+    function completed() {
+      $$('.loader').hide();
+    }
+    $$(document).ready(function() {
+      $$("#windows").hide();
+      $$("#android").hide();
+      $$("#ios").hide();
+      queryAgent();
+      function queryAgent() {
+        const str = navigator.userAgent;
+        if((str.match(/iPhone/i)) || (str.match(/iPad/i)) || (str.match(/Mac/i))) {
+          $$("#ios").show();
+        } else if (str.match(/Android/i)) {
+          $$("#android").show();
+        } else if (str.match(/Windows/i)) {
+          $$("#windows").show();
+        }
+      }
+      $$("#test").on('click', function() {
+        mdui.snackbar({
+          message: '您已选择一键加群通道，需要再次确认后才会自动跳转'
+        });
+      });
+    });
+  </script>
+</head>
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-red mdui-theme-accent-pink mdui-loaded mdui-drawer-body-left">
+<div class="loader">
+  <div class='base'>
+    <div class='cube'></div>
+    <div class='cube'></div>
+    <div class='cube'></div>
+    <div class='cube'></div>
+    <div class='cube'></div>
+    <div class='cube'></div>
+    <div class='cube'></div>
+    <div class='cube'></div>
+    <div class='cube'></div>
+  </div>
+</div>
+<header class="mdui-appbar mdui-appbar-fixed">
+  <div class="mdui-toolbar mdui-color-theme">
+    <button class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#left-drawer'}"> <i class="mdui-icon material-icons">
+      menu
+    </i> </button> <span class="mdui-typo-title typo-title">
+          <script>
+            document.write(document.title);
+          </script>
+        </span>
+    <div class="mdui-toolbar-spacer"> </div>
+    <div class="search-box">
+    <input type="text" placeholder="输入关键词开始检索">
+    <button class="mdui-btn mdui-btn-icon" id="search"> <i class="mdui-icon material-icons">
+      search
+    </i> </button>
+      </div>
+    <a href="javascript:;" class="mdui-btn mdui-btn-icon"> <i class="mdui-icon material-icons">
+      more_vert
+    </i> </a>
+  </div>
+</header>
+<div class="mdui-drawer" id="left-drawer">
+  <div class="list">
+    <ul class="mdui-list" mdui-collapse="{accordion: true}">
+      <li class="mdui-list-item mdui-ripple"> <i class="mdui-list-item-icon mdui-icon material-icons">
+        home
+      </i>
+        <div class="mdui-list-item-content"> 妖灵会馆传送系统 </div>
+      </li>
+      <li class="mdui-list-item mdui-ripple"> <i class="mdui-list-item-icon mdui-icon material-icons">
+        dashboard
+      </i>
+        <div class="mdui-list-item-content"> Dashboard </div>
+      </li>
+      <li class="mdui-collapse-item mdui-collapse-item-open">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple"> <i class="mdui-list-item-icon mdui-icon material-icons">
+          people
+        </i>
+          <div class="mdui-list-item-content"> Audience </div> <i class="mdui-collapse-item-arrow mdui-icon material-icons">
+            keyboard_arrow_down
+          </i> </div>
+        <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li class="mdui-list-item mdui-ripple"> Overview </li>
+          <li class="mdui-list-item mdui-ripple"> Language </li>
+          <li class="mdui-list-item mdui-ripple"> Location </li>
+          <li class="mdui-list-item mdui-ripple"> New vs Returning </li>
+        </ul>
+      </li>
+      <li class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple"> <i class="mdui-list-item-icon mdui-icon material-icons">
+          device_hub
+        </i>
+          <div class="mdui-list-item-content"> Acquisition </div> <i class="mdui-collapse-item-arrow mdui-icon material-icons">
+            keyboard_arrow_down
+          </i> </div>
+        <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li class="mdui-list-item mdui-ripple"> Overview </li>
+          <li class="mdui-list-item mdui-ripple"> All Traffic </li>
+          <li class="mdui-list-item mdui-ripple"> Direct Traffic </li>
+          <li class="mdui-list-item mdui-ripple"> Search Overview </li>
+        </ul>
+      </li>
+      <li class="mdui-collapse-item">
+        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple"> <i class="mdui-list-item-icon mdui-icon material-icons">
+          touch_app
+        </i>
+          <div class="mdui-list-item-content"> Behavior </div> <i class="mdui-collapse-item-arrow mdui-icon material-icons">
+            keyboard_arrow_down
+          </i> </div>
+        <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+          <li class="mdui-list-item mdui-ripple"> Overview </li>
+          <li class="mdui-list-item mdui-ripple"> All Pages </li>
+          <li class="mdui-list-item mdui-ripple"> Landing Pages </li>
+          <li class="mdui-list-item mdui-ripple"> Exit Pages </li>
+        </ul>
+      </li>
+      <li class="mdui-list-item mdui-ripple"> <i class="mdui-list-item-icon mdui-icon material-icons">
+        shopping_cart
+      </i>
+        <div class="mdui-list-item-content"> Ecommerce </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="mdui-container doc-container">
+  <div class="mdui-col-xs-12">
+    <div class="mdui-card card">
+      <!-- 卡片头部，标题、副标题及头像 -->
+      <div class="mdui-card-primary card-primary">
+        <div class="card-primary-avatar"> </div>
+        <div class="mdui-card-primary-title"> 加入小黑板 </div>
+        <div class="mdui-card-primary-subtitle"> JOIN IN BLACKBOARD </div>
+      </div>
+      <div class="mdui-divider c1-divider"> </div>
+      <!-- 卡片的内容 -->
+      <div class="mdui-card-content card-content">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-QQqun"> </use>
+        </svg> QQ群 </div>
+      <div class="mdui-panel mdui-panel-gapless" mdui-panel>
+        <div class="mdui-panel-item">
+          <div class="mdui-panel-item-header panel-item-header"> 黑板自来水 610165419（点击展开一键加群通道） </div>
+          <div class="mdui-panel-item-body">
+            <svg xmlns="http://www.w3.org/2000/svg" width="52.316" height="28" viewBox="0 0 52.316 28" id="test">
+              <g id="layer1" transform="translate(45.952 -448.367)">
+                <path id="path80319" d="M188.413,452.007l4.34-7.175a.821.821,0,0,0-.319-1.147.893.893,0,0,0-1.2.3l-4.4,7.268a28.631,28.631,0,0,0-22.382,0l-4.4-7.268a.9.9,0,0,0-1.2-.3.817.817,0,0,0-.319,1.147l4.34,7.175a24.7,24.7,0,0,0-13.389,19.563h52.316A24.7,24.7,0,0,0,188.413,452.007Zm-24.774,12.551a2.1,2.1,0,1,1,2.193-2.093A2.145,2.145,0,0,1,163.638,464.558Zm24.017,0a2.1,2.1,0,1,1,2.193-2.093A2.145,2.145,0,0,1,187.655,464.558Z" transform="translate(-195.443 4.796)" fill="#32de84"/>
+              </g>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="52.316" height="28" viewBox="0 0 52.316 28" id="android">
+              <g id="layer1" transform="translate(45.952 -448.367)">
+                <a xlink:href="mqqapi://card/show_pslcard?src_type=internal&version=1&uin=610165419&card_type=group&source=qrcode" xlink:title="安卓用户点此图标" target="_blank">
+                  <path id="path80319" d="M188.413,452.007l4.34-7.175a.821.821,0,0,0-.319-1.147.893.893,0,0,0-1.2.3l-4.4,7.268a28.631,28.631,0,0,0-22.382,0l-4.4-7.268a.9.9,0,0,0-1.2-.3.817.817,0,0,0-.319,1.147l4.34,7.175a24.7,24.7,0,0,0-13.389,19.563h52.316A24.7,24.7,0,0,0,188.413,452.007Zm-24.774,12.551a2.1,2.1,0,1,1,2.193-2.093A2.145,2.145,0,0,1,163.638,464.558Zm24.017,0a2.1,2.1,0,1,1,2.193-2.093A2.145,2.145,0,0,1,187.655,464.558Z" transform="translate(-195.443 4.796)" fill="#32de84"/>
+                </a>
+              </g>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="23.585" height="28" viewBox="0 0 23.585 28" id="ios">
+              <a xlink:href="mqqapi://card/show_pslcard?src_type=internal&version=1&uin=610165419&key=cf016530e542675f51e35d101681eb98fb19507700bd56d72be69eaf4cb4b56a&card_type=group&source=external" xlink:title="iOS用户点此图标" target="_blank">
+                <path id="path4" d="M23.091,20.7a28.016,28.016,0,0,1-1.505,3.827,13.751,13.751,0,0,1-1.939,2.344,3.762,3.762,0,0,1-2.492,1.1,6.247,6.247,0,0,1-2.3-.55,6.606,6.606,0,0,0-2.478-.548,6.83,6.83,0,0,0-2.549.548,6.857,6.857,0,0,1-2.2.579,3.542,3.542,0,0,1-2.549-1.127,14.44,14.44,0,0,1-2.028-2.427A16.783,16.783,0,0,1,.9,20.184,15.6,15.6,0,0,1,0,15.107a9.272,9.272,0,0,1,1.218-4.851,7.143,7.143,0,0,1,2.55-2.58A6.86,6.86,0,0,1,7.215,6.7a8.118,8.118,0,0,1,2.667.621A8.573,8.573,0,0,0,12,7.946a12.656,12.656,0,0,0,2.345-.733,7.752,7.752,0,0,1,3.188-.566,6.769,6.769,0,0,1,5.3,2.792A5.9,5.9,0,0,0,19.7,14.8a5.911,5.911,0,0,0,1.941,4.454,6.378,6.378,0,0,0,1.939,1.272c-.156.451-.32-.237-.494.178ZM17.688.561a5.973,5.973,0,0,1-1.531,3.918,5.217,5.217,0,0,1-4.333,2.139,4.36,4.36,0,0,1-.032-.531,6.137,6.137,0,0,1,1.624-3.959A6.254,6.254,0,0,1,15.394.642,5.9,5.9,0,0,1,17.658,0a5.089,5.089,0,0,1,.029.56Z" transform="translate(0 -0.001)"/>
+              </a>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="27.904" height="28" viewBox="0 0 27.904 28" id="windows">
+              <a xlink:href="https://shang.qq.com/wpa/qunwpa?idkey=cf016530e542675f51e35d101681eb98fb19507700bd56d72be69eaf4cb4b56a" xlink:title="PC端用户点此图标" target="_blank">
+                <path id="Windows_10_Logo" d="M0,4,11.411,2.429V13.457H0M12.785,2.205,27.9,0V13.361H12.785M0,14.62H11.411V25.679L0,24.081m12.785-9.314H27.9V28L12.785,25.858" fill="#0078d6"/>
+              </a>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mdui-card card">
+      <!-- 卡片头部，标题、副标题及头像 -->
+      <div class="mdui-card-primary card-primary">
+        <div class="mdui-card-primary-title"> 执行者档案 </div>
+        <div class="mdui-card-primary-subtitle"> PROFILES OF PERFORMERS </div>
+      </div>
+      <div class="mdui-divider"> </div>
+      <!-- 卡片的内容 -->
+      <div class="mdui-card-content card-content">
+        <div class="card-character-avatar"> </div>
+        <div class="tag-area">
+          <div class="tag">
+            <div class="mdui-chip chip"> <span class="mdui-chip-title chip-title">
+                    ID
+                  </span> </div> <span class="chip-content name">
+                  H树
+                </span> </div>
+          <div class="tag">
+            <div class="mdui-chip chip"> <span class="mdui-chip-title chip-title">
+                    身份
+                  </span> </div> <span class="chip-content identify">
+                  小黑板最强甲方
+                </span> </div>
+          <div class="tag">
+            <div class="mdui-chip chip"> <span class="mdui-chip-title chip-title">
+                    编号
+                  </span> </div> <span class="chip-content code">
+                  B000001
+                </span> </div>
+          <div class="tag">
+            <div class="mdui-chip chip"> <span class="mdui-chip-title chip-title">
+                    特性
+                  </span> </div> <span class="chip-content description">
+                  稳重可靠
+                </span> </div>
+        </div>
+      </div>
+      <div class="mdui-divider"> </div>
+      <div class="mdui-card-content card-content">
+        <div class="left">
+          <div class="avatar-box">
+            <div class="character-avatar" data-id="1"> </div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="avatar-box">
+            <div class="character-avatar" data-id="2"> </div>
+          </div>
+          <div class="avatar-box">
+            <div class="character-avatar" data-id="3"> </div>
+          </div>
+          <div class="avatar-box">
+            <div class="character-avatar" data-id="4"> </div>
+          </div>
+          <div class="avatar-box">
+            <div class="character-avatar" data-id="5"> </div>
+          </div>
+          <div class="avatar-box">
+            <div class="character-avatar" data-id="6"> </div>
+          </div>
+          <div class="avatar-box">
+            <div class="character-avatar" data-id="7"> </div>
+          </div>
+          <div class="avatar-box">
+            <div class="character-avatar" data-id="8"> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<select class="mdui-select" mdui-select="{position: 'bottom'}">
+  <option value="1"> State 1 </option>
+  <option value="2"> State 2 </option>
+  <option value="3" disabled> State 3 </option>
+  <option value="4"> State 4 </option>
+  <option value="5"> State 5 </option>
+  <option value="6"> State 6 </option>
+</select>
+<script type="text/javascript" src="https://at.alicdn.com/t/font_1651592_yi7c2gwb56.js"></script>
+<script type="text/javascript">
+  var $$ = mdui.JQ;
+  $$(document)
+          .ready(function() {
+            $$.ajax({
+              method: 'GET',
+              url: './data/blackboard.json',
+              dataType: "json",
+              success: function(data) {
+                const string = JSON.stringify(data);
+                const arr = JSON.parse(string);
+
+                function changeContent({
+                                         src: src,
+                                         alt: alt,
+                                         name: name,
+                                         identify: identify,
+                                         code: code,
+                                         description: description
+                                       }) {
+                  $$('.card-character-avatar')
+                          .css({
+                            'background': 'url(' + src + ') no-repeat center',
+                            'background-size': 'cover'
+                          });
+                  $$('.name')
+                          .html(name);
+                  $$('.identify')
+                          .html(identify);
+                  $$('.code')
+                          .html(code);
+                  $$('.description')
+                          .html(description);
+                }
+
+                function getDataFromArr(id) {
+                  let res;
+                  $$.each(arr, function(i, item) {
+                    if (item.id == id) {
+                      res = item;
+                    }
+                  });
+                  return res;
+                }
+                $$(".character-avatar")
+                        .on('click', function() {
+                          let id = $$(this)
+                                  .data('id');
+                          let item = getDataFromArr(id);
+                          changeContent(item)
+                        })
+              }
+            });
+          });
+</script>
+</body>
+</html>

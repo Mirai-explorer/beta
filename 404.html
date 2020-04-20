@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <title>404 - 页面不存在</title>
+    <style type="text/css">
+        body {
+            background-color: #F1F1F1;
+            margin: 0;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        .container {
+            width: 100%;
+            margin-top: 240px;
+            text-align: center;
+        }
+        p:first-child {
+            font-size: 72px;
+            margin-block-start: 0;
+            margin-block-end: 0;
+        }
+        p:nth-child(2) {
+            font-size: 24px;
+            color: #8F8F8F;
+            margin-block-end: 4em;
+        }
+    </style>
+</head>
+<body>
+<script>
+    var t = 5;
+    setInterval("refer()",1000);
+    function refer(){
+        if(t == 0){
+            location="https://miraiexp.com";
+        }
+        document.getElementById('show').innerHTML=""+t+"秒后将带您回到主页";
+        t--;
+    }
+</script>
+<div class="container">
+    <p>404</p>
+    <p>您似乎来到一片无人的荒漠……</p>
+    <span id="show"></span>
+</div>
+</body>
+</html>
