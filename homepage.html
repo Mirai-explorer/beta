@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>电影网</title>
+    <link rel="stylesheet" href="./bundle.css" type="text/css" />
+    <style type="text/css">
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif;
+        }
+        .bg {
+            z-index: -1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-filter: blur(4px);
+            filter: blur(4px);
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+        .bg-1 {
+            background: url("./pic/bg-1.jpg") no-repeat center;
+            background-size: cover;
+        }
+        .bg-2 {
+            background: url("./pic/bg-2.png") no-repeat center;
+            background-size: cover;
+        }
+        .bg-3 {
+            background: url("./pic/bg-3.jpg") no-repeat center;
+            background-size: cover;
+        }
+        .bg-4 {
+            background: url("./pic/bg-4.jpg") no-repeat center;
+            background-size: cover;
+        }
+        .bg-5 {
+            background: url("./pic/bg-5.jpg") no-repeat center;
+            background-size: cover;
+        }
+        .bg-6 {
+            background: url("./pic/bg-6.jpg") no-repeat center;
+            background-size: cover;
+        }
+        .bg-7 {
+            background: url("./pic/bg-7.jpg") no-repeat center;
+            background-size: cover;
+        }
+        .bg-8 {
+            background: url("./pic/bg-8.jpg") no-repeat center;
+            background-size: cover;
+            will-change: animation;
+            -webkit-animation: move 30s ease-in-out 2.0s;
+            -moz-animation: move 30s ease-in-out 2.0s;
+            animation: move 30s ease-in-out 2.0s;
+        }
+        @keyframes move {
+            0% { background-position: 50% 50%;filter: blur(4px) }
+            15% { background-position: 0 50%;filter: blur(0) }
+            75% { background-position: 100% 50%;filter: blur(0) }
+            100% { background-position: 50% 50%;filter: blur(4px) }
+        }
+        header {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            padding: 10px;
+            background-color: rgba(255,255,255,.1);
+        }
+        .wrapper {
+            position: relative;
+            width: 95%;
+            height: auto;
+            margin: 10px 2.5%;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+        .gallery img {
+            width: 200px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 2px 3px #5c5c5c;
+        }
+        .poster-s {
+            flex-basis: 10%;
+            transition: all 0.2s;
+        }
+        .poster-s:hover {
+            transform: scale(1.1);
+        }
+        .title {
+            display: block;
+            line-height: 1.5;
+            font-weight: bold;
+            font-size: 30px;
+            color: floralwhite;
+            z-index: 1001;
+            text-shadow: 1px 2px 3px #a0a0a0;
+        }
+        .star50, .star45, .star40, .star35, .star30, .star25, .star20, .star15, .star10, .star05, .star00 {
+            display: inline-block;
+            zoom: 1;
+            background: url("https://img3.doubanio.com/f/shire/680a4bc4c384199245b080c7104da5be8ed717d3/pics/rating_icons/ic_rating_m.png") no-repeat;
+            width: 75px;
+            height: 15px;
+            margin: 1px 0 0 0;
+            overflow: hidden;
+        }
+        .star50 {
+            background-position: 0 0;
+        }
+        .star45 {
+            background-position: 0 -15px;
+        }
+        .star40 {
+            background-position: 0 -30px;
+        }
+        .star35 {
+            background-position: 0 -45px;
+        }
+        .star30 {
+            background-position: 0 -60px;
+        }
+        .star25 {
+            background-position: 0 -75px;
+        }
+        .star20 {
+            background-position: 0 -90px;
+        }
+        .star15 {
+            background-position: 0 -105px;
+        }
+        .star10 {
+            background-position: 0 -120px;
+        }
+        .star05 {
+            background-position: 0 -135px;
+        }
+        .star00 {
+            background-position: 0 -150px;
+        }
+        .container {
+            float: left;
+            width: 80%;
+            height: auto;
+            margin: 10px 0;
+            padding: 10px 0;
+            background-color: rgba(225,225,225,.3);
+            border-radius: 10px;
+            z-index: 1000;
+            transition: height 1s linear;
+        }
+        .container-right {
+            float: right;
+            width: 17.5%;
+            height: auto;
+            margin-left: 2.5%;
+        }
+        .content {
+            display: none;
+        }
+        .tag-box {
+            display: inline-block;
+            margin: 20px 20px 0 20px;
+        }
+        .tag {
+            float: left;
+            font-size: 14px;
+            line-height: 1.62;
+            padding: 2px 10px 1px;
+            background: #f5f5f5;
+            margin: 0 8px 8px 0;
+            border-radius: 12px;
+            color: #666;
+            word-break: keep-all;
+            white-space: nowrap;
+        }
+        .green {
+            color: #fff;
+            background: #66c056;
+        }
+        .intro {
+            color: white;
+            font-size: 18px;
+            letter-spacing: 0.15em;
+            line-height: 1.8;
+            margin: 0 20px 20px 20px;
+            text-indent: 2em;
+        }
+        .intro:first-letter {
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 1px 2px 3px #a7a7a7;
+        }
+        .review, .author {
+            margin: 20px;
+            color: white;
+        }
+        .review {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .author {
+            font-size: 20px;
+            font-style: italic;
+            text-align: end;
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+            background-color: rgba(255,255,255,.1);
+        }
+        .douban {
+            display: inline-block;
+        }
+        .douban img {
+            width: 50%;
+            height: auto;
+        }
+        ::selection {
+            background-color: #d6d6d6;
+        }
+    </style>
+    <script>
+        let imgSrcArr = [
+            './pic/bg-1.jpg',
+            './pic/bg-2.png',
+            './pic/bg-3.jpg',
+            './pic/bg-4.jpg',
+            './pic/bg-5.jpg',
+            './pic/bg-6.jpg',
+            './pic/bg-7.jpg',
+            './pic/bg-8.jpg',
+        ]
+        let imgWrap = []
+        function preloadImg(arr) {
+            for(let i = 0; i < arr.length; i++) {
+                imgWrap[i] = new Image()
+                imgWrap[i].src = arr[i];
+            }
+        }
+        preloadImg(imgSrcArr)
+        window.onload = show
+        function show() {
+            const poster = document.querySelectorAll('.poster-s')
+            const content = document.querySelectorAll('.content')
+            const bg = document.querySelector('.bg')
+            const title = document.querySelector('.chs-title')
+            const ori_title = document.querySelector('.ori-title')
+            const rate = document.querySelector('.title span:last-child')
+            function hide() {
+                bg.style.opacity = '0.8'
+                bg.style.transition = 'all 1.2s linear 0s'
+                for (let i = 0; i < content.length; i++) {
+                    content[i].style.display = 'none'
+                }
+            }
+            function fadeout() {
+                bg.style.opacity = '1'
+                bg.style.transition = 'all 1.8s linear 0s'
+            }
+            poster[0].addEventListener('click',(function() { hide();content[0].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-1'; title.innerText='哪吒之魔童降世'; ori_title.innerText = '（2019）'; rate.className='star45'}),false)
+            poster[1].addEventListener('click',(function() { hide();content[1].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-2'; title.innerText='千与千寻'; ori_title.innerText = '千と千尋の神隠し‎（2001）'; rate.className='star50'}),false)
+            poster[2].addEventListener('click',(function() { hide();content[2].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-3'; title.innerText='你的名字。'; ori_title.innerText = '君の名は。‎（2016）'; rate.className='star45'}),false)
+            poster[3].addEventListener('click',(function() { hide();content[3].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-4'; title.innerText='疯狂动物城'; ori_title.innerText = 'Zootopia（2016）'; rate.className='star50'}),false)
+            poster[4].addEventListener('click',(function() { hide();content[4].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-5'; title.innerText='寻梦环游记'; ori_title.innerText = 'Coco（2017）'; rate.className='star50'}),false)
+            poster[5].addEventListener('click',(function() { hide();content[5].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-6'; title.innerText='飞屋环游记'; ori_title.innerText = 'Up（2009）'; rate.className='star50'}),false)
+            poster[6].addEventListener('click',(function() { hide();content[6].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-7'; title.innerText='狮子王'; ori_title.innerText = 'The Lion King（1994）'; rate.className='star50'}),false)
+            poster[7].addEventListener('click',(function() { hide();content[7].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-8'; title.innerText='罗小黑战记'; ori_title.innerText = '（2019）'; rate.className='star40'}),false)
+        }
+    </script>
+</head>
+<body>
+<div class="bg bg-1"></div>
+<header>
+
+</header>
+<div class="wrapper">
+    <div class="gallery">
+        <div class="poster-s"><img src="./pic/p1.jpg" alt="哪吒之魔童降世"></div>
+        <div class="poster-s"><img src="./pic/p2.jpg" alt="千与千寻"></div>
+        <div class="poster-s"><img src="./pic/p3.jpg" alt="你的名字。"></div>
+        <div class="poster-s"><img src="./pic/p4.jpg" alt="疯狂动物城"></div>
+        <div class="poster-s"><img src="./pic/p5.jpg" alt="寻梦环游记"></div>
+        <div class="poster-s"><img src="./pic/p6.jpg" alt="飞屋环游记"></div>
+        <div class="poster-s"><img src="./pic/p7.jpg" alt="狮子王"></div>
+        <div class="poster-s"><img src="./pic/p8.jpg" alt="罗小黑战记"></div>
+    </div>
+    <div class="title">
+        <span class="chs-title">哪吒之魔童降世</span>
+        <span class="ori-title">（2019）</span>
+        <span class="star45"></span>
+    </div>
+    <div class="container">
+        <div class="content" style="display: block">
+            <div class="tag-box">
+                <div class="tag green">可播放</div>
+                <div class="tag">110分钟</div>
+                <div class="tag">中国大陆</div>
+                <div class="tag">剧情</div>
+                <div class="tag">喜剧</div>
+                <div class="tag">动画</div>
+                <div class="tag">饺子(导演)</div>
+                <div class="tag">吕艳婷</div>
+                <div class="tag">囧森瑟夫</div>
+                <div class="tag">瀚墨</div>
+            </div>
+            <div class="intro">
+                <p>天地灵气孕育出一颗能量巨大的混元珠，元始天尊将混元珠提炼成灵珠和魔丸，灵珠投胎为人，助周伐纣时可堪大用；而魔丸则会诞出魔王，为祸人间。元始天尊启动了天劫咒语，3年后天雷将会降临，摧毁魔丸。太乙受命将灵珠托生于陈塘关李靖家的儿子哪吒身上。然而阴差阳错，灵珠和魔丸竟然被掉包。本应是灵珠英雄的哪吒却成了混世大魔王。调皮捣蛋顽劣不堪的哪吒却徒有一颗做英雄的心。然而面对众人对魔丸的误解和即将来临的天雷的降临，哪吒是否命中注定会立地成魔？他将何去何从？</p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="tag-box">
+                <div class="tag green">可播放</div>
+                <div class="tag">125分钟</div>
+                <div class="tag">日本</div>
+                <div class="tag">剧情</div>
+                <div class="tag">动画</div>
+                <div class="tag">奇幻</div>
+                <div class="tag">宫崎骏(导演)</div>
+                <div class="tag">柊瑠美</div>
+                <div class="tag">入野自由</div>
+                <div class="tag">夏木真理</div>
+            </div>
+            <div class="intro">
+                <p>千寻和爸爸妈妈一同驱车前往新家，在郊外的小路上不慎进入了神秘的隧道——他们去到了另外一个诡异世界—一个中世纪的小镇。远处飘来食物的香味，爸爸妈妈大快朵颐，孰料之后变成了猪！这时小镇上渐渐来了许多样子古怪、半透明的人。</p>
+                <p>千寻仓皇逃出，一个叫小白的人救了他，喂了她阻止身体消失的药，并且告诉她怎样去找锅炉爷爷以及汤婆婆，而且必须获得一份工作才能不被魔法变成别的东西。</p>
+                <p>千寻在小白的帮助下幸运地获得了一份在浴池打杂的工作。渐渐她不再被那些怪模怪样的人吓倒，并从小玲那儿知道了小白是凶恶的汤婆婆的弟子。</p>
+                <p>一次，千寻发现小白被一群白色飞舞的纸人打伤，为了救受伤的小白，她用河神送给她的药丸驱出了小白身体内的封印以及守封印的小妖精，但小白还是没有醒过来。</p>
+                <p>为了救小白，千寻又踏上了她的冒险之旅。</p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="tag-box">
+                <div class="tag green">可播放</div>
+                <div class="tag">106分钟</div>
+                <div class="tag">日本</div>
+                <div class="tag">剧情</div>
+                <div class="tag">爱情</div>
+                <div class="tag">动画</div>
+                <div class="tag">新海诚(导演)</div>
+                <div class="tag">神木隆之介</div>
+                <div class="tag">上白石萌音</div>
+                <div class="tag">长泽雅美</div>
+            </div>
+            <div class="intro">
+                <p>在远离大都会的小山村，住着巫女世家出身的高中女孩宫水三叶（上白石萌音 配音）。校园和家庭的原因本就让她充满烦恼，而近一段时间发生的奇怪事件，又让三叶摸不清头脑。不知从何时起，三叶在梦中就会变成一个住在东京的高中男孩。那里有陌生的同学和朋友，有亲切的前辈和繁华的街道，一切都是如此诱人而真实。另一方面，住在东京的高中男孩立花泷（神木隆之介 配音）则总在梦里来到陌生的小山村，以女孩子的身份过着全新的生活。许是受那颗神秘彗星的影响，立花和三叶在梦中交换了身份。他们以他者的角度体验着对方的人生，这期间有愤怒、有欢笑也有暖心。只是两人并不知道，身份交换的背后隐藏着重大而锥心的秘密…… </p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="tag-box">
+                <div class="tag green">可播放</div>
+                <div class="tag">109分钟(中国大陆)</div>
+                <div class="tag">美国</div>
+                <div class="tag">喜剧</div>
+                <div class="tag">动画</div>
+                <div class="tag">冒险</div>
+                <div class="tag">拜伦·霍华德(导演)</div>
+                <div class="tag">金妮弗·古德温</div>
+                <div class="tag">杰森·贝特曼</div>
+                <div class="tag">伊德里斯·艾尔巴</div>
+            </div>
+            <div class="intro">
+                <p>故事发生在一个所有哺乳类动物和谐共存的美好世界中，兔子朱迪（金妮弗·古德温 Ginnifer Goodwin 配音）从小就梦想着能够成为一名惩恶扬善的刑警，凭借着智慧和努力，朱迪成功的从警校中毕业进入了疯狂动物城警察局，殊不知这里是大型肉食类动物的领地，作为第一只，也是唯一的小型食草类动物，朱迪会遇到怎样的故事呢？</p>
+                <p>近日里，城中接连发生动物失踪案件，就在全部警员都致力于调查案件真相之时，朱迪却被局长（伊德瑞斯·艾尔巴 Idris Elba 配音）发配成为了一名无足轻重的交警。某日，正在执勤的兔子遇见了名为尼克（杰森·贝特曼 Jason Bateman 配音）的狐狸，两人不打不相识，之后又误打误撞的接受了寻找失踪的水獭先生的任务，如果不能在两天之内找到水獭先生，朱迪就必须自愿离开警局。朱迪找到了尼克，两人联手揭露了一个隐藏在疯狂动物城之中的惊天秘密。</p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="tag-box">
+                <div class="tag green">可播放</div>
+                <div class="tag">105分钟</div>
+                <div class="tag">美国</div>
+                <div class="tag">喜剧</div>
+                <div class="tag">动画</div>
+                <div class="tag">奇幻</div>
+                <div class="tag">李·昂克里奇(导演)</div>
+                <div class="tag">安东尼·冈萨雷斯</div>
+                <div class="tag">盖尔·加西亚·贝纳尔</div>
+                <div class="tag">本杰明·布拉特</div>
+            </div>
+            <div class="intro">
+                <p>热爱音乐的米格尔（安东尼·冈萨雷兹 Anthony Gonzalez 配音）不幸地出生在一个视音乐为洪水猛兽的大家庭之中，一家人只盼着米格尔快快长大，好继承家里传承了数代的制鞋产业。一年一度的亡灵节即将来临，每逢这一天，去世的亲人们的魂魄便可凭借着摆在祭坛上的照片返回现世和生者团圆。</p>
+                <p>在一场意外中，米格尔竟然穿越到了亡灵国度之中，在太阳升起之前，他必须得到一位亲人的祝福，否则就将会永远地留在这个世界里。米格尔决定去寻找已故的歌神德拉库斯（本杰明·布拉特 Benjamin Bratt 配音），因为他很有可能就是自己的祖父。途中，米格尔邂逅了落魄乐手埃克托（盖尔·加西亚·贝纳尔 Gael García Bernal 配音），也渐渐发现了德拉库斯隐藏已久的秘密。</p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="tag-box">
+                <div class="tag green">可播放</div>
+                <div class="tag">96分钟</div>
+                <div class="tag">美国</div>
+                <div class="tag">剧情</div>
+                <div class="tag">喜剧</div>
+                <div class="tag">动画</div>
+                <div class="tag">彼特·道格特(导演)</div>
+                <div class="tag">爱德华·阿斯纳</div>
+                <div class="tag">克里斯托弗·普卢默</div>
+                <div class="tag">乔丹·长井</div>
+            </div>
+            <div class="intro">
+                <p>小男孩卡尔（Carl Fredricksen）怀揣着对于冒险的热爱偶遇假小子艾丽（Ellie），而艾丽把整个屋子当成一艘大飞船游戏居然使他对这个女孩子有些着迷，相同的爱好最终使两个人成为了一生的爱侣。</p>
+                <p>他们有一个梦想，那就是有朝一日要去南美洲的“仙境瀑布”探险，但直到艾丽去世，这个梦想也未能实现。终于有一天，曾经专卖气球的老人卡尔居然用五颜六色的气球拽着他的房子飞上了天空，他决定要去实现他们未曾实现的梦想。令卡尔始料不及的是，门廊居然搭上了一个自称是“荒野开拓者”的小男孩小罗（Russell），小罗的喋喋不休让卡尔对这个小胖墩格外讨厌。</p>
+                <p>一老一少在飞行中经过了千难万险终于看到了传说中的“仙境瀑布”，在相处过程中卡尔发现小罗其实是个惹人怜爱的孩子。在步行穿越一座森林时，他们遇到了不会飞的大鸟凯文（Kevin）和一只会说话的狗狗逗逗（Dug），让老人惊讶的是他们还遇到了他少年的崇拜偶像——探险家查尔斯·蒙兹（Charles Muntz），而且他发现蒙兹居然是一个为达目的不择手段的坏人。这时，老人离自己的梦想之地只有一步之遥……</p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="tag-box">
+                <div class="tag green">可播放</div>
+                <div class="tag">89分钟</div>
+                <div class="tag">美国</div>
+                <div class="tag">动画</div>
+                <div class="tag">冒险</div>
+                <div class="tag">歌舞</div>
+                <div class="tag">罗杰·阿勒斯(导演)</div>
+                <div class="tag">乔纳森·泰勒·托马斯</div>
+                <div class="tag">马修·布罗德里克</div>
+                <div class="tag">杰瑞米·艾恩斯</div>
+            </div>
+            <div class="intro">
+                <p>辛巴是狮子王国的小王子，他的父亲穆法沙是一个威严的国王。然而叔叔刀疤却对穆法沙的王位觊觎已久。</p>
+                <p>要想坐上王位宝座，刀疤必须除去小王子。于是，刀疤利用种种借口让辛巴外出，然后伺机大开杀戒，无奈被穆法沙即时来救。在反复的算计下，穆法沙惨死在刀疤手下，刀疤别有用心的劝辛巴离开，一方面派人将他赶尽杀绝。</p>
+                <p>辛巴逃亡中遇到了机智的丁满和善良的彭彭，他们抚养辛巴长成雄壮的大狮子，鼓励他回去森林复国。在接下来一场复国救民的斗争中，辛巴真正长成一个坚强的男子汉，领会了责任的真谛。</p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="tag-box">
+                <div class="tag green">可播放</div>
+                <div class="tag">101分钟</div>
+                <div class="tag">中国大陆</div>
+                <div class="tag">动作</div>
+                <div class="tag">动画</div>
+                <div class="tag">奇幻</div>
+                <div class="tag">木头(导演)</div>
+                <div class="tag">山新</div>
+                <div class="tag">郝祥海</div>
+                <div class="tag">刘明月</div>
+            </div>
+            <div class="intro">
+                <p>在熙攘的人类世界里，很多妖精隐匿其中，他们与人类相安无事地生活着。猫妖罗小黑因为家园被破坏，开始了它的流浪之旅。这场旅途中惺惺相惜的妖精同类与和谐包容的人类伙伴相继出现，让小黑陷入了两难抉择，究竟何处才是真正的归属？</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <p class="review">邓超救不起这暑期档，哪吒可以。</p>
+        <p class="author">——凹凸 评</p>
+    </div>
+    <div class="container-right">
+        <p class="review">邓超救不起这暑期档，哪吒可以。</p>
+        <p class="author">——凹凸 评</p>
+    </div>
+</div>
+<footer>
+    <div class="copyright">
+        <span class="douban"><a href="//movie.douban.com"><img src="https://img3.doubanio.com/dae/accounts/resources/1f8d15e/movie/assets/lg_movie@2x.png" alt="豆瓣电影"/></a></span>
+    </div>
+</footer>
+</body>
+</html>
