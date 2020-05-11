@@ -387,6 +387,13 @@
             fill: currentColor;
             overflow: hidden;
         }
+        .progress {
+            width: 0;
+            height: 4px;
+            background-color: #00b0ff;
+            border-radius: 2px;
+            transition: width 10ms ease-in;
+        }
     </style>
     <script>
         let imgSrcArr = [
@@ -486,7 +493,7 @@
                 <p>天地灵气孕育出一颗能量巨大的混元珠，元始天尊将混元珠提炼成灵珠和魔丸，灵珠投胎为人，助周伐纣时可堪大用；而魔丸则会诞出魔王，为祸人间。元始天尊启动了天劫咒语，3年后天雷将会降临，摧毁魔丸。太乙受命将灵珠托生于陈塘关李靖家的儿子哪吒身上。然而阴差阳错，灵珠和魔丸竟然被掉包。本应是灵珠英雄的哪吒却成了混世大魔王。调皮捣蛋顽劣不堪的哪吒却徒有一颗做英雄的心。然而面对众人对魔丸的误解和即将来临的天雷的降临，哪吒是否命中注定会立地成魔？他将何去何从？</p>
             </div>
             <div class="theme-song">
-                
+
             </div>
         </div>
         <div class="content">
@@ -625,6 +632,7 @@
                     <audio preload="auto" id="player" src="https://webfs.yun.kugou.com/202005120053/02c6279f6f2d9831382c149763b687ce/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3" type="audio/mp3"></audio>
                     <div class="wrap">
                         <div class="song-title">嘘 - 《罗小黑战记》大电影主题曲</div>
+                        <div class="progress"></div>
                         <div class="time"><span class="now"></span>/<span class="all"></span></div>
                         <div class="control">
                             <button class="prev" onclick="player(this.className)">
@@ -799,22 +807,47 @@
     audio.addEventListener('loadstart',function () {
         i_pause.classList.add('disappear')
         i_play.classList.remove('disappear')
-        document.querySelector('.all').innerText = time
     })
     audio.addEventListener('pause',function () {
         i_pause.classList.add('disappear')
         i_play.classList.remove('disappear')
     })
+    function getTime(type) {
+        let timeDisplay = Math.floor(type)
+        let min = timeDisplay / 60
+        let mins = parseInt(min)
+        if (mins < 10) {
+            mins = "0"+mins
+        }
+        let sec = timeDisplay % 60
+        let secs = Math.round(sec)
+        if (secs < 10) {
+            secs = "0"+secs
+        }
+        return mins+":"+secs
+    }
+    function Percentage(num, total) {
+        if (num === 0 || total === 0){
+            return 0;
+        }
+        return (Math.round(num / total * 10000) / 100.00);// 小数点后两位百分比
+    }
+    audio.addEventListener('timeupdate',function () {
+        document.querySelector('.now').innerText = getTime(audio.currentTime)
+        let progress = document.querySelector('.progress')
+        progress.style.width = Percentage(audio.currentTime,audio.duration)+'%'
+    },false)
     audio.addEventListener('ended',function () {
         next()
     })
     audio.addEventListener('playing',function () {
         i_play.classList.add('disappear')
         i_pause.classList.remove('disappear')
-        let now = audio.currentTime
-        let time = audio.duration
     })
-    setInterval(function(){document.querySelector('.now').innerText = now},200)
+    audio.addEventListener('canplaythrough',function () {
+        document.querySelector('.all').innerText = getTime(audio.duration)
+        document.querySelector('.now').innerText = getTime(audio.currentTime)
+    })
 </script>
 </body>
 </html>
