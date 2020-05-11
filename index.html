@@ -794,6 +794,10 @@
             eval(type+'()')
         }
     }
+    audio.addEventListener('loadstart',function () {
+        i_play.classList.add('disappear')
+        i_pause.classList.remove('disappear')
+    })
     audio.addEventListener('pause',function () {
         i_pause.classList.add('disappear')
         i_play.classList.remove('disappear')
