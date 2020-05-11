@@ -804,8 +804,8 @@
         i_play.classList.remove('disappear')
     })
     audio.addEventListener('ended',function () {
-        i_play.classList.add('disappear')
         next()
+        i_play.classList.add('disappear')
     })
     audio.addEventListener('playing',function () {
         i_play.classList.add('disappear')
