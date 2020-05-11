@@ -799,6 +799,7 @@
     audio.addEventListener('loadstart',function () {
         i_pause.classList.add('disappear')
         i_play.classList.remove('disappear')
+        document.querySelector('.all').innerText = time
     })
     audio.addEventListener('pause',function () {
         i_pause.classList.add('disappear')
@@ -812,9 +813,8 @@
         i_pause.classList.remove('disappear')
         let now = audio.currentTime
         let time = audio.duration
-        setInterval(function(){document.querySelector('.now').innerText = now},200)
-        document.querySelector('.all').innerText = time
     })
+    setInterval(function(){document.querySelector('.now').innerText = now},200)
 </script>
 </body>
 </html>
