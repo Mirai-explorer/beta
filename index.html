@@ -629,7 +629,7 @@
                                 <svg t="1589199036460" class="icon-prev" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3807" width="50" height="50"><path d="M110.08 54.4a64 64 0 0 1 64 64V448A64 64 0 0 1 192 435.2L865.28 64a76.16 76.16 0 0 1 112.64 64v744.96a75.52 75.52 0 0 1-112.64 64L192 568.32a85.76 85.76 0 0 1-16.64-12.16v349.44a64 64 0 0 1-128 0V118.4a64 64 0 0 1 62.72-64z" p-id="3808" fill="#ffffff"></path></svg>
                             </button>
                             <button class="play" onclick="player(this.className)">
-                                <svg t="1589198319971" class="icon-play disappear" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2124" width="50" height="50"><path d="M869.814857 603.977143L279.552 962.194286C195.84 1012.955429 128 984.685714 128 899.364571V124.708571C128 39.131429 195.876571 11.081143 279.552 61.805714l590.262857 358.217143c83.675429 50.797714 83.675429 133.12 0 183.954286z" p-id="2125" fill="#ffffff"></path></svg>
+                                <svg t="1589198319971" class="icon-play" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2124" width="50" height="50"><path d="M869.814857 603.977143L279.552 962.194286C195.84 1012.955429 128 984.685714 128 899.364571V124.708571C128 39.131429 195.876571 11.081143 279.552 61.805714l590.262857 358.217143c83.675429 50.797714 83.675429 133.12 0 183.954286z" p-id="2125" fill="#ffffff"></path></svg>
                                 <svg t="1589212916896" class="icon-pause disappear" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2133" width="50" height="50"><path d="M720.896 95.232c-47.616 0-89.6 41.472-89.6 89.088v655.36c0 47.616 41.984 89.088 89.6 89.088s89.6-41.472 89.6-89.088V184.32c-0.512-47.616-41.984-89.088-89.6-89.088z m-417.792 0c-47.616 0-89.6 41.472-89.6 89.088v655.36c0 47.616 41.984 89.088 89.6 89.088s89.6-41.472 89.6-89.088V184.32c0-47.616-41.984-89.088-89.6-89.088z" p-id="2134" fill="#ffffff"></path></svg>
                             </button>
                             <button class="next" onclick="player(this.className)">
@@ -774,6 +774,7 @@
         cover.src = music.track1[i].cover
         title.innerText = music.track1[i].title
         audio.src = music.track1[i].src
+        i_play.classList.add('disappear')
         audio.play()
     }
     let prev = n => {
@@ -792,23 +793,16 @@
             eval(type+'()')
         }
     }
-    audio.addEventListener('loadstart',function () {
-        i_play.classList.remove('disappear')
-    })
-    audio.addEventListener('play',function () {
-        i_play.classList.add('disappear')
-        i_pause.classList.remove('disappear')
-    })
-    audio.addEventListener('pause',function () {
+    audio.addEventListener('paused',function () {
         i_pause.classList.add('disappear')
         i_play.classList.remove('disappear')
     })
     audio.addEventListener('ended',function () {
         next()
-        i_play.classList.add('disappear')
     })
     audio.addEventListener('playing',function () {
         i_play.classList.add('disappear')
+        i_pause.classList.remove('disappear')
         let now = audio.currentTime
         let time = audio.duration
     })
