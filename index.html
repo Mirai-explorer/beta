@@ -621,7 +621,7 @@
                 <p></p>
                 <div class="player">
                     <div class="cover-img"><img src="https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg" /></div>
-                    <audio preload="auto" id="player" src="./music1.mp3" type="audio/mp3"></audio>
+                    <audio preload="auto" id="player" src="https://webfs.yun.kugou.com/202005120053/02c6279f6f2d9831382c149763b687ce/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3" type="audio/mp3"></audio>
                     <div class="wrap">
                         <div class="song-title">嘘 - 《罗小黑战记》大电影主题曲</div>
                         <div class="control">
@@ -808,6 +808,7 @@
         next()
     })
     audio.addEventListener('playing',function () {
+        i_play.classList.add('disappear')
         let now = audio.currentTime
         let time = audio.duration
     })
