@@ -214,8 +214,7 @@
             padding: 5px 0;
             margin: 10px 20px;
             text-align: center;
-            list-style: none !important;
-            cursor: default;
+            cursor: pointer;
             display: inline-block;
             transition: all ease 0.3s;
             filter: grayscale(100%);
@@ -320,6 +319,73 @@
         ::selection {
             background-color: #d6d6d6;
         }
+        .player {
+            width: 500px;
+            height: 100px;
+            background: rgba(255,255,255,.7);
+            box-shadow: 0 0 5px 3px rgba(255,255,255,.3);
+            display: flex;
+        }
+        .cover-img {
+            width: 100px;
+            height: 100px;
+        }
+        .wrap {
+            padding: 5px;
+            width: 400px;
+            height: auto;
+        }
+        .song-title {
+            width: auto;
+            height: 30px;
+            line-height: 1.25;
+            align-items: center;
+            font-size: 20px;
+            color: black;
+            letter-spacing: 0;
+            padding: 5px 10px;
+        }
+        .control {
+            width: auto;
+            height: 70px;
+            align-items: center;
+            text-align: center;
+        }
+        .play {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin: 10px;
+            border-style: none;
+            outline: none;
+            background-color: gray;
+        }
+        .prev, .next {
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            margin: 24px;
+            border-style: none;
+            outline: none;
+            background-color: gray;
+        }
+        .icon-play, .icon-pause {
+            width: 30px;
+            height: 30px;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+        }
+        .disappear {
+            display: none;
+        }
+        .icon-prev, .icon-next {
+            width: 18px;
+            height: 18px;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+        }
     </style>
     <script>
         let imgSrcArr = [
@@ -367,17 +433,18 @@
             }
             const data = [['哪吒之魔童降世','（2019）','star45'],['千与千寻','千と千尋の神隠し‎（2001）','star50'],['你的名字。','君の名は。‎（2016）','star45'],['疯狂动物城','Zootopia（2016）','star50'],['寻梦环游记','Coco（2017）','star50'],['飞屋环游记','Up（2009）','star50'],['狮子王','The Lion King（1994）','star50'],['罗小黑战记','（2019）','star40']]
             const color = [['#9e1f06','rgba(1,2,56,.15)'],['#d7cdd8','rgba(200,200,200,.2)'],['#46b2e2','rgba(242,238,203,.1)'],['#f9c38c','rgba(228,234,229,.1)'],['#fdd02f','rgba(219,220,189,.2)'],['#d8dbe4','rgba(200,200,200,.2)'],['#961d21','rgba(225,225,225,.1)'],['#000','rgba(17,61,44,.2)']]
-            poster[0].addEventListener('click',(function() { hide(); poster[0].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[0][1]; ac[0].style.backgroundColor = color[0][1]; ac[1].style.backgroundColor = color[0][1]; content[0].style.display = 'block'; comment[0].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-1'; title.style.color = color[0][0]; chs_title.innerText = data[0][0]; ori_title.innerText = data[0][1]; rate.className = data[0][2]}),false)
-            poster[1].addEventListener('click',(function() { hide(); poster[1].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[1][1]; ac[0].style.backgroundColor = color[1][1]; ac[1].style.backgroundColor = color[1][1]; content[1].style.display = 'block'; comment[1].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-2'; title.style.color = color[1][0]; chs_title.innerText = data[1][0]; ori_title.innerText = data[1][1]; rate.className = data[1][2]}),false)
-            poster[2].addEventListener('click',(function() { hide(); poster[2].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[2][1]; ac[0].style.backgroundColor = color[2][1]; ac[1].style.backgroundColor = color[2][1]; content[2].style.display = 'block'; comment[2].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-3'; title.style.color = color[2][0]; chs_title.innerText = data[2][0]; ori_title.innerText = data[2][1]; rate.className = data[2][2]}),false)
-            poster[3].addEventListener('click',(function() { hide(); poster[3].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[3][1]; ac[0].style.backgroundColor = color[3][1]; ac[1].style.backgroundColor = color[3][1]; content[3].style.display = 'block'; comment[3].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-4'; title.style.color = color[3][0]; chs_title.innerText = data[3][0]; ori_title.innerText = data[3][1]; rate.className = data[3][2]}),false)
-            poster[4].addEventListener('click',(function() { hide(); poster[4].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[4][1]; ac[0].style.backgroundColor = color[4][1]; ac[1].style.backgroundColor = color[4][1]; content[4].style.display = 'block'; comment[4].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-5'; title.style.color = color[4][0]; chs_title.innerText = data[4][0]; ori_title.innerText = data[4][1]; rate.className = data[4][2]}),false)
-            poster[5].addEventListener('click',(function() { hide(); poster[5].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[5][1]; ac[0].style.backgroundColor = color[5][1]; ac[1].style.backgroundColor = color[5][1]; content[5].style.display = 'block'; comment[5].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-6'; title.style.color = color[5][0]; chs_title.innerText = data[5][0]; ori_title.innerText = data[5][1]; rate.className = data[5][2]}),false)
-            poster[6].addEventListener('click',(function() { hide(); poster[6].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[6][1]; ac[0].style.backgroundColor = color[6][1]; ac[1].style.backgroundColor = color[6][1]; content[6].style.display = 'block'; comment[6].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-7'; title.style.color = color[6][0]; chs_title.innerText = data[6][0]; ori_title.innerText = data[6][1]; rate.className = data[6][2]}),false)
-            poster[7].addEventListener('click',(function() { hide(); poster[7].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[7][1]; ac[0].style.backgroundColor = color[7][1]; ac[1].style.backgroundColor = color[7][1]; content[7].style.display = 'block'; comment[7].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-8 blur'; title.style.color = color[7][0]; chs_title.innerText = data[7][0]; ori_title.innerText = data[7][1]; rate.className = data[7][2]; setTimeout(function(){bg.classList.remove('blur')},3000)}),false)
+            poster[0].addEventListener('click',(function() { hide(); poster[0].style.transform = 'scale(1.1)'; container.style.backgroundColor = ac[0].style.backgroundColor = ac[1].style.backgroundColor = color[0][1]; content[0].style.display = comment[0].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-1'; title.style.color = color[0][0]; chs_title.innerText = data[0][0]; ori_title.innerText = data[0][1]; rate.className = data[0][2]}),false)
+            poster[1].addEventListener('click',(function() { hide(); poster[1].style.transform = 'scale(1.1)'; container.style.backgroundColor = ac[0].style.backgroundColor = ac[1].style.backgroundColor = color[1][1]; content[1].style.display = comment[1].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-2'; title.style.color = color[1][0]; chs_title.innerText = data[1][0]; ori_title.innerText = data[1][1]; rate.className = data[1][2]}),false)
+            poster[2].addEventListener('click',(function() { hide(); poster[2].style.transform = 'scale(1.1)'; container.style.backgroundColor = ac[0].style.backgroundColor = ac[1].style.backgroundColor = color[2][1]; content[2].style.display = comment[2].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-3'; title.style.color = color[2][0]; chs_title.innerText = data[2][0]; ori_title.innerText = data[2][1]; rate.className = data[2][2]}),false)
+            poster[3].addEventListener('click',(function() { hide(); poster[3].style.transform = 'scale(1.1)'; container.style.backgroundColor = ac[0].style.backgroundColor = ac[1].style.backgroundColor = color[3][1]; content[3].style.display = comment[3].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-4'; title.style.color = color[3][0]; chs_title.innerText = data[3][0]; ori_title.innerText = data[3][1]; rate.className = data[3][2]}),false)
+            poster[4].addEventListener('click',(function() { hide(); poster[4].style.transform = 'scale(1.1)'; container.style.backgroundColor = ac[0].style.backgroundColor = ac[1].style.backgroundColor = color[4][1]; content[4].style.display = comment[4].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-5'; title.style.color = color[4][0]; chs_title.innerText = data[4][0]; ori_title.innerText = data[4][1]; rate.className = data[4][2]}),false)
+            poster[5].addEventListener('click',(function() { hide(); poster[5].style.transform = 'scale(1.1)'; container.style.backgroundColor = ac[0].style.backgroundColor = ac[1].style.backgroundColor = color[5][1]; content[5].style.display = comment[5].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-6'; title.style.color = color[5][0]; chs_title.innerText = data[5][0]; ori_title.innerText = data[5][1]; rate.className = data[5][2]}),false)
+            poster[6].addEventListener('click',(function() { hide(); poster[6].style.transform = 'scale(1.1)'; container.style.backgroundColor = ac[0].style.backgroundColor = ac[1].style.backgroundColor = color[6][1]; content[6].style.display = comment[6].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-7'; title.style.color = color[6][0]; chs_title.innerText = data[6][0]; ori_title.innerText = data[6][1]; rate.className = data[6][2]}),false)
+            poster[7].addEventListener('click',(function() { hide(); poster[7].style.transform = 'scale(1.1)'; container.style.backgroundColor = ac[0].style.backgroundColor = ac[1].style.backgroundColor = color[7][1]; content[7].style.display = comment[7].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-8 blur'; title.style.color = color[7][0]; chs_title.innerText = data[7][0]; ori_title.innerText = data[7][1]; rate.className = data[7][2]; setTimeout(function(){bg.classList.remove('blur')},3000)}),false)
         }
     </script>
     <script type="text/javascript" src="./iconfont.js"></script>
+    <script src="iconfont.js"></script>
 </head>
 <body>
 <div class="bg bg-1"></div>
@@ -551,30 +618,26 @@
             </div>
             <div class="theme-song">
                 <p>主题曲：嘘</p>
-                <p>词曲：薄荷映像
-                    编曲：幻想传说
-                    演唱：艾索
-                    相遇 分离
-                    快乐 忧伤
-                    心动 慌张
-                    希望 绝望
-                    不管明天会变得怎样
-                    陪着我静静地唱
-                    我们在静静的夜静静地唱
-                    轻轻地说出你的梦想
-                    没有 星星 月亮的晚上
-                    有我 在你的身旁
-                    有太多甜太多苦太多的酸
-                    已忘记了快乐也忘了忧伤
-                    把我的幸福放在你手上
-                    陪着我 不再流浪
-                    我们在静静的夜静静地唱
-                    轻轻地说出你的梦想
-                    在整个世界睡觉的晚上
-                    有我 在你的身旁
-                    不管明天会变得怎样
-                    陪着我轻轻地唱
-                </p>
+                <p></p>
+                <div class="player">
+                    <div class="cover-img"><img src="https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg" /></div>
+                    <audio preload="auto" id="player" src="./music1.mp3" type="audio/mp3"></audio>
+                    <div class="wrap">
+                        <div class="song-title">嘘 - 《罗小黑战记》大电影主题曲</div>
+                        <div class="control">
+                            <button class="prev" onclick="player(this.className)">
+                                <svg t="1589199036460" class="icon-prev" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3807" width="50" height="50"><path d="M110.08 54.4a64 64 0 0 1 64 64V448A64 64 0 0 1 192 435.2L865.28 64a76.16 76.16 0 0 1 112.64 64v744.96a75.52 75.52 0 0 1-112.64 64L192 568.32a85.76 85.76 0 0 1-16.64-12.16v349.44a64 64 0 0 1-128 0V118.4a64 64 0 0 1 62.72-64z" p-id="3808" fill="#ffffff"></path></svg>
+                            </button>
+                            <button class="play" onclick="player(this.className)">
+                                <svg t="1589198319971" class="icon-play disappear" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2124" width="50" height="50"><path d="M869.814857 603.977143L279.552 962.194286C195.84 1012.955429 128 984.685714 128 899.364571V124.708571C128 39.131429 195.876571 11.081143 279.552 61.805714l590.262857 358.217143c83.675429 50.797714 83.675429 133.12 0 183.954286z" p-id="2125" fill="#ffffff"></path></svg>
+                                <svg t="1589212916896" class="icon-pause disappear" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2133" width="50" height="50"><path d="M720.896 95.232c-47.616 0-89.6 41.472-89.6 89.088v655.36c0 47.616 41.984 89.088 89.6 89.088s89.6-41.472 89.6-89.088V184.32c-0.512-47.616-41.984-89.088-89.6-89.088z m-417.792 0c-47.616 0-89.6 41.472-89.6 89.088v655.36c0 47.616 41.984 89.088 89.6 89.088s89.6-41.472 89.6-89.088V184.32c0-47.616-41.984-89.088-89.6-89.088z" p-id="2134" fill="#ffffff"></path></svg>
+                            </button>
+                            <button class="next" onclick="player(this.className)">
+                                <svg t="1589198984135" class="icon-next" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2968" width="50" height="50"><path d="M913.92 54.4a64 64 0 0 0-64 64V448a64 64 0 0 0-17.92-12.8L158.72 64A76.16 76.16 0 0 0 46.08 128v744.96a75.52 75.52 0 0 0 112.64 64L832 568.32a85.76 85.76 0 0 0 16.64-12.16v349.44a64 64 0 0 0 128 0V118.4a64 64 0 0 0-62.72-64z" p-id="2969" fill="#ffffff"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -657,5 +720,97 @@
         </span>
     </div>
 </footer>
+<script>
+    const music = {
+        track1: [
+            { src:'https://webfs.yun.kugou.com/202005120053/02c6279f6f2d9831382c149763b687ce/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘 - 《罗小黑战记》大电影主题曲' },
+            { src:'https://webfs.yun.kugou.com/202005112107/60dd7929ddc0885baf2c4fab31df4ca1/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落'},
+            { src:'https://webfs.yun.kugou.com/202005120054/3ce91f0b4fc938231296e118445974fe/G170/M06/06/15/ipQEAF11056AP2pzADLBs7-quTE491.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190829/20190829142458750431.jpg',title:'不再流浪' }
+        ],
+        track2: [
+            { src:'./music1.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘 - 《罗小黑战记》大电影主题曲' },
+            { src:'https://webfs.yun.kugou.com/202005112107/60dd7929ddc0885baf2c4fab31df4ca1/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落'},
+            { src:'' }
+        ],
+        track3: [
+            { src:'./music1.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘 - 《罗小黑战记》大电影主题曲' },
+            { src:'https://webfs.yun.kugou.com/202005112107/60dd7929ddc0885baf2c4fab31df4ca1/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落'},
+            { src:'' }
+        ],
+        track4: [
+            { src:'./music1.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘 - 《罗小黑战记》大电影主题曲' },
+            { src:'https://webfs.yun.kugou.com/202005112107/60dd7929ddc0885baf2c4fab31df4ca1/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落'},
+            { src:'' }
+        ],
+        track5: [
+            { src:'./music1.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘 - 《罗小黑战记》大电影主题曲' },
+            { src:'https://webfs.yun.kugou.com/202005112107/60dd7929ddc0885baf2c4fab31df4ca1/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落'},
+            { src:'' }
+        ],
+        track6: [
+            { src:'./music1.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘 - 《罗小黑战记》大电影主题曲' },
+            { src:'https://webfs.yun.kugou.com/202005112107/60dd7929ddc0885baf2c4fab31df4ca1/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落'},
+            { src:'' }
+        ],
+        track7: [
+            { src:'./music1.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘 - 《罗小黑战记》大电影主题曲' },
+            { src:'https://webfs.yun.kugou.com/202005112107/60dd7929ddc0885baf2c4fab31df4ca1/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落'},
+            { src:'' }
+        ],
+        track8: [
+            { src:'./music1.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘 - 《罗小黑战记》大电影主题曲' },
+            { src:'https://webfs.yun.kugou.com/202005112107/60dd7929ddc0885baf2c4fab31df4ca1/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落'},
+            { src:'' }
+        ]
+    }
+    const cover = document.querySelector('.cover-img img')
+    const audio = document.getElementById('player')
+    const title = document.querySelector('.song-title')
+    const i_play = document.querySelector('.icon-play')
+    const i_pause = document.querySelector('.icon-pause')
+    let i = 0
+    let len = music.track1.length
+    function change() {
+        cover.src = music.track1[i].cover
+        title.innerText = music.track1[i].title
+        audio.src = music.track1[i].src
+        audio.play()
+    }
+    let prev = n => {
+        i <= 0 ? i = len - 1 : i--
+        change()
+    }
+    let next = n => {
+        i >= len - 1 ? i = 0 : i++
+        change()
+    }
+    let play = () => {
+        audio.paused ? audio.play() : audio.pause()
+    }
+    function player(type) {
+        if(len) {
+            eval(type+'()')
+        }
+    }
+    audio.addEventListener('loadstart',function () {
+        i_play.classList.remove('disappear')
+    })
+    audio.addEventListener('play',function () {
+        i_play.classList.add('disappear')
+        i_pause.classList.remove('disappear')
+    })
+    audio.addEventListener('pause',function () {
+        i_pause.classList.add('disappear')
+        i_play.classList.remove('disappear')
+    })
+    audio.addEventListener('ended',function () {
+        i_play.classList.add('disappear')
+        next()
+    })
+    audio.addEventListener('playing',function () {
+        let now = audio.currentTime
+        let time = audio.duration
+    })
+</script>
 </body>
 </html>
