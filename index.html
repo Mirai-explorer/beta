@@ -625,6 +625,7 @@
                     <audio preload="auto" id="player" src="https://webfs.yun.kugou.com/202005120053/02c6279f6f2d9831382c149763b687ce/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3" type="audio/mp3"></audio>
                     <div class="wrap">
                         <div class="song-title">嘘 - 《罗小黑战记》大电影主题曲</div>
+                        <div class="time"><span class="now"></span>/<span class="all"></span></div>
                         <div class="control">
                             <button class="prev" onclick="player(this.className)">
                                 <svg t="1589199036460" class="icon-prev" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3807" width="50" height="50"><path d="M110.08 54.4a64 64 0 0 1 64 64V448A64 64 0 0 1 192 435.2L865.28 64a76.16 76.16 0 0 1 112.64 64v744.96a75.52 75.52 0 0 1-112.64 64L192 568.32a85.76 85.76 0 0 1-16.64-12.16v349.44a64 64 0 0 1-128 0V118.4a64 64 0 0 1 62.72-64z" p-id="3808" fill="#ffffff"></path></svg>
@@ -762,6 +763,7 @@
             { src:'./music1.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘 - 《罗小黑战记》大电影主题曲' },
             { src:'https://webfs.yun.kugou.com/202005112107/60dd7929ddc0885baf2c4fab31df4ca1/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'https://p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落'},
             { src:'' }
+
         ]
     }
     const cover = document.querySelector('.cover-img img')
@@ -810,6 +812,8 @@
         i_pause.classList.remove('disappear')
         let now = audio.currentTime
         let time = audio.duration
+        setInterval(function(){document.querySelector('.now').innerText = now},200)
+        document.querySelector('.all').innerText = time
     })
 </script>
 </body>
