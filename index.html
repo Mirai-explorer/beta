@@ -795,19 +795,19 @@
         }
     }
     audio.addEventListener('loadstart',function () {
-        i_play.classList.add('disappear')
         i_pause.classList.remove('disappear')
+        i_play.classList.add('disappear')
     })
     audio.addEventListener('pause',function () {
-        i_pause.classList.add('disappear')
         i_play.classList.remove('disappear')
+        i_pause.classList.add('disappear')
     })
     audio.addEventListener('ended',function () {
         next()
     })
     audio.addEventListener('playing',function () {
-        i_play.classList.add('disappear')
         i_pause.classList.remove('disappear')
+        i_play.classList.add('disappear')
         let now = audio.currentTime
         let time = audio.duration
     })
