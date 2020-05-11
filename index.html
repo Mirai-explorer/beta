@@ -58,11 +58,15 @@
             -moz-animation: move 30s ease-in-out 2.0s;
             animation: move 30s ease-in-out 2.0s;
         }
+        .blur {
+            filter: blur(5px);
+        }
         @keyframes move {
-            0% { background-position: 50% 50%;filter: blur(2px) }
+            0% { background-position: 50% 50%;filter: blur(5px) }
+            2.5% { background-position: 50% 50%;filter: blur(0) }
             15% { background-position: 0 50%;filter: blur(0) }
             75% { background-position: 100% 50%;filter: blur(0) }
-            100% { background-position: 50% 50%;filter: blur(2px) }
+            100% { background-position: 50% 50%;filter: blur(0) }
         }
         header {
             position: relative;
@@ -113,9 +117,11 @@
             line-height: 1.5;
             font-weight: bold;
             font-size: 30px;
-            color: floralwhite;
+            color: #9e1f06;
             z-index: 1001;
-            text-shadow: 1px 2px 3px #a0a0a0;
+        }
+        .ori-title {
+            opacity: 0.5;
         }
         .star50, .star45, .star40, .star35, .star30, .star25, .star20, .star15, .star10, .star05, .star00 {
             display: inline-block;
@@ -165,7 +171,7 @@
             height: auto;
             margin: 10px 0;
             padding: 10px 0;
-            background-color: rgba(225,225,225,.3);
+            background-color: rgba(1,2,56,.15);
             border-radius: 10px;
             z-index: 1000;
             transition: height 1s linear;
@@ -181,7 +187,7 @@
             height: auto;
             padding: 10px 0;
             margin-bottom: 20px;
-            background-color: rgba(225,225,225,.3);
+            background-color: rgba(1,2,56,.15);
             border-radius: 10px;
         }
         .center {
@@ -339,12 +345,15 @@
             const poster = document.querySelectorAll('.poster-s')
             const content = document.querySelectorAll('.content')
             const bg = document.querySelector('.bg')
-            const title = document.querySelector('.chs-title')
+            const title = document.querySelector('.title')
+            const chs_title = document.querySelector('.chs-title')
             const ori_title = document.querySelector('.ori-title')
             const rate = document.querySelector('.title span:last-child')
             const comment = document.querySelectorAll('.comment')
+            const container = document.querySelector('.container')
+            const ac = document.querySelectorAll('.aside-container')
             function hide() {
-                bg.style.opacity = '0.8'
+                bg.style.opacity = '0.9'
                 bg.style.transition = 'all 1.2s linear 0s'
                 for (let i = 0; i < content.length; i++) {
                     poster[i].style.removeProperty('transform')
@@ -356,14 +365,16 @@
                 bg.style.opacity = '1'
                 bg.style.transition = 'all 1.8s linear 0s'
             }
-            poster[0].addEventListener('click',(function() { hide(); poster[0].style.transform = 'scale(1.1)'; content[0].style.display = 'block'; comment[0].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-1'; title.innerText='哪吒之魔童降世'; ori_title.innerText = '（2019）'; rate.className='star45'}),false)
-            poster[1].addEventListener('click',(function() { hide(); poster[1].style.transform = 'scale(1.1)'; content[1].style.display = 'block'; comment[1].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-2'; title.innerText='千与千寻'; ori_title.innerText = '千と千尋の神隠し‎（2001）'; rate.className='star50'}),false)
-            poster[2].addEventListener('click',(function() { hide(); poster[2].style.transform = 'scale(1.1)'; content[2].style.display = 'block'; comment[2].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-3'; title.innerText='你的名字。'; ori_title.innerText = '君の名は。‎（2016）'; rate.className='star45'}),false)
-            poster[3].addEventListener('click',(function() { hide(); poster[3].style.transform = 'scale(1.1)'; content[3].style.display = 'block'; comment[3].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-4'; title.innerText='疯狂动物城'; ori_title.innerText = 'Zootopia（2016）'; rate.className='star50'}),false)
-            poster[4].addEventListener('click',(function() { hide(); poster[4].style.transform = 'scale(1.1)'; content[4].style.display = 'block'; comment[4].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-5'; title.innerText='寻梦环游记'; ori_title.innerText = 'Coco（2017）'; rate.className='star50'}),false)
-            poster[5].addEventListener('click',(function() { hide(); poster[5].style.transform = 'scale(1.1)'; content[5].style.display = 'block'; comment[5].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-6'; title.innerText='飞屋环游记'; ori_title.innerText = 'Up（2009）'; rate.className='star50'}),false)
-            poster[6].addEventListener('click',(function() { hide(); poster[6].style.transform = 'scale(1.1)'; content[6].style.display = 'block'; comment[6].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-7'; title.innerText='狮子王'; ori_title.innerText = 'The Lion King（1994）'; rate.className='star50'}),false)
-            poster[7].addEventListener('click',(function() { hide(); poster[7].style.transform = 'scale(1.1)'; content[7].style.display = 'block'; comment[7].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-8'; title.innerText='罗小黑战记'; ori_title.innerText = '（2019）'; rate.className='star40'}),false)
+            const data = [['哪吒之魔童降世','（2019）','star45'],['千与千寻','千と千尋の神隠し‎（2001）','star50'],['你的名字。','君の名は。‎（2016）','star45'],['疯狂动物城','Zootopia（2016）','star50'],['寻梦环游记','Coco（2017）','star50'],['飞屋环游记','Up（2009）','star50'],['狮子王','The Lion King（1994）','star50'],['罗小黑战记','（2019）','star40']]
+            const color = [['#9e1f06','rgba(1,2,56,.15)'],['#d7cdd8','rgba(200,200,200,.2)'],['#46b2e2','rgba(242,238,203,.1)'],['#f9c38c','rgba(228,234,229,.1)'],['#fdd02f','rgba(219,220,189,.2)'],['#d8dbe4','rgba(200,200,200,.2)'],['#961d21','rgba(225,225,225,.1)'],['#000','rgba(17,61,44,.2)']]
+            poster[0].addEventListener('click',(function() { hide(); poster[0].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[0][1]; ac[0].style.backgroundColor = color[0][1]; ac[1].style.backgroundColor = color[0][1]; content[0].style.display = 'block'; comment[0].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-1'; title.style.color = color[0][0]; chs_title.innerText = data[0][0]; ori_title.innerText = data[0][1]; rate.className = data[0][2]}),false)
+            poster[1].addEventListener('click',(function() { hide(); poster[1].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[1][1]; ac[0].style.backgroundColor = color[1][1]; ac[1].style.backgroundColor = color[1][1]; content[1].style.display = 'block'; comment[1].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-2'; title.style.color = color[1][0]; chs_title.innerText = data[1][0]; ori_title.innerText = data[1][1]; rate.className = data[1][2]}),false)
+            poster[2].addEventListener('click',(function() { hide(); poster[2].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[2][1]; ac[0].style.backgroundColor = color[2][1]; ac[1].style.backgroundColor = color[2][1]; content[2].style.display = 'block'; comment[2].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-3'; title.style.color = color[2][0]; chs_title.innerText = data[2][0]; ori_title.innerText = data[2][1]; rate.className = data[2][2]}),false)
+            poster[3].addEventListener('click',(function() { hide(); poster[3].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[3][1]; ac[0].style.backgroundColor = color[3][1]; ac[1].style.backgroundColor = color[3][1]; content[3].style.display = 'block'; comment[3].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-4'; title.style.color = color[3][0]; chs_title.innerText = data[3][0]; ori_title.innerText = data[3][1]; rate.className = data[3][2]}),false)
+            poster[4].addEventListener('click',(function() { hide(); poster[4].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[4][1]; ac[0].style.backgroundColor = color[4][1]; ac[1].style.backgroundColor = color[4][1]; content[4].style.display = 'block'; comment[4].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-5'; title.style.color = color[4][0]; chs_title.innerText = data[4][0]; ori_title.innerText = data[4][1]; rate.className = data[4][2]}),false)
+            poster[5].addEventListener('click',(function() { hide(); poster[5].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[5][1]; ac[0].style.backgroundColor = color[5][1]; ac[1].style.backgroundColor = color[5][1]; content[5].style.display = 'block'; comment[5].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-6'; title.style.color = color[5][0]; chs_title.innerText = data[5][0]; ori_title.innerText = data[5][1]; rate.className = data[5][2]}),false)
+            poster[6].addEventListener('click',(function() { hide(); poster[6].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[6][1]; ac[0].style.backgroundColor = color[6][1]; ac[1].style.backgroundColor = color[6][1]; content[6].style.display = 'block'; comment[6].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-7'; title.style.color = color[6][0]; chs_title.innerText = data[6][0]; ori_title.innerText = data[6][1]; rate.className = data[6][2]}),false)
+            poster[7].addEventListener('click',(function() { hide(); poster[7].style.transform = 'scale(1.1)'; container.style.backgroundColor = color[7][1]; ac[0].style.backgroundColor = color[7][1]; ac[1].style.backgroundColor = color[7][1]; content[7].style.display = 'block'; comment[7].style.display = 'block'; setTimeout(fadeout,500); bg.className ='bg bg-8 blur'; title.style.color = color[7][0]; chs_title.innerText = data[7][0]; ori_title.innerText = data[7][1]; rate.className = data[7][2]; setTimeout(function(){bg.classList.remove('blur')},3000)}),false)
         }
     </script>
     <script type="text/javascript" src="./iconfont.js"></script>
@@ -604,32 +615,32 @@
         </div>
         <div class="aside-container center">
             <ul class="icon-lists clearfix">
-                <li>
+                <li data-id="iqiyi">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-aiqiyi"></use>
                     </svg>
                 </li>
-                <li>
+                <li data-id="youku">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-youku"></use>
                     </svg>
                 </li>
-                <li>
+                <li data-id="bilibili">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-bilibili"></use>
                     </svg>
                 </li>
-                <li>
+                <li data-id="txvideo">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-tengxunshipin"></use>
                     </svg>
                 </li>
-                <li>
+                <li data-id="miguvideo">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-migushipin"></use>
                     </svg>
                 </li>
-                <li>
+                <li data-id="mangotv">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-mangguoTV"></use>
                     </svg>
