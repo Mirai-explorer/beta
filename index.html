@@ -7,6 +7,8 @@
     <style type="text/css">
         body {
             font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif;
+            overflow:hidden;
+            zoom:1;
         }
         .bg {
             z-index: -1;
@@ -15,8 +17,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            -webkit-filter: blur(4px);
-            filter: blur(4px);
+            overflow: hidden;
+            filter: blur(2px);
             -webkit-transform: translate3d(0, 0, 0);
             -moz-transform: translate3d(0, 0, 0);
             transform: translate3d(0, 0, 0);
@@ -58,17 +60,24 @@
             animation: move 30s ease-in-out 2.0s;
         }
         @keyframes move {
-            0% { background-position: 50% 50%;filter: blur(4px) }
+            0% { background-position: 50% 50%;filter: blur(2px) }
             15% { background-position: 0 50%;filter: blur(0) }
             75% { background-position: 100% 50%;filter: blur(0) }
-            100% { background-position: 50% 50%;filter: blur(4px) }
+            100% { background-position: 50% 50%;filter: blur(2px) }
         }
         header {
             position: relative;
             width: 100%;
-            height: 50px;
+            height: 40px;
             padding: 10px;
             background-color: rgba(255,255,255,.1);
+            text-align: center;
+            color: white;
+            font-size: 30px;
+            letter-spacing: 0.5em;
+        }
+        header p {
+            vertical-align: center;
         }
         .wrapper {
             position: relative;
@@ -81,6 +90,11 @@
             flex-wrap: wrap;
             justify-content: space-between;
             margin: 15px 0;
+            opacity: 0.3;
+            transition: opacity ease 0.5s;
+        }
+        .gallery:hover {
+            opacity: 1.0;
         }
         .gallery img {
             width: 200px;
@@ -90,7 +104,7 @@
         }
         .poster-s {
             flex-basis: 10%;
-            transition: all 0.2s;
+            transition: all ease 0.2s;
         }
         .poster-s:hover {
             transform: scale(1.1);
@@ -159,11 +173,53 @@
         }
         .container-right {
             float: right;
-            width: 17.5%;
+            width: calc(20% - 20px);
             height: auto;
-            margin-left: 2.5%;
+            margin: 10px 0;
         }
-        .content {
+        .aside-container {
+            width: 100%;
+            height: auto;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            background-color: rgba(225,225,225,.3);
+            border-radius: 10px;
+        }
+        .center {
+            text-align: center;
+        }
+        .icon {
+            width: 4em; height: 4em;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+        }
+        .clearfix:after {
+            content:'';
+            visibility:hidden;
+            font-size:0;
+            height:0;
+            display:block;
+            clear:both;
+        }
+        .icon-lists li {
+            vertical-align: top;
+            font-size: 14px;
+            width: 56px;
+            padding: 5px 0;
+            margin: 10px 20px;
+            text-align: center;
+            list-style: none !important;
+            cursor: default;
+            display: inline-block;
+            transition: all ease 0.3s;
+            filter: grayscale(100%);
+        }
+        .icon-lists li:hover {
+            transform: scale(1.5);
+            filter: grayscale(0%);
+        }
+        .content, .comment {
             display: none;
         }
         .tag-box {
@@ -189,8 +245,8 @@
         .intro {
             color: white;
             font-size: 18px;
-            letter-spacing: 0.15em;
-            line-height: 1.8;
+            letter-spacing: 0.125em;
+            line-height: 1.75;
             margin: 0 20px 20px 20px;
             text-indent: 2em;
         }
@@ -199,18 +255,34 @@
             font-weight: bold;
             text-shadow: 1px 2px 3px #a7a7a7;
         }
-        .review, .author {
+        .theme-song {
+            color: white;
+            font-size: 18px;
+            letter-spacing: 0.125em;
+            line-height: 2;
             margin: 20px;
+        }
+        #r8 .review {
+            font-size: 16px;
+            font-weight: normal;
+        }
+        #r8 .author {
+            font-size: 15px;
+        }
+        .review, .author {
+            margin: 10px 20px;
             color: white;
         }
         .review {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
+            line-height: 1.625;
         }
         .author {
-            font-size: 20px;
+            font-size: 18px;
             font-style: italic;
             text-align: end;
+            padding: 10px;
         }
         footer {
             position: absolute;
@@ -218,12 +290,26 @@
             width: 100%;
             height: 60px;
             background-color: rgba(255,255,255,.1);
+            align-items: center;
         }
         .douban {
-            display: inline-block;
+            text-align: center;
+            margin: 4px 0;
+            width: 100%;
+            display: block;
+            line-height: 1.6;
+            color: #d6d6d6;
+            font-size: 16px;
+            letter-spacing: 0.1em;
+        }
+        .douban a {
+            vertical-align: 2px;
+        }
+        .douban .copy {
+            font-size: 14px;
         }
         .douban img {
-            width: 50%;
+            width: 100px;
             height: auto;
         }
         ::selection {
@@ -257,36 +343,40 @@
             const title = document.querySelector('.chs-title')
             const ori_title = document.querySelector('.ori-title')
             const rate = document.querySelector('.title span:last-child')
+            const comment = document.querySelectorAll('.comment')
             function hide() {
                 bg.style.opacity = '0.8'
                 bg.style.transition = 'all 1.2s linear 0s'
                 for (let i = 0; i < content.length; i++) {
+                    poster[i].style.removeProperty('transform')
                     content[i].style.display = 'none'
+                    comment[i].style.display = 'none'
                 }
             }
             function fadeout() {
                 bg.style.opacity = '1'
                 bg.style.transition = 'all 1.8s linear 0s'
             }
-            poster[0].addEventListener('click',(function() { hide();content[0].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-1'; title.innerText='哪吒之魔童降世'; ori_title.innerText = '（2019）'; rate.className='star45'}),false)
-            poster[1].addEventListener('click',(function() { hide();content[1].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-2'; title.innerText='千与千寻'; ori_title.innerText = '千と千尋の神隠し‎（2001）'; rate.className='star50'}),false)
-            poster[2].addEventListener('click',(function() { hide();content[2].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-3'; title.innerText='你的名字。'; ori_title.innerText = '君の名は。‎（2016）'; rate.className='star45'}),false)
-            poster[3].addEventListener('click',(function() { hide();content[3].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-4'; title.innerText='疯狂动物城'; ori_title.innerText = 'Zootopia（2016）'; rate.className='star50'}),false)
-            poster[4].addEventListener('click',(function() { hide();content[4].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-5'; title.innerText='寻梦环游记'; ori_title.innerText = 'Coco（2017）'; rate.className='star50'}),false)
-            poster[5].addEventListener('click',(function() { hide();content[5].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-6'; title.innerText='飞屋环游记'; ori_title.innerText = 'Up（2009）'; rate.className='star50'}),false)
-            poster[6].addEventListener('click',(function() { hide();content[6].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-7'; title.innerText='狮子王'; ori_title.innerText = 'The Lion King（1994）'; rate.className='star50'}),false)
-            poster[7].addEventListener('click',(function() { hide();content[7].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-8'; title.innerText='罗小黑战记'; ori_title.innerText = '（2019）'; rate.className='star40'}),false)
+            poster[0].addEventListener('click',(function() { hide(); poster[0].style.transform = 'scale(1.1)'; content[0].style.display = 'block'; comment[0].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-1'; title.innerText='哪吒之魔童降世'; ori_title.innerText = '（2019）'; rate.className='star45'}),false)
+            poster[1].addEventListener('click',(function() { hide(); poster[1].style.transform = 'scale(1.1)'; content[1].style.display = 'block'; comment[1].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-2'; title.innerText='千与千寻'; ori_title.innerText = '千と千尋の神隠し‎（2001）'; rate.className='star50'}),false)
+            poster[2].addEventListener('click',(function() { hide(); poster[2].style.transform = 'scale(1.1)'; content[2].style.display = 'block'; comment[2].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-3'; title.innerText='你的名字。'; ori_title.innerText = '君の名は。‎（2016）'; rate.className='star45'}),false)
+            poster[3].addEventListener('click',(function() { hide(); poster[3].style.transform = 'scale(1.1)'; content[3].style.display = 'block'; comment[3].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-4'; title.innerText='疯狂动物城'; ori_title.innerText = 'Zootopia（2016）'; rate.className='star50'}),false)
+            poster[4].addEventListener('click',(function() { hide(); poster[4].style.transform = 'scale(1.1)'; content[4].style.display = 'block'; comment[4].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-5'; title.innerText='寻梦环游记'; ori_title.innerText = 'Coco（2017）'; rate.className='star50'}),false)
+            poster[5].addEventListener('click',(function() { hide(); poster[5].style.transform = 'scale(1.1)'; content[5].style.display = 'block'; comment[5].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-6'; title.innerText='飞屋环游记'; ori_title.innerText = 'Up（2009）'; rate.className='star50'}),false)
+            poster[6].addEventListener('click',(function() { hide(); poster[6].style.transform = 'scale(1.1)'; content[6].style.display = 'block'; comment[6].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-7'; title.innerText='狮子王'; ori_title.innerText = 'The Lion King（1994）'; rate.className='star50'}),false)
+            poster[7].addEventListener('click',(function() { hide(); poster[7].style.transform = 'scale(1.1)'; content[7].style.display = 'block'; comment[7].style.display = 'block'; setTimeout(fadeout,500); bg.className='bg bg-8'; title.innerText='罗小黑战记'; ori_title.innerText = '（2019）'; rate.className='star40'}),false)
         }
     </script>
+    <script type="text/javascript" src="./iconfont.js"></script>
 </head>
 <body>
 <div class="bg bg-1"></div>
 <header>
-
+    <p>动画电影专题</p>
 </header>
 <div class="wrapper">
     <div class="gallery">
-        <div class="poster-s"><img src="./pic/p1.jpg" alt="哪吒之魔童降世"></div>
+        <div class="poster-s" style="transform: scale(1.1)"><img src="./pic/p1.jpg" alt="哪吒之魔童降世"></div>
         <div class="poster-s"><img src="./pic/p2.jpg" alt="千与千寻"></div>
         <div class="poster-s"><img src="./pic/p3.jpg" alt="你的名字。"></div>
         <div class="poster-s"><img src="./pic/p4.jpg" alt="疯狂动物城"></div>
@@ -316,6 +406,9 @@
             </div>
             <div class="intro">
                 <p>天地灵气孕育出一颗能量巨大的混元珠，元始天尊将混元珠提炼成灵珠和魔丸，灵珠投胎为人，助周伐纣时可堪大用；而魔丸则会诞出魔王，为祸人间。元始天尊启动了天劫咒语，3年后天雷将会降临，摧毁魔丸。太乙受命将灵珠托生于陈塘关李靖家的儿子哪吒身上。然而阴差阳错，灵珠和魔丸竟然被掉包。本应是灵珠英雄的哪吒却成了混世大魔王。调皮捣蛋顽劣不堪的哪吒却徒有一颗做英雄的心。然而面对众人对魔丸的误解和即将来临的天雷的降临，哪吒是否命中注定会立地成魔？他将何去何从？</p>
+            </div>
+            <div class="theme-song">
+                <p>主题曲：嘘</p>
             </div>
         </div>
         <div class="content">
@@ -446,20 +539,112 @@
             <div class="intro">
                 <p>在熙攘的人类世界里，很多妖精隐匿其中，他们与人类相安无事地生活着。猫妖罗小黑因为家园被破坏，开始了它的流浪之旅。这场旅途中惺惺相惜的妖精同类与和谐包容的人类伙伴相继出现，让小黑陷入了两难抉择，究竟何处才是真正的归属？</p>
             </div>
+            <div class="theme-song">
+                <p>主题曲：嘘</p>
+                <p>词曲：薄荷映像
+                    编曲：幻想传说
+                    演唱：艾索
+                    相遇 分离
+                    快乐 忧伤
+                    心动 慌张
+                    希望 绝望
+                    不管明天会变得怎样
+                    陪着我静静地唱
+                    我们在静静的夜静静地唱
+                    轻轻地说出你的梦想
+                    没有 星星 月亮的晚上
+                    有我 在你的身旁
+                    有太多甜太多苦太多的酸
+                    已忘记了快乐也忘了忧伤
+                    把我的幸福放在你手上
+                    陪着我 不再流浪
+                    我们在静静的夜静静地唱
+                    轻轻地说出你的梦想
+                    在整个世界睡觉的晚上
+                    有我 在你的身旁
+                    不管明天会变得怎样
+                    陪着我轻轻地唱
+                </p>
+            </div>
         </div>
     </div>
-    <div class="container">
-        <p class="review">邓超救不起这暑期档，哪吒可以。</p>
-        <p class="author">——凹凸 评</p>
-    </div>
     <div class="container-right">
-        <p class="review">邓超救不起这暑期档，哪吒可以。</p>
-        <p class="author">——凹凸 评</p>
+        <div class="aside-container">
+            <div class="comment" id="r1" style="display: block">
+                <p class="review">邓超救不起这暑期档，哪吒可以。</p>
+                <p class="author">——凹凸 评</p>
+            </div>
+            <div class="comment" id="r2">
+                <p class="review">每次看这些神作的时候想到这是动画片这是一群牛人一笔一笔画出来的,就觉得漏看掉一帧都实在是对不起他们啊</p>
+                <p class="author">——zing 评</p>
+            </div>
+            <div class="comment" id="r3">
+                <p class="review">……彗星降临的末世情怀，穿越时空的灵之绳结，只有7秒钟记忆的鱼...星空、爱情以及所有遇见都是注定。</p>
+                <p class="author">——同志亦凡人中文站 评</p>
+            </div>
+            <div class="comment" id="r4">
+                <p class="review">树懒太他妈好笑了！！那两分钟我嗓子都哑了！！卧槽！！真是太他妈好笑了！！</p>
+                <p class="author">——祥林嫂 评</p>
+            </div>
+            <div class="comment" id="r5">
+                <p class="review">死后世界还是这么三六九等，穷逼死了还是穷逼，那还不如被快点遗忘消失掉啊！</p>
+                <p class="author">——王大根 评</p>
+            </div>
+            <div class="comment" id="r6">
+                <p class="review">“我总是记得那些无聊的小事情……”“感谢你给了我精彩的一生”，简单并深情着</p>
+                <p class="author">——Orchid 评</p>
+            </div>
+            <div class="comment" id="r7">
+                <p class="review">败在“刀疤”没有反派魅力！</p>
+                <p class="author">——罗弘霉素 评</p>
+            </div>
+            <div class="comment" id="r8">
+                <p class="review">第一次看这个IP，还挺意外的，小黑的角色设计很独特，而环境打破了地域和年代的界限，很多场景天马行空不拘一格，这是一部好的国漫应该有的素质，带领观众不断拓展想象力的边界……</p>
+                <p class="author">——二十二岛主 评</p>
+            </div>
+        </div>
+        <div class="aside-container center">
+            <ul class="icon-lists clearfix">
+                <li>
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-aiqiyi"></use>
+                    </svg>
+                </li>
+                <li>
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-youku"></use>
+                    </svg>
+                </li>
+                <li>
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-bilibili"></use>
+                    </svg>
+                </li>
+                <li>
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-tengxunshipin"></use>
+                    </svg>
+                </li>
+                <li>
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-migushipin"></use>
+                    </svg>
+                </li>
+                <li>
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-mangguoTV"></use>
+                    </svg>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 <footer>
     <div class="copyright">
-        <span class="douban"><a href="//movie.douban.com"><img src="https://img3.doubanio.com/dae/accounts/resources/1f8d15e/movie/assets/lg_movie@2x.png" alt="豆瓣电影"/></a></span>
+        <span class="douban">
+            <p>技术支持：<a href="//movie.douban.com"><img src="https://img3.doubanio.com/dae/accounts/resources/1f8d15e/movie/assets/lg_movie@2x.png" alt="豆瓣电影"/></a></p>
+            <p class="copy">Copyright © 2020 Mirai-explorer</p>
+        </span>
     </div>
 </footer>
 </body>
