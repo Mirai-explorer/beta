@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-dns-prefetch-control" content="on">
     <link rel="dns-prefetch" href="//pics.images.ac.cn">
+    <link rel="dns-prefetch" href="//ae01.alicdn.com">
     <link rel="dns-prefetch" href="//img3.doubanio.com">
-    <link rel="dns-prefetch" href="//i.loli.net">
-    <link rel="prefetch" href="//pics.images.ac.cn/image/5eba497bd1823.html">
+    <link rel="dns-prefetch" href="//pic.downk.cc">
+    <link rel="preload" href="//pics.images.ac.cn/image/5eba497bd1823.html" as="image">
+    <link rel="preload" href="//pic.downk.cc/item/5ebaa9a1101ccd402bc214a7.jpg" as="image">
+    <link rel="preload" href="//pic.downk.cc/item/5ebaa9a1101ccd402bc214c3.jpg" as="image">
     <title>电影网</title>
     <link rel="stylesheet" href="./bundle.css" type="text/css" />
     <style type="text/css">
@@ -47,7 +50,7 @@
             background-size: cover;
         }
         .bg-5 {
-            background: url("//i.loli.net/2020/05/12/5tFT378osU6vqZb.jpg") no-repeat center;
+            background: url("//pic.downk.cc/item/5ebaa9a1101ccd402bc214a7.jpg") no-repeat center;
             background-size: cover;
         }
         .bg-6 {
@@ -59,7 +62,7 @@
             background-size: cover;
         }
         .bg-8 {
-            background: url("//i.loli.net/2020/05/12/XOBRDMecKP7TFvi.jpg") no-repeat center;
+            background: url("//pic.downk.cc/item/5ebaa9a1101ccd402bc214c3.jpg") no-repeat center;
             background-size: cover;
             will-change: animation;
             -webkit-animation: move 30s ease-in-out 2.0s;
@@ -480,17 +483,18 @@
         }
     </style>
     <script>
+        /*
         let imgSrcArr = [
             '//pics.images.ac.cn/image/5eba497bd1823.html',
             '//pics.images.ac.cn/image/5eba4999be6c0.html',
             '//pics.images.ac.cn/image/5eba4d65a0cc2.html',
             '//pics.images.ac.cn/image/5eba495228db4.html',
-            '//i.loli.net/2020/05/12/5tFT378osU6vqZb.jpg',
+            '//pic.downk.cc/item/5ebaa9a1101ccd402bc214a7.jpg',
             '//pics.images.ac.cn/image/5eba4d5e526ab.html',
             '//pics.images.ac.cn/image/5eba49c88139e.html',
-            '//i.loli.net/2020/05/12/XOBRDMecKP7TFvi.jpg'
+            '//pic.downk.cc/item/5ebaa9a1101ccd402bc214c3.jpg'
         ]
-        /*
+
         let imgSrcArr = [
             './pic/bg-1.jpg',
             './pic/bg-2.jpg',
@@ -501,7 +505,7 @@
             './pic/bg-7.jpg',
             './pic/bg-8.jpg'
         ]
-        */
+
         let imgWrap = []
         function preloadImg(arr) {
             for(let i = 0; i < arr.length; i++) {
@@ -510,6 +514,7 @@
             }
         }
         preloadImg(imgSrcArr)
+        */
         window.onload = show
         function show() {
             const poster = document.querySelectorAll('.poster-s')
@@ -551,7 +556,26 @@
     <script src="iconfont.js"></script>
 </head>
 <body>
-<div class="bg bg-1"></div>
+<div class="bg bg-1">
+    <script type="text/javascript">
+        let images = []
+        function preload() {
+            for (i = 0; i < preload.arguments.length; i++) {
+                images[i] = new Image()
+                images[i].src = preload.arguments[i]
+            }
+        }
+        preload(
+            '//pics.images.ac.cn/image/5eba4999be6c0.html',
+            '//pics.images.ac.cn/image/5eba4d65a0cc2.html',
+            '//pics.images.ac.cn/image/5eba495228db4.html',
+            /* '//pic.downk.cc/item/5ebaa9a1101ccd402bc214a7.jpg', */
+            '//pics.images.ac.cn/image/5eba4d5e526ab.html',
+            '//pics.images.ac.cn/image/5eba49c88139e.html'
+            /* '//pic.downk.cc/item/5ebaa9a1101ccd402bc214c3.jpg' */
+        )
+    </script>
+</div>
 <header>
     <p>动画电影专题</p>
 </header>
