@@ -6,6 +6,9 @@
     <link rel="stylesheet" href="./bundle.css" type="text/css" />
     <style type="text/css">
         body {
+            display: flex;
+            flex-flow: column;
+            min-height: 100vh;
             font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif;
             overflow:hidden;
             zoom:1;
@@ -69,20 +72,20 @@
             100% { background-position: 50% 50%;filter: blur(0) }
         }
         header {
-            position: relative;
-            width: 100%;
-            height: 40px;
-            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: auto;
+            height: 50px;
             background-color: rgba(255,255,255,.1);
-            text-align: center;
             color: white;
             font-size: 30px;
             letter-spacing: 0.5em;
         }
-        header p {
-            vertical-align: center;
-        }
         .wrapper {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
             position: relative;
             width: 95%;
             height: auto;
@@ -90,7 +93,6 @@
         }
         .gallery {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             margin: 15px 0;
             opacity: 0.3;
@@ -113,12 +115,16 @@
             transform: scale(1.1);
         }
         .title {
-            display: block;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
             line-height: 1.5;
             font-weight: bold;
             font-size: 30px;
             color: #9e1f06;
-            z-index: 1001;
+        }
+        .title span {
+            display: inline-flex;
         }
         .ori-title {
             opacity: 0.5;
@@ -165,10 +171,14 @@
         .star00 {
             background-position: 0 -150px;
         }
+        .box {
+            display: flex;
+            justify-content: space-between;
+            flex-flow: row;
+        }
         .container {
-            float: left;
             width: 80%;
-            height: auto;
+            height: fit-content;
             margin: 10px 0;
             padding: 10px 0;
             background-color: rgba(1,2,56,.15);
@@ -177,7 +187,6 @@
             transition: height 1s linear;
         }
         .container-right {
-            float: right;
             width: calc(20% - 20px);
             height: auto;
             margin: 10px 0;
@@ -289,12 +298,12 @@
             padding: 10px;
         }
         footer {
-            position: absolute;
-            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 100%;
             height: 60px;
             background-color: rgba(255,255,255,.1);
-            align-items: center;
         }
         .douban {
             text-align: center;
@@ -321,41 +330,62 @@
         }
         .player {
             width: 500px;
-            height: 100px;
+            height: 120px;
             background: rgba(255,255,255,.7);
             box-shadow: 0 0 5px 3px rgba(255,255,255,.3);
             display: flex;
+            flex-direction: row;
         }
         .cover-img {
-            width: 100px;
-            height: 100px;
+            display: flex;
+            width: 120px;
+            height: auto;
         }
         .wrap {
-            padding: 5px;
+            display: flex;
+            flex-direction: column;
             width: 400px;
             height: auto;
+            padding: 10px 10px 5px 10px;
+        }
+        .top, .bottom {
+            display: flex;
+        }
+        .top {
+            flex-direction: column;
+            height: 40%;
+        }
+        .bottom {
+            flex-direction: row;
+            height: 60%;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .time {
+            display: inline-flex;
+            align-items: center;
         }
         .song-title {
             width: auto;
-            height: 30px;
-            line-height: 1.25;
-            align-items: center;
-            font-size: 20px;
+            height: fit-content;
+            line-height: 1.5;
+            font-size: 21px;
             color: black;
             letter-spacing: 0;
-            padding: 5px 10px;
+            display: inline-flex;
         }
         .control {
             width: auto;
             height: 70px;
             align-items: center;
-            text-align: center;
+            display: flex;
+            justify-content: center;
         }
         .play {
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            margin: 10px;
+            margin: 12px;
             border-style: none;
             outline: none;
             background-color: gray;
@@ -365,7 +395,7 @@
             border-radius: 50%;
             width: 36px;
             height: 36px;
-            margin: 24px;
+            margin: 15px;
             border-style: none;
             outline: none;
             background-color: gray;
@@ -388,6 +418,13 @@
             overflow: hidden;
         }
         .progress {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(0, 176, 255, 0.3);
+            border-radius: 2px;
+            margin: 5px 0;
+        }
+        .living-progress {
             width: 0;
             height: 4px;
             background-color: #00b0ff;
@@ -475,6 +512,7 @@
         <span class="ori-title">（2019）</span>
         <span class="star45"></span>
     </div>
+    <div class="box">
     <div class="container">
         <div class="content" style="display: block">
             <div class="tag-box">
@@ -631,8 +669,11 @@
                     <div class="cover-img"><img src="https://p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg" /></div>
                     <audio preload="auto" id="player" src="https://webfs.yun.kugou.com/202005120053/02c6279f6f2d9831382c149763b687ce/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3" type="audio/mp3"></audio>
                     <div class="wrap">
+                        <div class="top">
                         <div class="song-title">嘘 - 《罗小黑战记》大电影主题曲</div>
-                        <div class="progress"></div>
+                        <div class="progress"><div class="living-progress"></div></div>
+                        </div>
+                        <div class="bottom">
                         <div class="time"><span class="now"></span>/<span class="all"></span></div>
                         <div class="control">
                             <button class="prev" onclick="player(this.className)">
@@ -645,6 +686,7 @@
                             <button class="next" onclick="player(this.className)">
                                 <svg t="1589198984135" class="icon-next" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2968" width="50" height="50"><path d="M913.92 54.4a64 64 0 0 0-64 64V448a64 64 0 0 0-17.92-12.8L158.72 64A76.16 76.16 0 0 0 46.08 128v744.96a75.52 75.52 0 0 0 112.64 64L832 568.32a85.76 85.76 0 0 0 16.64-12.16v349.44a64 64 0 0 0 128 0V118.4a64 64 0 0 0-62.72-64z" p-id="2969" fill="#ffffff"></path></svg>
                             </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -689,37 +731,50 @@
         <div class="aside-container center">
             <ul class="icon-lists clearfix">
                 <li data-id="iqiyi">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-aiqiyi"></use>
-                    </svg>
+                    <a href="https://www.iqiyi.com">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-aiqiyi"></use>
+                        </svg>
+                    </a>
                 </li>
                 <li data-id="youku">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-youku"></use>
-                    </svg>
+                    <a href="https://www.youku.com">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-youku"></use>
+                        </svg>
+                    </a>
                 </li>
                 <li data-id="bilibili">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-bilibili"></use>
-                    </svg>
+                    <a href="https://www.bilibili.com">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-bilibili"></use>
+                        </svg>
+                    </a>
                 </li>
                 <li data-id="txvideo">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-tengxunshipin"></use>
-                    </svg>
+                    <a href="https://v.qq.com">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-tengxunshipin"></use>
+                        </svg>
+                    </a>
                 </li>
                 <li data-id="miguvideo">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-migushipin"></use>
-                    </svg>
+                    <a href="http://www.miguvideo.com/">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-migushipin"></use>
+                        </svg>
+                    </a>
                 </li>
                 <li data-id="mangotv">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-mangguoTV"></use>
-                    </svg>
+                    <a href="https://www.mgtv.com/">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-mangguoTV"></use>
+                        </svg>
+                    </a>
                 </li>
             </ul>
         </div>
+    </div>
     </div>
 </div>
 <footer>
@@ -834,8 +889,8 @@
     }
     audio.addEventListener('timeupdate',function () {
         document.querySelector('.now').innerText = getTime(audio.currentTime)
-        let progress = document.querySelector('.progress')
-        progress.style.width = Percentage(audio.currentTime,audio.duration)+'%'
+        let l_progress = document.querySelector('.living-progress')
+        l_progress.style.width = Percentage(audio.currentTime,audio.duration)+'%'
     },false)
     audio.addEventListener('ended',function () {
         next()
@@ -847,6 +902,23 @@
     audio.addEventListener('canplaythrough',function () {
         document.querySelector('.all').innerText = getTime(audio.duration)
         document.querySelector('.now').innerText = getTime(audio.currentTime)
+    })
+    const progress = document.querySelector('.progress')
+    function getOffsetLeft(obj){
+        let tmp = obj.offsetLeft;
+        let val = obj.offsetParent;
+        while(val != null){
+            tmp += val.offsetLeft;
+            val = val.offsetParent;
+        }
+        return tmp;
+    }
+    progress.addEventListener('click',function (event) {
+        let objLeft = getOffsetLeft(this);
+        let mouseX = event.clientX+document.body.scrollLeft;
+        let clickObjPosition = mouseX - objLeft;
+        console.log(clickObjPosition/progress.offsetWidth)
+        audio.currentTime = (clickObjPosition/progress.offsetWidth)*audio.duration
     })
 </script>
 </body>
