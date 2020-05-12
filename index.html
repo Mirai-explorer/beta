@@ -26,6 +26,43 @@
             transform: translate3d(0, 0, 0);
         }
         .bg-1 {
+            background: url("//pics.images.ac.cn/image/5eba497bd1823.html") no-repeat center;
+            background-size: cover;
+        }
+        .bg-2 {
+            background: url("//pics.images.ac.cn/image/5eba4999be6c0.html") no-repeat center;
+            background-size: cover;
+        }
+        .bg-3 {
+            background: url("//pics.images.ac.cn/image/5eba4d65a0cc2.html") no-repeat center;
+            background-size: cover;
+        }
+        .bg-4 {
+            background: url("//pics.images.ac.cn/image/5eba495228db4.html") no-repeat center;
+            background-size: cover;
+        }
+        .bg-5 {
+            background: url("//pics.images.ac.cn/image/5eba50601e44f.html") no-repeat center;
+            background-size: cover;
+        }
+        .bg-6 {
+            background: url("//pics.images.ac.cn/image/5eba4d5e526ab.html") no-repeat center;
+            background-size: cover;
+        }
+        .bg-7 {
+            background: url("//pics.images.ac.cn/image/5eba49c88139e.html") no-repeat center;
+            background-size: cover;
+        }
+        .bg-8 {
+            background: url("//pics.images.ac.cn/image/5eba505c5bfcd.html") no-repeat center;
+            background-size: cover;
+            will-change: animation;
+            -webkit-animation: move 30s ease-in-out 2.0s;
+            -moz-animation: move 30s ease-in-out 2.0s;
+            animation: move 30s ease-in-out 2.0s;
+        }
+        /*
+        .bg-1 {
             background: url("./pic/bg-1.jpg") no-repeat center;
             background-size: cover;
         }
@@ -61,6 +98,7 @@
             -moz-animation: move 30s ease-in-out 2.0s;
             animation: move 30s ease-in-out 2.0s;
         }
+        */
         .blur {
             filter: blur(5px);
         }
@@ -438,6 +476,17 @@
     </style>
     <script>
         let imgSrcArr = [
+            '//pics.images.ac.cn/image/5eba497bd1823.html',
+            '//pics.images.ac.cn/image/5eba4999be6c0.html',
+            '//pics.images.ac.cn/image/5eba4d65a0cc2.html',
+            '//pics.images.ac.cn/image/5eba495228db4.html',
+            '//pics.images.ac.cn/image/5eba50601e44f.html',
+            '//pics.images.ac.cn/image/5eba4d5e526ab.html',
+            '//pics.images.ac.cn/image/5eba49c88139e.html',
+            '//pics.images.ac.cn/image/5eba505c5bfcd.html',
+        ]
+        /*
+        let imgSrcArr = [
             './pic/bg-1.jpg',
             './pic/bg-2.jpg',
             './pic/bg-3.jpg',
@@ -447,6 +496,7 @@
             './pic/bg-7.jpg',
             './pic/bg-8.jpg',
         ]
+        */
         let imgWrap = []
         function preloadImg(arr) {
             for(let i = 0; i < arr.length; i++) {
