@@ -528,8 +528,6 @@
             const container = document.querySelector('.container')
             const ac = document.querySelectorAll('.aside-container')
             function hide() {
-                bg.style.opacity = '0.9'
-                bg.style.transition = 'all 1.2s linear 0s'
                 for (let i = 0; i < content.length; i++) {
                     poster[i].style.removeProperty('transform')
                     content[i].style.display = 'none'
@@ -537,7 +535,6 @@
                 }
             }
             function fadeout() {
-                bg.style.opacity = '1'
                 bg.style.transition = 'all 1.8s linear 0s'
             }
             const data = [['哪吒之魔童降世','（2019）','star45'],['千与千寻','千と千尋の神隠し‎（2001）','star50'],['你的名字。','君の名は。‎（2016）','star45'],['疯狂动物城','Zootopia（2016）','star50'],['寻梦环游记','Coco（2017）','star50'],['飞屋环游记','Up（2009）','star50'],['狮子王','The Lion King（1994）','star50'],['罗小黑战记','（2019）','star40']]
