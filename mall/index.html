@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>京多淘</title>
+    <style>
+        html, body, div, blockquote, body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p, pre, td, textarea, th, ul {
+            margin: 0;
+            padding: 0;
+        }
+        ul, li {
+            list-style: none;
+        }
+        fieldset, img {
+            border: 0;
+        }
+        a:visited, a:link {
+            color: #a7a7a7;
+            text-decoration: none;
+        }
+        .clearfix {
+            zoom: 1;
+        }
+        .clearfix, .clearfix::after {
+            clear: both;
+        }
+        .clearfix::before, .clearfix::after {
+            display: table;
+            content: "";
+            overflow: hidden;
+        }
+        .site-nav {
+            width: auto;
+            height: 32px;
+            position: relative!important;
+            background: #f2f2f2;
+            z-index: 99999;
+            -webkit-transform: translate3d(0,0,0);
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+        }
+        .sn-container {
+            position: relative;
+            display: flex;
+            width: 1230px;
+            justify-content: space-between;
+            margin: auto;
+        }
+        .snc-left, .snc-right {
+            display: flex;
+            flex-direction: row;
+            color: #a7a7a7;
+        }
+        .snc-right {
+            width: 380px;
+            justify-content: space-around;
+            font-size: 14px;
+        }
+        .header-wrapper {
+            display: flex;
+            height: 122px;
+            width: 1230px;
+            background: #fff;
+            min-width: 990px;
+            position: relative;
+            z-index: 1000;
+            padding-top: 26px;
+            margin: 0 auto;
+            zoom: 1;
+        }
+        .logo {
+            display: flex;
+        }
+        .header-core {
+            margin-left: 50px;
+        }
+        .search-form {
+            float: right;
+            width: 625px;
+            padding-top: 38px;
+            overflow: hidden;
+        }
+        .search-form form {
+            border: solid #FF0036;
+            border-width: 2px 0 2px 2px;
+        }
+        legend {
+            display: none;
+            color: #000;
+        }
+        fieldset, .search-input {
+            position: relative;
+            background: #fff;
+            height: 36px;
+        }
+        .combobox {
+            position: relative;
+            height: 36px;
+            vertical-align: middle;
+        }
+        .combobox input {
+            height: 36px;
+            width: 491px;
+            font: 16px/22px arial;
+            box-sizing: border-box;
+            background: 0 0;
+            color: #000;
+            margin: 0;
+            z-index: 2;
+            line-height: 20px;
+            padding: 5px 3px 5px 5px;
+            outline: 0;
+            border: none;
+            font-weight: 900;
+            position: relative;
+            border-radius: 2px 0 0 2px;
+            vertical-align: middle;
+            overflow-y: visible;
+        }
+        .combobox-placeholder {
+            color: #666;
+            font-size: 14px;
+            line-height: 36px;
+            height: 36px;
+            position: absolute;
+            left: 8px;
+            top: 0;
+            z-index: 1;
+            max-width: 90%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .search-input button {
+            width: 132px;
+            height: 36px;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            border: 0;
+            cursor: pointer;
+            color: #fff;
+            background-color: #FF0036;
+            overflow: hidden;
+            z-index: 1;
+            border-radius: 0;
+            outline: none;
+        }
+        .nav {
+            white-space: nowrap;
+            position: relative;
+            font-size: 0;
+            padding-top: 0;
+            width: 100%;
+            height: 36px;
+            background-color: #fff;
+            border-style: solid;
+            border-width: 0 0 1px;
+            border-color: #FF0036;
+        }
+        .content {
+            width: 100%;
+            height: auto;
+            background-color: #999;
+            display: flex;
+            flex: 1;
+        }
+        .banner {
+            width: 100%;
+            height: 500px;
+            background-color: #18282d;
+            z-index: 0;
+            position: relative;
+        }
+        .banner-slider-loading {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .banner-slider-panel {
+            width: 100%;
+            display: block;
+            position: relative;
+            height: 500px;
+        }
+        .banner-outcon {
+            position: relative;
+            z-index: 1;
+            display: block;
+            height: 100%;
+            width: 1230px;
+            margin: 0 auto;
+            padding-right: 30px;
+        }
+        .slider-nav {
+            display: block;
+            position: relative;
+            margin: -40px auto 0;
+            text-align: center;
+            z-index: 100;
+        }
+        .slider-nav li {
+            background: #000;
+            width: 25px;
+            height: 5px;
+            display: inline-block;
+            overflow: hidden;
+            margin-left: 5px;
+            cursor: pointer;
+            opacity: .3;
+        }
+        .slider-nav li.selected {
+            background: #fff;
+            opacity: .6;
+        }
+        .fix-banner {
+            padding-right: 30px;
+            width: 1230px;
+            margin: 0 auto;
+            height: 500px;
+        }
+        .bg-banner {
+            height: 100%;
+            width: 100%;
+            display: block;
+            z-index: 1;
+            position: relative;
+        }
+        .bg-banner[id='bg1'] {
+            background: url(//img.alicdn.com/imgextra/i1/1765076/O1CN01yEI5ai1nMr1s1ugDG_%21%211765076-0-lubanu.jpg_q100.jpg_.webp) center center no-repeat;
+        }
+        .bg-banner[id='bg2'] {
+            background: url(//img.alicdn.com/imgextra/i1/199/O1CN01trJzAk1DLBPwGkty2_%21%21199-0-luban.jpg_q100.jpg_.webp) center center no-repeat;
+        }
+        .bg-banner[id='bg3'] {
+            background: url(//img.alicdn.com/tps/i4/TB1M_0JfeP2gK0jSZFoSuuuIVXa.jpg) center center no-repeat;
+        }
+        .bg-banner[id='bg4'] {
+            background: url(//img.alicdn.com/imgextra/i1/30/O1CN01ZdysWG1C5mTtO0N3r_%21%2130-0-luban.jpg_q100.jpg_.webp) center center no-repeat;
+        }
+        .bg-banner[id='bg5'] {
+            background: url(//img.alicdn.com/imgextra/i1/199/O1CN01trJzAk1DLBPwGkty2_%21%21199-0-luban.jpg_q100.jpg_.webp) center center no-repeat;
+        }
+        .footer {
+            display: flex;
+            min-height: 558px;
+            border-top: 1px solid #D1D7DC;
+            clear: both;
+            margin: 0;
+            text-align: center;
+            background: #fff;
+            position: relative;
+        }
+        .desc {
+            width: 1190px;
+            padding-top: 22px;
+            height: 190px;
+            margin: auto;
+            border-top: 1px solid #ededed;
+            background: url(data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAAAZCAMAAAC/3XipAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABdFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAxZWVmhoaG/v7+7u7u3t7eFhYU0NDQBAQFmZmbo6Oj////w8PAtLS2NjY24uLgnJycDAwOmpqZvb2/b29v09PRFRUVubm6np6cEBASXl5f29vZzc3MxMTEwMDB0dHSZmZk/Pz/Nzc0CAgIoKChAQEDDw8OAgIDv7+9TU1N/f38aGhr+/v5aWlrLy8uoqKhSUlJBQUGxsbHi4uLg4OBqamo3Nzf6+voiIiI2NjZjY2M8PDysrKzz8/P39/cFBQXy8vKtra07OztkZGRERERGRka2trbU1NRgYGBhYWHT09MJCQllZWXV1dV4eHh6enr19fWcnJyRkZEGBgYuLi4HBwd24IQCAAAAJXRSTlMAA2PD7um8WQEKurKksbCPMGaA+kA+tewkzd4c3d/iL+D5lU03tZLoQgAAAAFiS0dEMdnbHXIAAAHWSURBVDjLrZH5OwJRFIYnUrKWnQjVFSblVtYiS0j2fc2+72T3z7vnaOpOJmY8zi+955y+d+7MFQRdTq4+z2DMF7RWvtGQp8/N0TE0FRCsQpNGh6nwK1jAgkUkWcU6TQ5diRQsEgSSqlJNktJ00MxJiEWDw8LlynhJeYVqR2U5l6viJaS6RqWjppqP1cokpM6qymGtl6Ua5BJia1ThaLTJQ00ZEtJsdzjNP5XTYW8mv0j+Uv8uaXG1trWL7o5fIh1usb2t1dWiJPF4O6nPTwKUdnX/oOgWKQ0Qv492ej3fJD29lNI+9ttPaTCU1REKUtrfQ8gA+/dgOFMyxKbDcMQRgNEsjsgw247BqwOMZ0gm2IyKeF6g6KSiwxOFZQxQBJqSS6ZhNoM4CzinKJmDlQ9xHnBaJllYhNkS8jLgiqJkBVbLiC5AusBLVnG0hrwOuKEo2YTVOuIaJlZ5yRaOtpEHAeNSbicSiexITTx9yF1MbPGSPRztIx8AHiZj4SPWHB0nuxNYnSKeYeKcl1zg6BL5CvBaevgNa26l5i51h+QSExe85D4IowfkBGAg9R0e6VOKA7BKID4APt/LrvgFZq9Ab/Dii+/prxlLox8uMf4B+AqBl+QVfwLVX9WAqgikVgAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxNy0wMi0yMFQwOTo0NjoxNCswODowMHgr8vYAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTctMDItMjBUMDk6NDY6MTQrMDg6MDAJdkpKAAAAAElFTkSuQmCC) 45px bottom no-repeat;
+        }
+        .copyright {
+            border-top: 2px solid #FF0036;
+            background: #000;
+            text-align: left;
+            min-height: 177px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="header">
+        <div class="site-nav">
+            <div class="sn-container">
+                <ul class="snc-left">
+                    <li>湖北省</li>
+                </ul>
+                <ul class="snc-right">
+                    <li><a href="/">请登录</a></li>
+                    <li><a href="/">注册></a></li>
+                    <li><a href="/">我的订单</a></li>
+                    <li><a href="/">全平台</a></li>
+                    <li>网站导航</li>
+                </ul>
+            </div>
+        </div>
+        <div class="header-wrapper">
+            <div class="logo">
+                <img src="//img.alicdn.com/tfs/TB17XHyFi_1gK0jSZFqXXcpaXXa-290-130.gif" alt="淘乐多" />
+            </div>
+            <div class="header-core">
+                <div class="search-form">
+                    <form>
+                        <fieldset>
+                            <legend>淘乐多商城搜索</legend>
+                            <div class="search-input clearfix">
+                                <div class="combobox">
+                                    <input type="text" id="mq">
+                                </div>
+                                <label for="mq" class="combobox-placeholder">请输入要查询的商品名</label>
+                                <button type="submit">搜索</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="nav"></div>
+    </div>
+    <div class="content">
+        <div class="banner">
+            <div class="banner-slider-loading">
+                <div class="banner-slider-panel">
+                    <div class="banner-outcon">
+                        <div class="fix-banner">
+                            <a href="https://www.taobao.com">
+                                <div class="bg-banner" id="bg1"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-slider-panel">
+                    <div class="banner-outcon">
+                        <div class="fix-banner">
+                            <a href="https://www.taobao.com">
+                                <div class="bg-banner" id="bg2"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-slider-panel">
+                    <div class="banner-outcon">
+                        <div class="fix-banner">
+                            <a href="https://www.taobao.com">
+                                <div class="bg-banner" id="bg3"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-slider-panel">
+                    <div class="banner-outcon">
+                        <div class="fix-banner">
+                            <a href="https://www.taobao.com">
+                                <div class="bg-banner" id="bg-4"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-slider-panel">
+                    <div class="banner-outcon">
+                        <div class="fix-banner">
+                            <a href="https://www.taobao.com">
+                                <div class="bg-banner" id="bg5"></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-nav">
+                <ul>
+                    <li class data-id="axc1"></li>
+                    <li class data-id="axc1"></li>
+                    <li class data-id="axc1"></li>
+                    <li class data-id="axc1"></li>
+                    <li class data-id="axc1"></li>
+                </ul>
+            </div>
+        </div>
+        <div class="goods">
+            <div class="card"></div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="desc"></div>
+        <div class="copyright"></div>
+    </div>
+</div>
+</body>
+</html>
