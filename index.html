@@ -979,7 +979,7 @@
         i_play.classList.add('disappear')
         i_pause.classList.remove('disappear')
     })
-    audio.addEventListener('canplaythrough',function () {
+    audio.addEventListener('loadedmetadata',function () {
         document.querySelector('.all').innerText = getTime(audio.duration)
         document.querySelector('.now').innerText = getTime(audio.currentTime)
     })
