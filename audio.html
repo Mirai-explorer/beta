@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>播放器测试</title>
+    <link rel="stylesheet" href="./bundle.css" type="text/css" />
+    <style>
+        html {
+            font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif;
+        }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 720px;
+            height: 480px;
+            margin: 50px auto;
+            border-radius: 5px;
+            box-shadow: 0 3px 6px rgba(0,0,0,.16);
+            background-color: #6AB4F3;
+            color: white;
+        }
+        .main-body {
+            width: 100%;
+            height: 380px;
+            padding: 15px 0;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: auto;
+            height: 64px;
+            padding: 10px 25px;
+            border-bottom: 4px solid rgba(255,255,255,.5);
+            color: white;
+        }
+        .h-left {
+            display: flex;
+            flex-direction: column;
+        }
+        .song-title {
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 0 3px 6px rgba(0,0,0,.16);
+            letter-spacing: 0.04em;
+            animation: transformer 5s ease-in infinite;
+        }
+        .singer {
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 0 3px 6px rgba(0,0,0,.16);
+            letter-spacing: 0.04em;
+            animation: transformer 5s ease-in infinite;
+            display: none;
+        }
+        @keyframes transformer {
+            0% { opacity: 0;transform: translateY(10px);zoom: 0;display: none }
+            1% { opacity: 0;transform: translateY(10px);zoom: 0;display: flex }
+            10% { opacity: 1;transform: translateY(0px);zoom: 1;display: flex }
+            90% { opacity: 1;transform: translateY(0px);zoom: 1;display: flex }
+            99% { opacity: 0;transform: translateY(-10px);zoom: 0;display: flex }
+            100% { opacity: 0;transform: translateY(-10px);zoom: 0;display: none }
+        }
+        .song-subtitle {
+            font-size: 22px;
+        }
+        .middle {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 260px;
+            padding-left: 60px;
+        }
+        .cover-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: url("https://p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg")no-repeat center;
+            background-size: cover;
+            box-shadow: 0 3px 6px rgba(0,0,0,.16);
+            animation: rotate 10s linear infinite 1500ms;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg) }
+            to { transform: rotate(360deg) }
+        }
+        .scrolling-lyric {
+            width: 420px;
+            height: auto;
+            margin: 0 25px;
+            padding-top: 25px;
+            text-align: center;
+            letter-spacing: 0.08em;
+        }
+        .scrolling-lyric p {
+            line-height: 50px;
+            margin: 10px 0;
+        }
+        .scrolling-lyric p:first-child {
+            font-size: 34px;
+            font-weight: bold;
+            text-shadow: 0 3px 6px rgba(0,0,0,.16);
+            opacity: 1;
+        }
+        .scrolling-lyric p:nth-child(2) {
+            font-size: 30px;
+            text-shadow: 0 3px 2px rgba(0,0,0,.16);
+            opacity: .6;
+        }
+        .scrolling-lyric p:last-child {
+            font-size: 24px;
+            opacity: .2;
+        }
+        .control-region {
+            width: 100%;
+            height: 100px;
+            border-radius: inherit;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            background-color: rgba(255,255,255,.85);
+        }
+        .controller {
+            width: 100%;
+        }
+        .when {
+
+        }
+        .time {
+            padding-left: 25px;
+            line-height: 30px;
+        }
+        .time span {
+            display: inline-flex;
+        }
+        .time .now {
+            min-width: 64px;
+            font-size: 24px;
+        }
+        .time em {
+            margin: 0 5px;
+        }
+        .time .duration {
+            min-width: 50px;
+            font-size: 18px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255,255,255,.3);
+        }
+        .living-progressBar {
+            width: 20%;
+            height: 100%;
+            background-color: white;
+        }
+        .control-region {
+
+        }
+        .controller {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            padding: 10px 27.5px;
+        }
+        .controller button {
+            width: fit-content;
+            height: 30px;
+            padding: 0;
+            border-style: none;
+            outline: none;
+            background-color: rgba(255,255,255,0);
+        }
+        .controller .play {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+        .c-left, .c-right {
+            display: flex;
+            flex: 4;
+            margin: auto 0;
+            height: 30px;
+        }
+        .c-left {
+            justify-content: flex-start;
+        }
+        .c-middle {
+            display: flex;
+            flex: 2;
+            align-items: center;
+            margin: auto 0;
+            height: 60px;
+        }
+        .c-right {
+            justify-content: flex-end;
+        }
+        .c-left button {
+            margin-right: 32px;
+        }
+        .c-middle button {
+            margin: 20px;
+        }
+        .c-right button {
+            margin-left: 32px;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="main-body">
+        <div class="header">
+            <div class="h-left">
+                <span class="song-title">走过世界每个角落</span>
+                <span class="singer">周笔畅</span>
+            </div>
+            <span class="song-subtitle">电影《罗小黑战记》宣传曲</span>
+        </div>
+        <div class="middle">
+            <div class="cover-img"></div>
+            <div class="scrolling-lyric">
+                <p class="bubble">走过了世界每个角落</p>
+                <p class="await">会有什么在等候</p>
+                <p class="forward">一路上有你 一路有我</p>
+            </div>
+        </div>
+        <div class="when">
+            <div class="time"><span class="now">00:00</span><em>/</em><span class="duration">00:01</span></div>
+            <div class="progress-bar">
+                <div class="living-progressBar"></div>
+            </div>
+        </div>
+    </div>
+    <div class="control-region">
+        <div class="controller">
+            <div class="c-left">
+                <button class="volume">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="27.139" viewBox="0 0 30 27.139">
+                        <path id="路径_5" data-name="路径 5" d="M13.969,50.008c1.687-1.312,3-.609,3,1.5V74.477c0,2.016-1.313,2.625-2.813,1.313l-6.75-5.531H3.7a3.681,3.681,0,0,1-3.7-3.7V59.008a3.742,3.742,0,0,1,3.7-3.7H7.219Zm6.891,18.938a1.089,1.089,0,0,1-.891-.422,1.142,1.142,0,0,1,0-1.828,5.352,5.352,0,0,0,0-7.734,1.142,1.142,0,0,1,0-1.828,1.239,1.239,0,0,1,1.922,0,7.448,7.448,0,0,1,0,11.25c-.516.469-.609.563-1.031.563Zm3.7,2.109a1.142,1.142,0,0,1,0-1.828,8.8,8.8,0,0,0,0-12.563,1.142,1.142,0,0,1,0-1.828,1.239,1.239,0,0,1,1.922,0A11.318,11.318,0,0,1,30,62.758a10.987,10.987,0,0,1-3.516,7.922,1.584,1.584,0,0,1-.891.422.987.987,0,0,1-1.031-.047Z" transform="translate(0 -49.344)" fill="#00b0ff"/>
+                    </svg>
+                </button>
+                <div class="volume-bar">
+                    <div class="volume-n"></div>
+                </div>
+            </div>
+            <div class="c-middle">
+                <button class="prev">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24.296" height="30" viewBox="0 0 24.296 30">
+                        <path id="路径_11" data-name="路径 11" d="M149.895,63.84a.837.837,0,0,0-.838.838V93a.838.838,0,1,0,1.676,0V79.456a1.422,1.422,0,0,0,.731,1.181L169.9,92.254a2.47,2.47,0,0,0,1.227.327,2.217,2.217,0,0,0,2.226-2.124V67.222a2.253,2.253,0,0,0-2.267-2.123,2.366,2.366,0,0,0-1.2.326L151.5,77.043a1.46,1.46,0,0,0-.767,1.18V64.678A.837.837,0,0,0,149.895,63.84Zm2.3,14.622,18.517-11.617a1.052,1.052,0,0,1,.377-.07c.215,0,.592.171.592.448V90.458c0,.38-.553.548-.826.378L152.263,79.218a.509.509,0,0,1-.245-.378A.391.391,0,0,1,152.191,78.462Z" transform="translate(-149.057 -63.84)" fill="#00b0ff"/>
+                    </svg>
+                </button>
+                <button class="play">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+                        <path id="路径_13" data-name="路径 13" d="M30,0A30,30,0,1,1,0,30,30,30,0,0,1,30,0ZM27.144,18.525C25.428,17.346,24,18.219,24,20.5V39.492c0,2.268,1.41,3.174,3.144,1.98L40.7,32.16a2.447,2.447,0,0,0,0-4.32Z" fill="#00b0ff"/>
+                    </svg>
+                </button>
+                <button class="next">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24.296" height="30" viewBox="0 0 24.296 30">
+                        <path id="路径_12" data-name="路径 12" d="M172.516,93.841a.837.837,0,0,0,.838-.838V64.679a.838.838,0,1,0-1.676,0V78.225a1.422,1.422,0,0,0-.731-1.181L152.511,65.426a2.47,2.47,0,0,0-1.227-.327,2.217,2.217,0,0,0-2.226,2.124V90.459a2.253,2.253,0,0,0,2.267,2.123,2.366,2.366,0,0,0,1.2-.326l18.39-11.618a1.46,1.46,0,0,0,.767-1.18V93A.837.837,0,0,0,172.516,93.841Zm-2.3-14.622L151.7,90.836a1.052,1.052,0,0,1-.377.07c-.215,0-.592-.171-.592-.448V67.223c0-.38.553-.548.826-.378l18.588,11.618a.509.509,0,0,1,.245.378A.391.391,0,0,1,170.219,79.219Z" transform="translate(-149.058 -63.841)" fill="#00b0ff"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="c-right">
+                <button class="repeat">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="34.167" height="30" viewBox="0 0 34.167 30">
+                        <path id="路径_14" data-name="路径 14" d="M121.56,162.859a1.493,1.493,0,0,0-.642.952l-1.09,5.421a1.507,1.507,0,0,0,2.956.587l.461-2.294a12.047,12.047,0,0,1-16.729,15.239,1.5,1.5,0,1,0-1.4,2.656,15.1,15.1,0,0,0,22.093-13.282,14.994,14.994,0,0,0-1.185-5.782l1.295.257a1.5,1.5,0,1,0,.591-2.944l-5.214-1.035a1.523,1.523,0,0,0-1.132.224ZM96.142,181.106l5.2,1.11a1.5,1.5,0,0,0,1.791-1.149l1.168-5.4a1.507,1.507,0,0,0-2.947-.631l-.369,1.7a12.051,12.051,0,0,1,16.491-15.35,1.514,1.514,0,0,0,2.021-.681,1.494,1.494,0,0,0-.682-2.009,14.989,14.989,0,0,0-20.293,19.855l-1.742-.374a1.5,1.5,0,1,0-.635,2.935Z" transform="translate(-94.951 -157.139)" fill="#00b0ff"/>
+                    </svg>
+                </button>
+                <button class="song-list">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="31.853" height="30" viewBox="0 0 31.853 30">
+                        <path id="路径_7" data-name="路径 7" d="M182.734,118.07a16.892,16.892,0,0,0-6.575-4.6,1.319,1.319,0,0,0-1.8,1.23v16.291a6.938,6.938,0,1,0,2.646,5.443c0-.073-.007-.146-.013-.218,0-.04.013-.073.013-.112V116.78a14.384,14.384,0,0,1,3.744,3.029,1.319,1.319,0,0,0,1.984-1.74Zm-12.673,22.66a4.3,4.3,0,1,1,4.3-4.3A4.308,4.308,0,0,1,170.061,140.73Zm-17.528-19.843h15.213a1.323,1.323,0,1,0,0-2.646H152.533a1.323,1.323,0,0,0,0,2.646Zm9.26,5.953h-9.26a1.323,1.323,0,1,0,0,2.646h9.26a1.323,1.323,0,0,0,0-2.646Zm-3.969,8.6h-5.291a1.323,1.323,0,1,0,0,2.646h5.291a1.323,1.323,0,0,0,0-2.646Z" transform="translate(-151.211 -113.376)" fill="#00b0ff"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let a = document.querySelector('.play')
+    let b = document.querySelector('.cover-img')
+    a.addEventListener('click',function () {
+        if (b.hasAttribute('style', 'animation-play-state: paused')) {
+            b.removeAttribute('style', 'animation-play-state: paused')
+        } else {
+            b.setAttribute('style', 'animation-play-state: paused')
+        }
+    })
+    setInterval(function () {
+        document.querySelector('.song-title').style.display = 'none'
+        document.querySelector('.singer').style.display = 'flex'
+    },5000)
+    setInterval(function () {
+        document.querySelector('.singer').style.display = 'none'
+        document.querySelector('.song-title').style.display = 'flex'
+    },10000)
+</script>
+</body>
+</html>
