@@ -92,6 +92,7 @@
         }
         .cover-img:hover {
             box-shadow: 0 0 6px 8px rgba(255,255,255,.5), 0 0 6px 2px rgba(255,255,255,.5) inset;
+            cursor: wait;
         }
         @keyframes press {
             0% { box-shadow: 0 0 6px rgba(0,0,0,.16) }
@@ -189,12 +190,23 @@
             width: 100%;
             height: 8px;
             background-color: rgba(255,255,255,.3);
+            cursor: pointer;
         }
         .living-progressBar {
             width: 0;
             height: 100%;
             background-color: white;
             transition: width 50ms linear;
+        }
+        .playhead {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,.3);
+            transform: translateY(-4px);
+            margin-left: 0;
         }
         .control-region {
 
@@ -293,7 +305,7 @@
         <div class="when">
             <div class="time"><span class="now"></span><em>/</em><span class="duration"></span></div>
             <div class="progress-bar">
-                <div class="living-progressBar"></div>
+                <div class="living-progressBar"><span class="playhead"></span></div>
             </div>
         </div>
     </div>
@@ -369,6 +381,7 @@
     const i_mute = document.querySelector('.icon-mute')
     const progress = document.querySelector('.progress-bar')
     const volumeBar = document.querySelector('.volume-f')
+    const playhead = document.querySelector('.playhead')
     setInterval(function () {
         document.querySelector('.song-title').style.display = 'none'
         document.querySelector('.singer').style.display = 'flex'
@@ -467,6 +480,7 @@
     audio.addEventListener('timeupdate',function () {
         document.querySelector('.now').innerText = getTime(audio.currentTime)
         l_progress.style.width = Percentage(audio.currentTime,audio.duration)+'%'
+        playhead.style.marginLeft = Percentage(audio.currentTime,audio.duration)+'%'
         if(audio.volume===0||audio.muted){
             i_vol.classList.add('disappear')
             i_mute.classList.remove('disappear')
