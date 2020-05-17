@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="播放器测试">
+<html lang="zh-Hans">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>播放器测试</title>
     <link rel="stylesheet" href="./bundle.css" type="text/css" />
     <style>
         html {
@@ -467,7 +467,6 @@
     audio.addEventListener('timeupdate',function () {
         document.querySelector('.now').innerText = getTime(audio.currentTime)
         l_progress.style.width = Percentage(audio.currentTime,audio.duration)+'%'
-        n_volumeBar.style.width = Percentage(audio.volume,1)+'%'
         if(audio.volume===0||audio.muted){
             i_vol.classList.add('disappear')
             i_mute.classList.remove('disappear')
@@ -513,6 +512,7 @@
         let clickObjPosition = mouseX - objLeft;
         console.log((clickObjPosition/volumeBar.offsetWidth).toFixed(2))
         audio.volume = (clickObjPosition/volumeBar.offsetWidth).toFixed(2)
+        n_volumeBar.style.width = Percentage(audio.volume,1)+'%'
     })
 </script>
 </body>
