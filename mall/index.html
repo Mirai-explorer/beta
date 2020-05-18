@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <title>京多淘</title>
     <style>
+        @font-face {
+            font-family:fpIconFont;src:url(//at.alicdn.com/t/font_eu7qkdb0zt3jif6r.eot);src:url(//at.alicdn.com/t/font_eu7qkdb0zt3jif6r.eot?#iefix) format('embedded-opentype'),url(//at.alicdn.com/t/font_eu7qkdb0zt3jif6r.woff) format('woff'),url(//at.alicdn.com/t/font_eu7qkdb0zt3jif6r.ttf) format('truetype'),url(//at.alicdn.com/t/font_eu7qkdb0zt3jif6r.svg#fpIconFont) format('svg')
+        }
+        @font-face {
+            font-family:fpNewIconFont;src:url(//at.alicdn.com/t/font_lo8q60v4spi1wcdi.eot);src:url(//at.alicdn.com/t/font_lo8q60v4spi1wcdi.eot?#iefix) format('embedded-opentype'),url(//at.alicdn.com/t/font_lo8q60v4spi1wcdi.woff) format('woff'),url(//at.alicdn.com/t/font_lo8q60v4spi1wcdi.ttf) format('truetype'),url(//at.alicdn.com/t/font_lo8q60v4spi1wcdi.svg#iconfont) format('svg')
+        }
+        .fp-iconfont {
+            font-family: fpIconFont!important
+        }
+        .fp-iconfont-new {
+            font-family: fpNewIconFont!important
+        }
         html, body, div, blockquote, body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p, pre, td, textarea, th, ul {
             margin: 0;
             padding: 0;
@@ -14,7 +26,7 @@
         fieldset, img {
             border: 0;
         }
-        a:visited, a:link {
+        .sn-container a:visited, .sn-container a:link {
             color: #a7a7a7;
             text-decoration: none;
         }
@@ -171,6 +183,78 @@
             justify-content: center;
             align-items: center;
         }
+        .drop-down {
+            display: none;
+            transition: all linear 3s;
+            width: 0;
+            height: 0;
+        }
+        .category:hover .drop-down {
+            display: block;
+            position: absolute;
+            width: 180px;
+            height: 502px;
+            background-color: rgba(0,0,0,.55);
+            color: #fff;
+            top: 36px;
+            left: 0;
+            z-index: 5;
+        }
+        #drop-down {
+            width: 100%;
+            height: 100%;
+            font-size: 14px;
+        }
+        #drop-down i {
+            margin-left: 14px;
+        }
+        .nav-item-v a:visited, .nav-item-v a:link {
+            color: #fff;
+            text-decoration: none;
+        }
+        .nav-item-v {
+            position: relative;
+            height: 31.2px;
+            line-height: 31.2px;
+            color: #fff;
+            font-size: 14px;
+        }
+        .nav-item-v:hover {
+            background-color: white;
+        }
+        .nav-item-v:hover a:visited, .nav-item-v:hover a:link {
+            font-weight: 700;
+        }
+        .nav-item-v1:hover a:visited, .nav-item-v1:hover a:link,
+        .nav-item-v4:hover a:visited, .nav-item-v4:hover a:link {
+            color: #e54077;
+        }
+        .nav-item-v2:hover a:visited, .nav-item-v2:hover a:link,
+        .nav-item-v6:hover a:visited, .nav-item-v6:hover a:link,
+        .nav-item-v10:hover a:visited, .nav-item-v10:hover a:link,
+        .nav-item-v12:hover a:visited, .nav-item-v12:hover a:link {
+            color: #427def;
+        }
+        .nav-item-v3:hover a:visited, .nav-item-v3:hover a:link,
+        .nav-item-v5:hover a:visited, .nav-item-v5:hover a:link {
+            color: #6347ed;
+        }
+        .nav-item-v7:hover a:visited, .nav-item-v7:hover a:link {
+            color: #fa5c5c;
+        }
+        .nav-item-v8:hover a:visited, .nav-item-v8:hover a:link,
+        .nav-item-v9:hover a:visited, .nav-item-v9:hover a:link,
+        .nav-item-v13:hover a:visited, .nav-item-v13:hover a:link {
+            color: #f7a831;
+        }
+        .nav-item-v11:hover a:visited, .nav-item-v11:hover a:link,
+        .nav-item-v15:hover a:visited, .nav-item-v15:hover a:link {
+            color: #dd2727;
+        }
+        .nav-item-v14:hover a:visited, .nav-item-v14:hover a:link,
+        .nav-item-v16:hover a:visited, .nav-item-v16:hover a:link {
+            color: #3bc7b0;
+        }
         .category span {
             display: inline-flex;
         }
@@ -184,7 +268,7 @@
             width: 100%;
             height: 100%;
         }
-        .nav-item {
+        .nav-item-h {
             display: inline-flex;
             justify-content: center;
             align-items: center;
@@ -194,7 +278,7 @@
             height: 100%;
             transition: background-color 0.3s ease;
         }
-        .nav-item:hover {
+        .nav-item-h:hover {
             background-color: #FA5A57;
             color: white;
         }
@@ -208,9 +292,10 @@
         .banner {
             width: 100%;
             height: 500px;
-            background-color: #18282d;
+            background-color: #fecbd1;
             z-index: 0;
             position: relative;
+            transition: ease-in 500ms;
         }
         .banner-slider-loading {
             position: relative;
@@ -224,10 +309,6 @@
             display: block;
             position: relative;
             height: 500px;
-        }
-        @keyframes slide {
-            from { left: 1230px }
-            to { left:0 }
         }
         .banner-outcon {
             position: relative;
@@ -271,7 +352,12 @@
             display: block;
             z-index: 1;
             position: relative;
-            animation: slide ease-out 500ms;
+            animation: slide ease-out 2500ms;
+        }
+        @keyframes slide {
+            0% { left: 1920px }
+            10% { left: 0 }
+            100% { left: 0 }
         }
         .bg-banner[id='bg1'] {
             background: url(//img.alicdn.com/imgextra/i1/1765076/O1CN01yEI5ai1nMr1s1ugDG_%21%211765076-0-lubanu.jpg_q100.jpg_.webp) center no-repeat;
@@ -311,6 +397,10 @@
             background: #000;
             text-align: left;
             min-height: 177px;
+        }
+        .selected {
+            background: #fff;
+            opacity: 0.6;
         }
     </style>
 </head>
@@ -357,20 +447,37 @@
                 <span><svg t="1589502314322" class="icon" viewBox="0 0 1027 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1141" width="24" height="24"><path d="M180.818944 798.8224a35.84 35.84 0 1 1 0 71.5776H37.612544a35.84 35.84 0 1 1 0-71.5776h143.2064z m809.1136 0a35.84 35.84 0 1 1 0 71.5776H284.857344a35.84 35.84 0 1 1 0-71.5776H989.932544zM180.818944 477.9008a35.84 35.84 0 1 1 0 71.6288H37.612544a35.84 35.84 0 1 1 0-71.6288h143.2064z m809.1136 0a35.84 35.84 0 1 1 0 71.6288H284.806144a35.84 35.84 0 1 1 0-71.6288H989.932544zM180.818944 153.6a35.84 35.84 0 1 1 0 71.5776H37.612544A35.84 35.84 0 1 1 37.612544 153.6h143.2064zM989.932544 153.6a35.84 35.84 0 1 1 0 71.5776H284.806144a35.84 35.84 0 1 1 0-71.5776H989.932544z" fill="#ffffff" p-id="1142"></path></svg></svg>
                 商品分类</span>
                 <div class="drop-down">
-                    <div></div>
+                    <ul id="drop-down">
+                        <li class="nav-item-v nav-item-v1"><i class="fpIconFont">&#xe62f;</i><a href="/">女装 /内衣</a></li>
+                        <li class="nav-item-v nav-item-v2"><i></i><a href="/">男装 /运动户外</a></li>
+                        <li class="nav-item-v nav-item-v3"><i></i><a href="/">女鞋 /男鞋 /箱包</a></li>
+                        <li class="nav-item-v nav-item-v4"><i></i><a href="/">美妆 /个人护理</a></li>
+                        <li class="nav-item-v nav-item-v5"><i></i><a href="/">腕表 /眼镜 /珠宝饰品</a></li>
+                        <li class="nav-item-v nav-item-v6"><i></i><a href="/">手机 /数码 /电脑办公</a></li>
+                        <li class="nav-item-v nav-item-v7"><i></i><a href="/">母婴玩具</a></li>
+                        <li class="nav-item-v nav-item-v8"><i></i><a href="/">零食 /茶酒 /进口食品</a></li>
+                        <li class="nav-item-v nav-item-v9"><i></i><a href="/">生鲜水果</a></li>
+                        <li class="nav-item-v nav-item-v10"><i></i><a href="/">大家电 /生活电器</a></li>
+                        <li class="nav-item-v nav-item-v11"><i></i><a href="/">家具建材</a></li>
+                        <li class="nav-item-v nav-item-v12"><i></i><a href="/">汽车 /配件 /用品</a></li>
+                        <li class="nav-item-v nav-item-v13"><i></i><a href="/">家纺 /家饰 /鲜花</a></li>
+                        <li class="nav-item-v nav-item-v14"><i></i><a href="/">医药保健</a></li>
+                        <li class="nav-item-v nav-item-v15"><i></i><a href="/">厨具 /收纳 /宠物</a></li>
+                        <li class="nav-item-v nav-item-v16"><i></i><a href="/">图书音像</a></li>
+                    </ul>
                 </div>
             </div>
             <ul class="nav-list">
-                <li class="nav-item">秒杀</li>
-                <li class="nav-item">优惠券</li>
-                <li class="nav-item">会员</li>
-                <li class="nav-item">品牌闪购</li>
-                <li class="nav-item">拍卖</li>
-                <li class="nav-item">家电</li>
-                <li class="nav-item">超市</li>
-                <li class="nav-item">生鲜</li>
-                <li class="nav-item">国际</li>
-                <li class="nav-item">金融</li>
+                <li class="nav-item-h">秒杀</li>
+                <li class="nav-item-h">优惠券</li>
+                <li class="nav-item-h">会员</li>
+                <li class="nav-item-h">品牌闪购</li>
+                <li class="nav-item-h">拍卖</li>
+                <li class="nav-item-h">家电</li>
+                <li class="nav-item-h">超市</li>
+                <li class="nav-item-h">生鲜</li>
+                <li class="nav-item-h">国际</li>
+                <li class="nav-item-h">金融</li>
             </ul>
         </div>
     </div>
@@ -425,11 +532,11 @@
             </div>
             <div class="slider-nav">
                 <ul>
-                    <li class data-id="axc1"></li>
-                    <li class data-id="axc1"></li>
-                    <li class data-id="axc1"></li>
-                    <li class data-id="axc1"></li>
-                    <li class data-id="axc1"></li>
+                    <li class='selected' data-id="0"></li>
+                    <li class data-id="1"></li>
+                    <li class data-id="2"></li>
+                    <li class data-id="3"></li>
+                    <li class data-id="4"></li>
                 </ul>
             </div>
         </div>
@@ -443,23 +550,39 @@
     </div>
 </div>
 <script>
+    let color = ['#fecbd1','#182a2f','#f5c966','#ff8b9e','#df6de1']
     let bsp = document.querySelectorAll('.banner-slider-panel')
+    let item = Array.from(document.querySelectorAll('.slider-nav li'))
+    let banner = document.querySelector('.banner')
+    let len = bsp.length
+    change = () => {
+        banner.style.backgroundColor = color[i]
+        for(let k=0;k<bsp.length;k++){
+            item[k].className = ''
+            bsp[k].style.display = 'none'
+        }
+        item[i].className = 'selected'
+        bsp[i].style.display = 'block'
+    }
     let i = 0
-    setInterval(function () {
-        if(i<bsp.length){
-            for(let k=0;k<bsp.length;k++){
-                bsp[k].style.display = 'none'
+    item.forEach(ele => {
+        ele.onclick = () => {
+            if(len) {
+                i = ele.getAttribute('data-id')
+                console.log(i)
+                change()
+                i++
             }
-            bsp[i].style.display = 'block'
-            i++
+        }
+    })
+    let s = setInterval(function () {
+        if(i<bsp.length){
+            change()
         } else {
             i = 0
-            for(let k=0;k<bsp.length;k++){
-                bsp[k].style.display = 'none'
-            }
-            bsp[i].style.display = 'block'
-            i++
+            change()
         }
+        i++
     },2500)
 </script>
 </body>
