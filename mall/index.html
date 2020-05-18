@@ -162,7 +162,7 @@
             border-width: 0 0 1px;
             border-color: #FF0036;
         }
-        .extend-nav {
+        .category {
             width: 200px;
             height: 100%;
             background-color: #FF0036;
@@ -170,6 +170,12 @@
             display: inline-flex;
             justify-content: center;
             align-items: center;
+        }
+        .category span {
+            display: inline-flex;
+        }
+        .category svg {
+            margin-right: 8px;
         }
         .nav-list {
             display: flex;
@@ -219,6 +225,10 @@
             position: relative;
             height: 500px;
         }
+        @keyframes slide {
+            from { left: 1230px }
+            to { left:0 }
+        }
         .banner-outcon {
             position: relative;
             z-index: 1;
@@ -261,21 +271,22 @@
             display: block;
             z-index: 1;
             position: relative;
+            animation: slide ease-out 500ms;
         }
         .bg-banner[id='bg1'] {
-            background: url(//img.alicdn.com/imgextra/i1/1765076/O1CN01yEI5ai1nMr1s1ugDG_%21%211765076-0-lubanu.jpg_q100.jpg_.webp) center center no-repeat;
+            background: url(//img.alicdn.com/imgextra/i1/1765076/O1CN01yEI5ai1nMr1s1ugDG_%21%211765076-0-lubanu.jpg_q100.jpg_.webp) center no-repeat;
         }
         .bg-banner[id='bg2'] {
-            background: url(//img.alicdn.com/imgextra/i1/199/O1CN01trJzAk1DLBPwGkty2_%21%21199-0-luban.jpg_q100.jpg_.webp) center center no-repeat;
+            background: url(//img.alicdn.com/imgextra/i1/199/O1CN01trJzAk1DLBPwGkty2_%21%21199-0-luban.jpg_q100.jpg_.webp) center no-repeat;
         }
         .bg-banner[id='bg3'] {
-            background: url(//img.alicdn.com/tps/i4/TB1M_0JfeP2gK0jSZFoSuuuIVXa.jpg) center center no-repeat;
+            background: url(//img.alicdn.com/tps/i4/TB1M_0JfeP2gK0jSZFoSuuuIVXa.jpg) center no-repeat;
         }
         .bg-banner[id='bg4'] {
-            background: url(//img.alicdn.com/imgextra/i1/30/O1CN01ZdysWG1C5mTtO0N3r_%21%2130-0-luban.jpg_q100.jpg_.webp) center center no-repeat;
+            background: url(https://img.alicdn.com/tfs/TB1TlyjF4v1gK0jSZFFXXb0sXXa-1130-500.jpg_q100.jpg_.webp) center no-repeat;
         }
         .bg-banner[id='bg5'] {
-            background: url(//img.alicdn.com/imgextra/i1/199/O1CN01trJzAk1DLBPwGkty2_%21%21199-0-luban.jpg_q100.jpg_.webp) center center no-repeat;
+            background: url(//img.alicdn.com/imgextra/i4/139/O1CN0119gIou1CtheecHNjs_%21%21139-0-luban.jpg_q100.jpg_.webp) center no-repeat;
         }
         .footer {
             display: flex;
@@ -342,8 +353,12 @@
             </div>
         </div>
         <div class="nav">
-            <div class="extend-nav">
-                商品分类
+            <div class="category">
+                <span><svg t="1589502314322" class="icon" viewBox="0 0 1027 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1141" width="24" height="24"><path d="M180.818944 798.8224a35.84 35.84 0 1 1 0 71.5776H37.612544a35.84 35.84 0 1 1 0-71.5776h143.2064z m809.1136 0a35.84 35.84 0 1 1 0 71.5776H284.857344a35.84 35.84 0 1 1 0-71.5776H989.932544zM180.818944 477.9008a35.84 35.84 0 1 1 0 71.6288H37.612544a35.84 35.84 0 1 1 0-71.6288h143.2064z m809.1136 0a35.84 35.84 0 1 1 0 71.6288H284.806144a35.84 35.84 0 1 1 0-71.6288H989.932544zM180.818944 153.6a35.84 35.84 0 1 1 0 71.5776H37.612544A35.84 35.84 0 1 1 37.612544 153.6h143.2064zM989.932544 153.6a35.84 35.84 0 1 1 0 71.5776H284.806144a35.84 35.84 0 1 1 0-71.5776H989.932544z" fill="#ffffff" p-id="1142"></path></svg></svg>
+                商品分类</span>
+                <div class="drop-down">
+                    <div></div>
+                </div>
             </div>
             <ul class="nav-list">
                 <li class="nav-item">秒杀</li>
@@ -393,7 +408,7 @@
                     <div class="banner-outcon">
                         <div class="fix-banner">
                             <a href="https://www.taobao.com">
-                                <div class="bg-banner" id="bg-4"></div>
+                                <div class="bg-banner" id="bg4"></div>
                             </a>
                         </div>
                     </div>
@@ -427,5 +442,25 @@
         <div class="copyright"></div>
     </div>
 </div>
+<script>
+    let bsp = document.querySelectorAll('.banner-slider-panel')
+    let i = 0
+    setInterval(function () {
+        if(i<bsp.length){
+            for(let k=0;k<bsp.length;k++){
+                bsp[k].style.display = 'none'
+            }
+            bsp[i].style.display = 'block'
+            i++
+        } else {
+            i = 0
+            for(let k=0;k<bsp.length;k++){
+                bsp[k].style.display = 'none'
+            }
+            bsp[i].style.display = 'block'
+            i++
+        }
+    },2500)
+</script>
 </body>
 </html>
