@@ -357,7 +357,8 @@
         @keyframes slide {
             0% { left: 1920px }
             10% { left: 0 }
-            100% { left: 0 }
+            90% { left: 0 }
+            100% { left: -1920px }
         }
         .bg-banner[id='bg1'] {
             background: url(//img.alicdn.com/imgextra/i1/1765076/O1CN01yEI5ai1nMr1s1ugDG_%21%211765076-0-lubanu.jpg_q100.jpg_.webp) center no-repeat;
@@ -484,7 +485,7 @@
     <div class="content">
         <div class="banner">
             <div class="banner-slider-loading">
-                <div class="banner-slider-panel">
+                <div class="banner-slider-panel" style="display: block">
                     <div class="banner-outcon">
                         <div class="fix-banner">
                             <a href="https://www.taobao.com">
@@ -493,7 +494,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="banner-slider-panel">
+                <div class="banner-slider-panel" style="display: none">
                     <div class="banner-outcon">
                         <div class="fix-banner">
                             <a href="https://www.taobao.com">
@@ -502,7 +503,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="banner-slider-panel">
+                <div class="banner-slider-panel" style="display: none">
                     <div class="banner-outcon">
                         <div class="fix-banner">
                             <a href="https://www.taobao.com">
@@ -511,7 +512,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="banner-slider-panel">
+                <div class="banner-slider-panel" style="display: none">
                     <div class="banner-outcon">
                         <div class="fix-banner">
                             <a href="https://www.taobao.com">
@@ -520,7 +521,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="banner-slider-panel">
+                <div class="banner-slider-panel" style="display: none">
                     <div class="banner-outcon">
                         <div class="fix-banner">
                             <a href="https://www.taobao.com">
@@ -563,27 +564,28 @@
         }
         item[i].className = 'selected'
         bsp[i].style.display = 'block'
+
     }
     let i = 0
+    let s = function() {
+        if(i === len - 1) {
+            i = 0
+        } else {
+            i += 1
+        }
+        change()
+    }
+    let t = setInterval(s,2500)
     item.forEach(ele => {
         ele.onclick = () => {
             if(len) {
-                i = ele.getAttribute('data-id')
-                console.log(i)
+                clearInterval(t)
+                i = parseInt(ele.getAttribute('data-id'))
                 change()
-                i++
+                t = setInterval(s,2500)
             }
         }
     })
-    let s = setInterval(function () {
-        if(i<bsp.length){
-            change()
-        } else {
-            i = 0
-            change()
-        }
-        i++
-    },2500)
 </script>
 </body>
 </html>
