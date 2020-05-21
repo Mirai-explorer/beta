@@ -577,6 +577,10 @@
         document.querySelector('.duration').innerText = getTime(audio.duration)
         document.querySelector('.now').innerText = getTime(audio.currentTime)
     })
+    audio.onloadedmetadata = function () {
+        document.querySelector('.duration').innerText = getTime(audio.duration)
+        document.querySelector('.now').innerText = getTime(audio.currentTime)
+    }
     function getOffsetLeft(obj){
         let tmp = obj.offsetLeft;
         let val = obj.offsetParent;
