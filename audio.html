@@ -590,7 +590,7 @@
         let objLeft = getOffsetLeft(this);
         let mouseX = event.clientX+document.body.scrollLeft;
         let clickObjPosition = mouseX - objLeft;
-        console.log(clickObjPosition/progress.offsetWidth)
+        console.log(clickObjPosition/progress.offsetWidth);
         audio.currentTime = (clickObjPosition/progress.offsetWidth)*audio.duration
         for (let k=0;k<slp.length;k++) {
             slp[k].className = ''
