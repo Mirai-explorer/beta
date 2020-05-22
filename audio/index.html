@@ -595,6 +595,21 @@
                 break;
         }
     }
+    setTimeout(function () {
+        document.querySelector('.duration').innerText = getTime(audio.duration)
+        document.querySelector('.now').innerText = getTime(audio.currentTime)
+        parseLrc(i)
+    },100)
+    audio.addEventListener('loadedmetadata',function () {
+        document.querySelector('.duration').innerText = getTime(audio.duration)
+        document.querySelector('.now').innerText = getTime(audio.currentTime)
+        parseLrc(i)
+    })
+    audio.addEventListener('playing',function () {
+        i_play.classList.add('disappear')
+        i_pause.classList.remove('disappear')
+        b.setAttribute('style', 'animation-play-state: running')
+    })
     audio.addEventListener('timeupdate',function () {
         document.querySelector('.now').innerText = getTime(audio.currentTime)
         l_progress.style.width = Percentage(audio.currentTime,audio.duration)+'%'
@@ -611,21 +626,6 @@
     audio.addEventListener('ended',function () {
         playMode(3)
     })
-    audio.addEventListener('playing',function () {
-        i_play.classList.add('disappear')
-        i_pause.classList.remove('disappear')
-        b.setAttribute('style', 'animation-play-state: running')
-    })
-    audio.addEventListener('loadedmetadata',function () {
-        document.querySelector('.duration').innerText = getTime(audio.duration)
-        document.querySelector('.now').innerText = getTime(audio.currentTime)
-        parseLrc(i)
-    })
-    audio.onloadedmetadata = function () {
-        document.querySelector('.duration').innerText = getTime(audio.duration)
-        document.querySelector('.now').innerText = getTime(audio.currentTime)
-        parseLrc(i)
-    }
     function getOffsetLeft(obj){
         let tmp = obj.offsetLeft;
         let val = obj.offsetParent;
