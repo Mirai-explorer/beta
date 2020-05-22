@@ -558,7 +558,6 @@
     const progress = document.querySelector('.progress-bar')
     const volumeBar = document.querySelector('.volume-f')
     const playhead = document.querySelector('.playhead')
-    const slp = document.querySelectorAll('.scrolling-lyric p')
     setInterval(function () {
         document.querySelector('.song-title').style.display = 'none'
         document.querySelector('.singer').style.display = 'flex'
@@ -585,9 +584,6 @@
     function change() {
         l_progress.style.width = '0'
         cover.src = music.track1[i].cover
-        for (let k=0;k<slp.length;k++) {
-            slp[k].className = ''
-        }
         title.innerText = music.track1[i].title
         singer.innerText = music.track1[i].singer
         subtitle.innerText = music.track1[i].subtitle
@@ -705,6 +701,7 @@
             if(ct >= t && isNaN(nt)){
                 $(this).prev().removeClass('bubble');
                 $(this).attr("class","bubble");
+                sh = sc-sc/pList.length;
             }
         })
         $(".lyric-frame").animate({"scrollTop":sh},120);
@@ -712,13 +709,14 @@
     function playMode(flag) {
         switch (flag) {
             case 1 :
-                audio.pause()
-                break;
-            case 2 :
                 audio.play()
                 break;
-            case 3 :
+            case 2 :
                 next()
+                break;
+            case 3 :
+                i = parseInt(Math.random()*(len+1),10);
+                next(i);
                 break;
         }
     }
@@ -751,7 +749,14 @@
         renderLyric(audio.currentTime)
     },false)
     audio.addEventListener('ended',function () {
-        playMode(3)
+        let radio = $('input[type=radio][name=radio]');
+        if(radio[0].checked){
+            playMode(1)
+        } else if(radio[2].checked) {
+            playMode(3)
+        } else {
+            playMode(2)
+        }
     })
     function getOffsetLeft(obj){
         let tmp = obj.offsetLeft;
@@ -768,8 +773,9 @@
         let clickObjPosition = mouseX - objLeft;
         console.log(clickObjPosition/progress.offsetWidth)
         audio.currentTime = (clickObjPosition/progress.offsetWidth)*audio.duration
-        for (let k=0;k<slp.length;k++) {
-            slp[k].className = ''
+        for(let k=0;k<$('.scrolling-lyric p').length;k++) {
+            $('.scrolling-lyric p')[k].className = ''
+            console.log('success')
         }
     })
     volumeBar.addEventListener('click',function (event) {
