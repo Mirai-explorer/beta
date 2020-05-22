@@ -413,7 +413,7 @@
         </div>
     </div>
 </div>
-<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js">/* //ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js */</script>
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js">/* ./js/jquery-3.5.0.min.js */</script>
 <script>
     let lyric = '[00:00.22]艾索 - 嘘(罗小黑战记电影主题曲)\r\n[00:00.78]作词：薄荷映像\r\n[00:00.98]作曲：薄荷映像\r\n[00:01.24]编曲：幻想动漫音乐\r\n[00:19.94]相遇 分离\r\n[00:22.28]快乐 忧伤\r\n[00:24.83]心动 慌张\r\n[00:27.38]希望 绝望\r\n[00:29.93]不管明天会变得怎样\r\n[00:35.13]陪着我轻轻地唱\r\n[00:40.12]我们在静静的夜静静地唱\r\n[00:45.53]轻轻地说出你的梦想\r\n[00:50.31]没有 星星 月亮的晚上\r\n[00:55.41]有我 在你的身旁\r\n[01:20.96]有太多甜太多苦太多的酸\r\n[01:25.81]你忘记了快乐也忘了忧伤\r\n[01:30.75]把我的幸福 放在你手上\r\n[01:35.90]陪着我 不再流浪\r\n[01:40.95]我们在静静的夜静静地唱\r\n[01:46.40]轻轻地说出你的梦想\r\n[01:51.14]在整个世界睡着的晚上\r\n[01:56.24]有我 在你的身旁\r\n[02:01.59]不管明天会变得怎样\r\n[02:06.65]陪着我 轻轻地唱\r\n'
     let a = document.querySelector('.play')
@@ -459,10 +459,10 @@
     let len = music.track1.length
     function change() {
         l_progress.style.width = '0'
+        cover.src = music.track1[i].cover
         for (let k=0;k<slp.length;k++) {
             slp[k].className = ''
         }
-        cover.src = music.track1[i].cover
         title.innerText = music.track1[i].title
         singer.innerText = music.track1[i].singer
         subtitle.innerText = music.track1[i].subtitle
@@ -589,6 +589,10 @@
         document.querySelector('.duration').innerText = getTime(audio.duration)
         document.querySelector('.now').innerText = getTime(audio.currentTime)
     })
+    audio.onloadedmetadata = function () {
+        document.querySelector('.duration').innerText = getTime(audio.duration)
+        document.querySelector('.now').innerText = getTime(audio.currentTime)
+    }
     function getOffsetLeft(obj){
         let tmp = obj.offsetLeft;
         let val = obj.offsetParent;
