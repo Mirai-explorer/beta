@@ -7,6 +7,7 @@
     <style>
         html {
             font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
         .wrapper {
             display: flex;
@@ -16,7 +17,7 @@
             margin: 50px auto;
             border-radius: 5px;
             box-shadow: 0 3px 6px rgba(0,0,0,.16);
-            background: linear-gradient(#6AB4F3, #47AAFF);
+            background: linear-gradient(15deg, #6AB4F3, #47AAFF);
             color: white;
         }
         .main-body {
@@ -42,14 +43,14 @@
             font-size: 32px;
             font-weight: bold;
             text-shadow: 0 3px 6px rgba(0,0,0,.16);
-            letter-spacing: 0.04em;
+            letter-spacing: 0.06em;
             animation: transformer 5s ease-in infinite;
         }
         .singer {
             font-size: 32px;
             font-weight: bold;
             text-shadow: 0 3px 6px rgba(0,0,0,.16);
-            letter-spacing: 0.04em;
+            letter-spacing: 0.06em;
             animation: transformer 5s ease-in infinite;
             display: none;
         }
@@ -63,6 +64,7 @@
         }
         .song-subtitle {
             font-size: 22px;
+            letter-spacing: 0.04em;
         }
         .middle {
             display: flex;
@@ -193,7 +195,7 @@
         .progress-bar {
             width: 100%;
             height: 8px;
-            background-color: rgba(255,255,255,.3);
+            background: linear-gradient(90deg, rgba(255,255,255,.5), rgba(255,255,255,.3) 75%,rgba(192,192,192,.3) 95%);
             cursor: pointer;
         }
         .living-progressBar {
@@ -255,6 +257,21 @@
             align-items: center;
             margin: auto 0;
             height: 60px;
+        }
+        .icon-volume, .icon-mute,
+        .icon-prev, .icon-next,
+        .icon-repeat, .icon-songList {
+            transition: all 500ms;
+        }
+        .volume:hover .icon-volume,.volume:hover .icon-mute,
+        .prev:hover .icon-prev, .next:hover .icon-next,
+        .repeat:hover .icon-repeat, .song-list:hover .icon-songList {
+            filter: drop-shadow(0 0 8px rgba(25,198,255,1));
+        }
+        .volume:hover .icon-volume path,.volume:hover .icon-mute path,
+        .prev:hover .icon-prev path, .next:hover .icon-next path,
+        .repeat:hover .icon-repeat path, .song-list:hover .icon-songList path {
+            fill: rgba(0,178,255,.8);
         }
         .c-right {
             justify-content: flex-end;
@@ -381,16 +398,126 @@
                 </button>
             </div>
             <div class="c-right">
-                <button class="repeat">
+                <button class="repeat" data-flag="0" onclick="showMode()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-repeat" width="34.167" height="30" viewBox="0 0 34.167 30">
                         <path id="路径_14" data-name="路径 14" d="M121.56,162.859a1.493,1.493,0,0,0-.642.952l-1.09,5.421a1.507,1.507,0,0,0,2.956.587l.461-2.294a12.047,12.047,0,0,1-16.729,15.239,1.5,1.5,0,1,0-1.4,2.656,15.1,15.1,0,0,0,22.093-13.282,14.994,14.994,0,0,0-1.185-5.782l1.295.257a1.5,1.5,0,1,0,.591-2.944l-5.214-1.035a1.523,1.523,0,0,0-1.132.224ZM96.142,181.106l5.2,1.11a1.5,1.5,0,0,0,1.791-1.149l1.168-5.4a1.507,1.507,0,0,0-2.947-.631l-.369,1.7a12.051,12.051,0,0,1,16.491-15.35,1.514,1.514,0,0,0,2.021-.681,1.494,1.494,0,0,0-.682-2.009,14.989,14.989,0,0,0-20.293,19.855l-1.742-.374a1.5,1.5,0,1,0-.635,2.935Z" transform="translate(-94.951 -157.139)" fill="#00b0ff"/>
                     </svg>
                 </button>
-                <button class="song-list">
+                <div class="select-mode" style="display: none">
+                    <p><input name="radio" type="radio" id="single" value="1" /><label for="single">单曲循环</label></p>
+                    <p><input name="radio" type="radio" id="list" value="2" checked /><label for="list">列表循环</label></p>
+                    <p><input name="radio" type="radio" id="shuffle" value="3" /><label for="shuffle">随机播放</label></p>
+                </div>
+                <style>
+                    .select-mode {
+                        display: flex;
+                        position: absolute;
+                        padding: 10px;
+                        flex-direction: column;
+                        align-items: center;
+                        height: fit-content;
+                        width: 120px;
+                        margin-top: 40px;
+                        margin-left: -160px;
+                        background: white;
+                        color: #00b0ff;
+                        box-shadow: 0 2px 3px rgba(0,0,0,.16);
+                    }
+                    .select-mode p {
+                        line-height: 30px;
+                    }
+                    input[type="radio"] {
+                        position: absolute;
+                        clip: rect(0, 0, 0, 0);
+                    }
+                    input[type="radio"] + label {
+                        cursor: pointer;
+                        transition: 100ms linear;
+                    }
+                    input[type="radio"]:checked + label {
+                        font-size: 24px;
+                        font-weight: bold;
+                    }
+                </style>
+                <script>
+                    function showMode(){
+                        let display = document.querySelector('.select-mode');
+                        if(display.style.display==='none') {
+                            display.style.display = 'flex'
+                        } else {
+                            display.style.display = 'none'
+                        }
+                    }
+                </script>
+                <button class="song-list" onclick="showList()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-songList" width="31.853" height="30" viewBox="0 0 31.853 30">
                         <path id="路径_7" data-name="路径 7" d="M182.734,118.07a16.892,16.892,0,0,0-6.575-4.6,1.319,1.319,0,0,0-1.8,1.23v16.291a6.938,6.938,0,1,0,2.646,5.443c0-.073-.007-.146-.013-.218,0-.04.013-.073.013-.112V116.78a14.384,14.384,0,0,1,3.744,3.029,1.319,1.319,0,0,0,1.984-1.74Zm-12.673,22.66a4.3,4.3,0,1,1,4.3-4.3A4.308,4.308,0,0,1,170.061,140.73Zm-17.528-19.843h15.213a1.323,1.323,0,1,0,0-2.646H152.533a1.323,1.323,0,0,0,0,2.646Zm9.26,5.953h-9.26a1.323,1.323,0,1,0,0,2.646h9.26a1.323,1.323,0,0,0,0-2.646Zm-3.969,8.6h-5.291a1.323,1.323,0,1,0,0,2.646h5.291a1.323,1.323,0,0,0,0-2.646Z" transform="translate(-151.211 -113.376)" fill="#00b0ff"/>
                     </svg>
                 </button>
+                <div class="songList-item">
+                    <p>播放队列2/3</p>
+                    <div class="songList-wrapper">
+                        <ul class="song-item">
+                            <li><span>1</span>嘘</li>
+                            <li><span>2</span>走过世界每个角落</li>
+                            <li><span>3</span>不再流浪</li>
+                            <li><span>4</span></li>
+                            <li><span>5</span></li>
+                            <li><span>6</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <style>
+                    .songList-item {
+                        display: none;
+                        position: absolute;
+                        flex-direction: column;
+                        align-items: center;
+                        height: fit-content;
+                        width: 250px;
+                        margin-top: -255px;
+                        margin-left: 35px;
+                        padding-top: 10px;
+                        color: rgba(0,0,0,.87);
+                        box-shadow: 0 0 5px 2px rgba(0,176,255,.5), 0 0 2px 1px rgba(0,176,255,.5) inset;
+                        border-radius: 10px;
+                        font-size: 20px;
+                    }
+                    .songList-wrapper {
+                        width: 100%;
+                        height: fit-content;
+                        border-radius: inherit;
+                        font-size: 16px;
+                    }
+                    .songList-item p {
+                        line-height: 40px;
+                        font-size: 25px;
+                        font-weight: bold;
+                    }
+                    .song-item {
+                        margin: 5px 15px;
+                    }
+                    .song-item li {
+                        line-height: 40px;
+                        border-bottom: 1px dashed rgba(0,176,255,.5);
+                    }
+                    .song-item li:last-child {
+                        border-bottom: none;
+                    }
+                    .song-item li span {
+                        margin-right: 25px;
+                    }
+                </style>
+                <script>
+                    function showList(){
+                        let display = document.querySelector('.songList-item');
+                        if(display.style.display==='none') {
+                            display.style.display = 'flex'
+                        } else {
+                            display.style.display = 'none'
+                        }
+                    }
+                </script>
             </div>
         </div>
     </div>
