@@ -7,6 +7,7 @@
     <style>
         html {
             font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
         .wrapper {
             display: flex;
@@ -16,7 +17,7 @@
             margin: 50px auto;
             border-radius: 5px;
             box-shadow: 0 3px 6px rgba(0,0,0,.16);
-            background: linear-gradient(#6AB4F3, #47AAFF);
+            background: linear-gradient(15deg, #6AB4F3, #47AAFF);
             color: white;
         }
         .main-body {
@@ -42,14 +43,14 @@
             font-size: 32px;
             font-weight: bold;
             text-shadow: 0 3px 6px rgba(0,0,0,.16);
-            letter-spacing: 0.04em;
+            letter-spacing: 0.06em;
             animation: transformer 5s ease-in infinite;
         }
         .singer {
             font-size: 32px;
             font-weight: bold;
             text-shadow: 0 3px 6px rgba(0,0,0,.16);
-            letter-spacing: 0.04em;
+            letter-spacing: 0.06em;
             animation: transformer 5s ease-in infinite;
             display: none;
         }
@@ -63,6 +64,7 @@
         }
         .song-subtitle {
             font-size: 22px;
+            letter-spacing: 0.04em;
         }
         .middle {
             display: flex;
@@ -135,6 +137,7 @@
             margin: 10px 0;
             opacity: .2;
             font-size: 24px;
+            white-space: nowrap;
             transition: transform 150ms,text-shadow 150ms;
             transform: scale(1.0);
         }
@@ -192,7 +195,7 @@
         .progress-bar {
             width: 100%;
             height: 8px;
-            background-color: rgba(255,255,255,.3);
+            background: linear-gradient(90deg, rgba(255,255,255,.5), rgba(255,255,255,.3) 75%,rgba(192,192,192,.3) 95%);
             cursor: pointer;
         }
         .living-progressBar {
@@ -218,7 +221,6 @@
             100% { box-shadow: 0 2px 4px 0 rgba(255,255,255,.3); }
         }
         .control-region {
-
         }
         .controller {
             display: flex;
@@ -254,6 +256,21 @@
             align-items: center;
             margin: auto 0;
             height: 60px;
+        }
+        .icon-volume, .icon-mute,
+        .icon-prev, .icon-next,
+        .icon-repeat, .icon-songList {
+            transition: all 500ms;
+        }
+        .volume:hover .icon-volume,.volume:hover .icon-mute,
+        .prev:hover .icon-prev, .next:hover .icon-next,
+        .repeat:hover .icon-repeat, .song-list:hover .icon-songList {
+            filter: drop-shadow(0 0 8px rgba(25,198,255,1));
+        }
+        .volume:hover .icon-volume path,.volume:hover .icon-mute path,
+        .prev:hover .icon-prev path, .next:hover .icon-next path,
+        .repeat:hover .icon-repeat path, .song-list:hover .icon-songList path {
+            fill: rgba(0,178,255,.8);
         }
         .c-right {
             justify-content: flex-end;
@@ -321,7 +338,7 @@
 <body>
 <div class="wrapper">
     <div class="main-body">
-        <audio preload="auto" id="player" src="//webfs.yun.kugou.com/202005220956/09a7dc590ecba8f118e3143b7f3b506d/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3" type="audio/mp3"></audio>
+        <audio preload="auto" id="player" src="//webfs.yun.kugou.com/202005231305/e6dbce0a93468783ab50df910978dbd6/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3" type="audio/mp3"></audio>
         <div class="header">
             <div class="h-left">
                 <span class="song-title">嘘</span>
@@ -332,9 +349,7 @@
         <div class="middle">
             <div class="cover-img"><img src="//p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg" alt="专辑封面"></div>
             <div class="lyric-frame">
-                <div class="scrolling-lyric">
-                    <p data-time=0.22>艾索 - 嘘</p><p data-time=0.78>作词：薄荷映像</p><p data-time=0.98>作曲：薄荷映像</p><p data-time=1.24>编曲：幻想动漫音乐</p><p data-time=19.94>相遇 分离</p><p data-time=22.28>快乐 忧伤</p><p data-time=24.83>心动 慌张</p><p data-time=27.38>希望 绝望</p><p data-time=29.93>不管明天会变得怎样</p><p data-time=35.13>陪着我轻轻地唱</p><p data-time=40.12>我们在静静的夜静静地唱</p><p data-time=45.53>轻轻地说出你的梦想</p><p data-time=50.31>没有 星星 月亮的晚上</p><p data-time=55.41>有我 在你的身旁</p><p data-time=80.96>有太多甜太多苦太多的酸</p><p data-time=85.81>你忘记了快乐也忘了忧伤</p><p data-time=90.75>把我的幸福 放在你手上</p><p data-time=95.90>陪着我 不再流浪</p><p data-time=100.95>我们在静静的夜静静地唱</p><p data-time=106.40>轻轻地说出你的梦想</p><p data-time=111.14>在整个世界睡着的晚上</p><p data-time=116.24>有我 在你的身旁</p><p data-time=121.59>不管明天会变得怎样</p><p data-time=126.65>陪着我 轻轻地唱</p>
-                </div>
+                <div class="scrolling-lyric"></div>
             </div>
         </div>
         <div class="when">
@@ -382,16 +397,201 @@
                 </button>
             </div>
             <div class="c-right">
-                <button class="repeat">
+                <button class="repeat" data-flag="0" onclick="showMode()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-repeat" width="34.167" height="30" viewBox="0 0 34.167 30">
                         <path id="路径_14" data-name="路径 14" d="M121.56,162.859a1.493,1.493,0,0,0-.642.952l-1.09,5.421a1.507,1.507,0,0,0,2.956.587l.461-2.294a12.047,12.047,0,0,1-16.729,15.239,1.5,1.5,0,1,0-1.4,2.656,15.1,15.1,0,0,0,22.093-13.282,14.994,14.994,0,0,0-1.185-5.782l1.295.257a1.5,1.5,0,1,0,.591-2.944l-5.214-1.035a1.523,1.523,0,0,0-1.132.224ZM96.142,181.106l5.2,1.11a1.5,1.5,0,0,0,1.791-1.149l1.168-5.4a1.507,1.507,0,0,0-2.947-.631l-.369,1.7a12.051,12.051,0,0,1,16.491-15.35,1.514,1.514,0,0,0,2.021-.681,1.494,1.494,0,0,0-.682-2.009,14.989,14.989,0,0,0-20.293,19.855l-1.742-.374a1.5,1.5,0,1,0-.635,2.935Z" transform="translate(-94.951 -157.139)" fill="#00b0ff"/>
                     </svg>
                 </button>
-                <button class="song-list">
+                <div class="select-mode" style="display: none">
+                    <p><input name="radio" type="radio" id="single" value="1" /><label for="single">单曲循环</label></p>
+                    <p><input name="radio" type="radio" id="list" value="2" checked /><label for="list">列表循环</label></p>
+                    <p><input name="radio" type="radio" id="shuffle" value="3" /><label for="shuffle">随机播放</label></p>
+                </div>
+                <style>
+                    .prev:hover .icon-prev {
+                        animation: leftx 1s linear;
+                        filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
+                    }
+                    .play:hover .icon-play {
+                        animation: threed 1s linear;
+                        filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
+                    }
+                    .next:hover .icon-next {
+                        animation: rightx 1s linear;
+                        filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
+                    }
+                    .repeat:hover .icon-repeat {
+                        animation: rotate 1s linear;
+                        filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
+                    }
+                    .song-list:hover .icon-songList {
+                        animation: scalex 1s linear;
+                        filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
+                    }
+                    @keyframes leftx {
+                        0% { transform: translateX(0) }
+                        50% { transform: translateX(-7.68px) }
+                        85% { transform: translateX(-12.36px) }
+                        90% { transform: translateX(-12.36px) }
+                        100% { transform: translateX(0) }
+                    }
+                    @keyframes rightx {
+                        0% { transform: translateX(0) }
+                        50% { transform: translateX(7.68px) }
+                        85% { transform: translateX(12.36px) }
+                        90% { transform: translateX(12.36px) }
+                        100% { transform: translateX(0) }
+                    }
+                    @keyframes threed {
+                        0% { transform: translateX(0) rotate(0) }
+                        25% { transform: translateX(-6.18px) rotate(-36deg) }
+                        75% { transform: translateX(6.18px) rotate(36deg) }
+                        90% { transform: translateY(-12.36px) rotate(0) }
+                        100% { transform: translateX(0) rotate(0) }
+                    }
+                    @keyframes rotate {
+                        from { transform: rotate(0deg) }
+                        to { transform: rotate(360deg) }
+                    }
+                    @keyframes scalex {
+                        0% { transform: scale(1) }
+                        66.7% { transform: scale(1.2) }
+                        100% { transform: scale(1) }
+                    }
+                    .select-mode {
+                        display: flex;
+                        position: relative;
+                        padding: 10px;
+                        flex-direction: column;
+                        align-items: center;
+                        height: fit-content;
+                        width: 120px;
+                        margin-top: -125px;
+                        margin-left: -120px;
+                        background: rgba(240,252,255,.8);
+                        color: #1382b3;
+                        box-shadow: 0 0 5px 2px #e6f6ff, 0 0 3px 1px rgba(255,255,255,1) inset;
+                        border-radius: 5px;
+                        transform: translateX(20px);
+                    }
+                    .select-mode p {
+                        line-height: 30px;
+                    }
+                    input[type="radio"] {
+                        position: absolute;
+                        clip: rect(0, 0, 0, 0);
+                    }
+                    input[type="radio"] + label {
+                        cursor: pointer;
+                        transition: 100ms linear;
+                        color: cadetblue;
+                    }
+                    input[type="radio"]:checked + label {
+                        font-size: 22px;
+                        font-weight: bold;
+                        color: teal;
+                    }
+                </style>
+                <script>
+                    function showMode(){
+                        let display = document.querySelector('.select-mode');
+                        if(display.style.display==='none') {
+                            display.style.display = 'flex'
+                        } else {
+                            display.style.display = 'none'
+                        }
+                    }
+                </script>
+                <button class="song-list" onclick="showList()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-songList" width="31.853" height="30" viewBox="0 0 31.853 30">
                         <path id="路径_7" data-name="路径 7" d="M182.734,118.07a16.892,16.892,0,0,0-6.575-4.6,1.319,1.319,0,0,0-1.8,1.23v16.291a6.938,6.938,0,1,0,2.646,5.443c0-.073-.007-.146-.013-.218,0-.04.013-.073.013-.112V116.78a14.384,14.384,0,0,1,3.744,3.029,1.319,1.319,0,0,0,1.984-1.74Zm-12.673,22.66a4.3,4.3,0,1,1,4.3-4.3A4.308,4.308,0,0,1,170.061,140.73Zm-17.528-19.843h15.213a1.323,1.323,0,1,0,0-2.646H152.533a1.323,1.323,0,0,0,0,2.646Zm9.26,5.953h-9.26a1.323,1.323,0,1,0,0,2.646h9.26a1.323,1.323,0,0,0,0-2.646Zm-3.969,8.6h-5.291a1.323,1.323,0,1,0,0,2.646h5.291a1.323,1.323,0,0,0,0-2.646Z" transform="translate(-151.211 -113.376)" fill="#00b0ff"/>
                     </svg>
                 </button>
+                <div class="songList-item">
+                    <p>播放队列</p>
+                    <div class="songList-wrapper">
+                        <ul class="song-item">
+                            <li><span>#</span>歌曲名</li>
+                            <li><span>01</span>嘘</li>
+                            <li><span>02</span>走过世界每个角落</li>
+                            <li><span>03</span>不再流浪</li>
+                            <li><span>04</span></li>
+                            <li><span>05</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <style>
+                    .songList-item {
+                        display: none;
+                        position: relative;
+                        flex-direction: column;
+                        align-items: center;
+                        height: fit-content;
+                        width: 250px;
+                        margin-top: -320px;
+                        margin-left: -250px;
+                        padding-top: 10px;
+                        color: rgba(0,0,0,.87);
+                        box-shadow: 0 0 5px 2px #e6f6ff, 0 0 3px 1px rgba(255,255,255,1) inset;
+                        border-radius: 5px;
+                        font-size: 20px;
+                        background: rgba(240,252,255,.8);
+                        transform: translateX(20px);
+                    }
+                    .songList-wrapper {
+                        width: 100%;
+                        height: fit-content;
+                        border-radius: inherit;
+                        font-size: 16px;
+                    }
+                    .songList-item p {
+                        line-height: 42px;
+                        font-size: 24px;
+                        font-weight: bold;
+                        color: #66c056;
+                        letter-spacing: 0.05em;
+                        border-bottom: 4px solid #66c05680;
+                        border-radius: 12px;
+                    }
+                    .song-item {
+                        margin: 15px 5px;
+                    }
+                    .song-item li {
+                        line-height: 36px;
+                        margin: 2px 5px;
+                        padding: 0 10px;
+                        letter-spacing: 0.1em;
+                        cursor: pointer;
+                        transition: 100ms ease-in-out;
+                    }
+                    .song-item li:hover {
+                        background: #66c05630;
+                    }
+                    .song-item li:first-child:hover {
+                        background: none;
+                    }
+                    .song-item li:first-child {
+                        line-height: 30px;
+                        border-bottom: 0.5px solid rgba(204,204,204,.7);
+                        cursor: auto;
+                    }
+                    .song-item li span {
+                        margin-right: 25px;
+                        display: inline-flex;
+                        justify-content: center;
+                        width: 20px;
+                    }
+                </style>
+                <script>
+                    function showList(){
+                        let display = document.querySelector('.songList-item');
+                        if(display.style.display==='none') {
+                            display.style.display = 'flex'
+                        } else {
+                            display.style.display = 'none'
+                        }
+                    }
+                </script>
             </div>
         </div>
     </div>
@@ -415,7 +615,6 @@
 </div>
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js">/* ./js/jquery-3.5.0.min.js */</script>
 <script>
-    let lyric = '[00:00.22]艾索 - 嘘(罗小黑战记电影主题曲)\r\n[00:00.78]作词：薄荷映像\r\n[00:00.98]作曲：薄荷映像\r\n[00:01.24]编曲：幻想动漫音乐\r\n[00:19.94]相遇 分离\r\n[00:22.28]快乐 忧伤\r\n[00:24.83]心动 慌张\r\n[00:27.38]希望 绝望\r\n[00:29.93]不管明天会变得怎样\r\n[00:35.13]陪着我轻轻地唱\r\n[00:40.12]我们在静静的夜静静地唱\r\n[00:45.53]轻轻地说出你的梦想\r\n[00:50.31]没有 星星 月亮的晚上\r\n[00:55.41]有我 在你的身旁\r\n[01:20.96]有太多甜太多苦太多的酸\r\n[01:25.81]你忘记了快乐也忘了忧伤\r\n[01:30.75]把我的幸福 放在你手上\r\n[01:35.90]陪着我 不再流浪\r\n[01:40.95]我们在静静的夜静静地唱\r\n[01:46.40]轻轻地说出你的梦想\r\n[01:51.14]在整个世界睡着的晚上\r\n[01:56.24]有我 在你的身旁\r\n[02:01.59]不管明天会变得怎样\r\n[02:06.65]陪着我 轻轻地唱\r\n'
     let a = document.querySelector('.play')
     let b = document.querySelector('.cover-img')
     let c = document.querySelector('.bubble')
@@ -433,7 +632,6 @@
     const progress = document.querySelector('.progress-bar')
     const volumeBar = document.querySelector('.volume-f')
     const playhead = document.querySelector('.playhead')
-    const slp = document.querySelectorAll('.scrolling-lyric p')
     setInterval(function () {
         document.querySelector('.song-title').style.display = 'none'
         document.querySelector('.singer').style.display = 'flex'
@@ -448,9 +646,9 @@
     document.querySelector('.next').setAttribute('onclick','player(this.className)')
     let music = {
         track1: [
-            { src:'//webfs.yun.kugou.com/202005220956/09a7dc590ecba8f118e3143b7f3b506d/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘',subtitle:'电影《罗小黑战记》片尾曲',singer:'艾索',lyric:'./81.lrc' },
-            { src:'//webfs.yun.kugou.com/202005220955/7e672ca2708acc0b4457e479c5786fbd/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落',subtitle:'电影《罗小黑战记》宣传曲',singer:'周笔畅',lyric:'./82.lrc' },
-            { src:'//webfs.yun.kugou.com/202005220955/7c50d010895d02b1b3ab0bd3c6bb2e6a/G170/M06/06/15/ipQEAF11056AP2pzADLBs7-quTE491.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190829/20190829142458750431.jpg',title:'不再流浪',subtitle:'电影《罗小黑战记》宣传曲',singer:'周深',lyric:'./83.lrc' }
+            { src:'//webfs.yun.kugou.com/202005231305/e6dbce0a93468783ab50df910978dbd6/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘',subtitle:'电影《罗小黑战记》片尾曲',singer:'艾索',lyric:'./81.lrc' },
+            { src:'//webfs.yun.kugou.com/202005231303/a58821ff25712fb7f3490106d81ded70/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落',subtitle:'电影《罗小黑战记》宣传曲',singer:'周笔畅',lyric:'./82.lrc' },
+            { src:'//webfs.yun.kugou.com/202005231305/d53414f982e52b17291deb85fadcc8a1/G170/M06/06/15/ipQEAF11056AP2pzADLBs7-quTE491.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190829/20190829142458750431.jpg',title:'不再流浪',subtitle:'电影《罗小黑战记》宣传曲',singer:'周深',lyric:'./83.lrc' }
         ]
     }
     let l_progress = document.querySelector('.living-progressBar')
@@ -460,9 +658,6 @@
     function change() {
         l_progress.style.width = '0'
         cover.src = music.track1[i].cover
-        for (let k=0;k<slp.length;k++) {
-            slp[k].className = ''
-        }
         title.innerText = music.track1[i].title
         singer.innerText = music.track1[i].singer
         subtitle.innerText = music.track1[i].subtitle
@@ -529,6 +724,39 @@
         }
         return (Math.round(num / total * 10000) / 100.00);// 小数点后两位百分比
     }
+    function parseLrc(i){
+        let lyric = $.ajax({url:music.track1[i].lyric,async:false}).responseText;
+        let arr = lyric.split("\r\n");
+        let parseTime = function(time){
+            let tl = time.split(":");
+            switch(tl.length){
+                case 1 :
+                    return parseFloat(tl[0]);
+                case 2:
+                    return parseFloat(tl[0]) * 60 + parseFloat(tl[1]);
+                case 3:
+                    return parseFloat(tl[0]) * 3600 + parseFloat(tl[1]) * 60 + parseFloat(tl[2]);
+            }
+        }
+        let lrcArray = [];
+        let html = "";
+        for(let k=0;k<arr.length;k++){
+            if(arr[k] !== ""){
+                let tempArray = arr[k].split("]");
+                if(tempArray.length >1 ){
+                    let offset = tempArray[0].substring(1,tempArray[0].length);
+                    let text = tempArray[1];
+                    lrcArray.push({"offset":offset,"text":text});
+
+                    if(text !== ""){
+                        html+="<p data-time="+parseTime(offset).toFixed(2)+">"+text+"</p>";
+                    }
+                }
+            }
+        }
+        $(".scrolling-lyric").html(html);
+        return lrcArray;
+    }
     function renderLyric(ct) {
         let pList = $('.scrolling-lyric').find('p');
         let sc = document.querySelector('.lyric-frame').scrollHeight;
@@ -547,6 +775,7 @@
             if(ct >= t && isNaN(nt)){
                 $(this).prev().removeClass('bubble');
                 $(this).attr("class","bubble");
+                sh = sc-sc/pList.length;
             }
         })
         $(".lyric-frame").animate({"scrollTop":sh},120);
@@ -554,16 +783,32 @@
     function playMode(flag) {
         switch (flag) {
             case 1 :
-                audio.pause()
-                break;
-            case 2 :
                 audio.play()
                 break;
-            case 3 :
+            case 2 :
                 next()
+                break;
+            case 3 :
+                i = parseInt(Math.random()*(len+1),10);
+                next(i);
                 break;
         }
     }
+    setTimeout(function () {
+        document.querySelector('.duration').innerText = getTime(audio.duration)
+        document.querySelector('.now').innerText = getTime(audio.currentTime)
+        parseLrc(i)
+    },100)
+    audio.addEventListener('loadedmetadata',function () {
+        document.querySelector('.duration').innerText = getTime(audio.duration)
+        document.querySelector('.now').innerText = getTime(audio.currentTime)
+        parseLrc(i)
+    })
+    audio.addEventListener('playing',function () {
+        i_play.classList.add('disappear')
+        i_pause.classList.remove('disappear')
+        b.setAttribute('style', 'animation-play-state: running')
+    })
     audio.addEventListener('timeupdate',function () {
         document.querySelector('.now').innerText = getTime(audio.currentTime)
         l_progress.style.width = Percentage(audio.currentTime,audio.duration)+'%'
@@ -578,21 +823,15 @@
         renderLyric(audio.currentTime)
     },false)
     audio.addEventListener('ended',function () {
-        playMode(3)
+        let radio = $('input[type=radio][name=radio]');
+        if(radio[0].checked){
+            playMode(1)
+        } else if(radio[2].checked) {
+            playMode(3)
+        } else {
+            playMode(2)
+        }
     })
-    audio.addEventListener('playing',function () {
-        i_play.classList.add('disappear')
-        i_pause.classList.remove('disappear')
-        b.setAttribute('style', 'animation-play-state: running')
-    })
-    audio.addEventListener('loadedmetadata',function () {
-        document.querySelector('.duration').innerText = getTime(audio.duration)
-        document.querySelector('.now').innerText = getTime(audio.currentTime)
-    })
-    audio.onloadedmetadata = function () {
-        document.querySelector('.duration').innerText = getTime(audio.duration)
-        document.querySelector('.now').innerText = getTime(audio.currentTime)
-    }
     function getOffsetLeft(obj){
         let tmp = obj.offsetLeft;
         let val = obj.offsetParent;
@@ -608,8 +847,9 @@
         let clickObjPosition = mouseX - objLeft;
         console.log(clickObjPosition/progress.offsetWidth)
         audio.currentTime = (clickObjPosition/progress.offsetWidth)*audio.duration
-        for (let k=0;k<slp.length;k++) {
-            slp[k].className = ''
+        for(let k=0;k<$('.scrolling-lyric p').length;k++) {
+            $('.scrolling-lyric p')[k].className = ''
+            console.log('success')
         }
     })
     volumeBar.addEventListener('click',function (event) {
