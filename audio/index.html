@@ -778,22 +778,16 @@
                 $(this).attr("class","bubble");//高亮
                 $(this).next().addClass("await");
                 let x = index*sc/pList.length;
-                if(!document.hidden) {
-                    sh = x > 0 ? x : 0;
-                } else {
-                    sh = x;
-                }
+                sh = x > 0 ? x : 0;
             } else if(ct >= t && isNaN(nt)){
                 $(this).prev().removeClass('bubble');
                 $(this).attr("class","bubble");
-                if(!document.hidden) {
-                    sh = sc-sc/pList.length;
-                } else {
-                    sh = sc-sc/pList.length;
-                }
+                sh = sc-sc/pList.length;
             }
         })
-        $(".lyric-frame").animate({"scrollTop":sh},120);
+        if(!document.hidden){
+            $(".lyric-frame").animate({"scrollTop":sh},120);
+        }
     }
     function renderSongList() {
         let num
