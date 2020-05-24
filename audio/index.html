@@ -152,7 +152,7 @@
         }
         .scrolling-lyric p.await {
             display: block;
-            color: white;
+            color: #fff;
             text-shadow: 0 3px 2px rgba(0,0,0,.16);
             opacity: .6;
             transition: transform 150ms,text-shadow 150ms;
@@ -259,17 +259,17 @@
         }
         .icon-volume, .icon-mute,
         .icon-prev, .icon-next,
-        .icon-repeat, .icon-songList {
+        .icon-list, .icon-songList {
             transition: all 500ms;
         }
         .volume:hover .icon-volume,.volume:hover .icon-mute,
         .prev:hover .icon-prev, .next:hover .icon-next,
-        .repeat:hover .icon-repeat, .song-list:hover .icon-songList {
+        .repeat:hover .icon-list, .song-list:hover .icon-songList {
             filter: drop-shadow(0 0 8px rgba(25,198,255,1));
         }
         .volume:hover .icon-volume path,.volume:hover .icon-mute path,
         .prev:hover .icon-prev path, .next:hover .icon-next path,
-        .repeat:hover .icon-repeat path, .song-list:hover .icon-songList path {
+        .repeat:hover .icon-list path, .song-list:hover .icon-songList path {
             fill: rgba(0,178,255,.8);
         }
         .c-right {
@@ -338,7 +338,7 @@
 <body>
 <div class="wrapper">
     <div class="main-body">
-        <audio preload="auto" id="player" src="//webfs.yun.kugou.com/202005231305/e6dbce0a93468783ab50df910978dbd6/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3" type="audio/mp3"></audio>
+        <audio preload="auto" id="player" src="//webfs.yun.kugou.com/202005241203/386b4473be515c7c7df241f17ec5eb21/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3" type="audio/mp3"></audio>
         <div class="header">
             <div class="h-left">
                 <span class="song-title">嘘</span>
@@ -398,13 +398,23 @@
             </div>
             <div class="c-right">
                 <button class="repeat" data-flag="0" onclick="showMode()">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-repeat" width="34.167" height="30" viewBox="0 0 34.167 30">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" class=.icon-list" width="34.167" height="30" viewBox="0 0 34.167 30">
                         <path id="路径_14" data-name="路径 14" d="M121.56,162.859a1.493,1.493,0,0,0-.642.952l-1.09,5.421a1.507,1.507,0,0,0,2.956.587l.461-2.294a12.047,12.047,0,0,1-16.729,15.239,1.5,1.5,0,1,0-1.4,2.656,15.1,15.1,0,0,0,22.093-13.282,14.994,14.994,0,0,0-1.185-5.782l1.295.257a1.5,1.5,0,1,0,.591-2.944l-5.214-1.035a1.523,1.523,0,0,0-1.132.224ZM96.142,181.106l5.2,1.11a1.5,1.5,0,0,0,1.791-1.149l1.168-5.4a1.507,1.507,0,0,0-2.947-.631l-.369,1.7a12.051,12.051,0,0,1,16.491-15.35,1.514,1.514,0,0,0,2.021-.681,1.494,1.494,0,0,0-.682-2.009,14.989,14.989,0,0,0-20.293,19.855l-1.742-.374a1.5,1.5,0,1,0-.635,2.935Z" transform="translate(-94.951 -157.139)" fill="#00b0ff"/>
+                    </svg> -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-list" width="30" height="30" viewBox="0 0 1024 1024">
+                        <path d="M694.4 854.4H195.2l48 44.8c9.6 6.4 16 16 16 28.8-3.2 19.2-19.2 32-38.4 32-9.6 0-22.4-6.4-28.8-12.8l-108.8-96c-12.8-12.8-16-35.2 0-48L192 704c6.4-6.4 19.2-9.6 28.8-9.6 19.2 0 35.2 16 35.2 35.2 0 9.6-6.4 19.2-12.8 25.6l-41.6 38.4h496c112 0 198.4-89.6 198.4-198.4v-86.4c0-19.2 12.8-32 32-32s32 12.8 32 32v86.4c0 140.8-118.4 259.2-265.6 259.2zM329.6 169.6h496l-48-44.8c-9.6-6.4-16-16-16-28.8 3.2-19.2 19.2-32 38.4-32 9.6 0 22.4 6.4 28.8 12.8l108.8 96c12.8 12.8 16 35.2 0 48L832 320c-6.4 6.4-19.2 9.6-28.8 9.6-19.2 0-35.2-16-35.2-35.2 0-9.6 6.4-19.2 12.8-25.6l41.6-38.4H326.4C217.6 233.6 128 323.2 128 435.2v89.6c0 19.2-12.8 32-32 32s-32-12.8-32-32v-86.4C64 288 182.4 169.6 329.6 169.6z" fill="#00B0FF"></path>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-single disappear" width="30" height="30" viewBox="0 0 1024 1024">
+                        <path data-id="circle" d="M928 476.8c-19.2 0-32 12.8-32 32v86.4c0 108.8-86.4 198.4-198.4 198.4H201.6l41.6-38.4c6.4-6.4 12.8-16 12.8-25.6 0-19.2-16-35.2-35.2-35.2-9.6 0-22.4 3.2-28.8 9.6l-108.8 99.2c-16 12.8-12.8 35.2 0 48l108.8 96c6.4 6.4 19.2 12.8 28.8 12.8 19.2 0 35.2-12.8 38.4-32 0-12.8-6.4-22.4-16-28.8l-48-44.8h499.2c147.2 0 265.6-118.4 265.6-259.2v-86.4c0-19.2-12.8-32-32-32zM96 556.8c19.2 0 32-12.8 32-32v-89.6c0-112 89.6-201.6 198.4-204.8h496l-41.6 38.4c-6.4 6.4-12.8 16-12.8 25.6 0 19.2 16 35.2 35.2 35.2 9.6 0 22.4-3.2 28.8-9.6l105.6-99.2c16-12.8 12.8-35.2 0-48l-108.8-96c-6.4-6.4-19.2-12.8-28.8-12.8-19.2 0-35.2 12.8-38.4 32 0 12.8 6.4 22.4 16 28.8l48 44.8H329.6C182.4 169.6 64 288 64 438.4v86.4c0 19.2 12.8 32 32 32z" p-id="2583" fill="#00B0FF"></path>
+                        <path d="M544 672V352h-48L416 409.6l16 41.6 60.8-41.6V672z" fill="#00B0FF"></path>
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-shuffle disappear" width="30" height="30" viewBox="0 0 1024 1024">
+                        <path d="M844.8 665.6c-6.4-6.4-16-12.8-25.6-9.6-19.2 0-35.2 16-35.2 35.2 0 9.6 6.4 19.2 12.8 25.6l41.6 41.6c-44.8-6.4-86.4-22.4-121.6-51.2-3.2 0-3.2-3.2-6.4-6.4L332.8 304C268.8 233.6 192 195.2 99.2 195.2c-19.2 0-35.2 16-35.2 35.2s16 32 35.2 32c73.6 0 134.4 32 182.4 86.4l384 400 6.4 6.4c48 38.4 108.8 64 172.8 70.4l-48 44.8c-9.6 6.4-16 19.2-16 28.8 0 19.2 19.2 35.2 38.4 32 9.6 0 19.2-6.4 25.6-12.8l99.2-92.8c16-16 16-41.6 0-57.6l-99.2-102.4z m-3.2-556.8c-12.8-16-32-19.2-48-6.4-9.6 6.4-12.8 16-12.8 25.6 0 12.8 3.2 22.4 16 28.8l41.6 41.6c-73.6 9.6-140.8 38.4-192 89.6l-115.2 118.4c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 16 9.6 25.6 9.6s19.2-3.2 25.6-9.6l112-118.4c41.6-38.4 92.8-64 147.2-70.4l-44.8 44.8c-6.4 6.4-12.8 16-12.8 25.6 0 19.2 16 35.2 32 35.2 9.6 0 19.2-3.2 28.8-9.6L950.4 256c12.8-12.8 12.8-35.2 0-48l-108.8-99.2m-438.4 448c-9.6 0-19.2 3.2-25.6 9.6l-118.4 121.6c-48 44.8-96 67.2-160 67.2H96c-19.2 0-35.2 16-35.2 35.2s16 32 35.2 32h3.2c83.2 0 147.2-32 211.2-86.4l121.6-124.8c6.4-6.4 9.6-12.8 9.6-22.4 0-9.6-3.2-16-9.6-22.4-9.6-6.4-19.2-9.6-28.8-9.6z" fill="#00B0FF"></path>
                     </svg>
                 </button>
                 <div class="select-mode" style="display: none">
-                    <p><input name="radio" type="radio" id="single" value="1" /><label for="single">单曲循环</label></p>
-                    <p><input name="radio" type="radio" id="list" value="2" checked /><label for="list">列表循环</label></p>
+                    <p><input name="radio" type="radio" id="list" value="1" checked /><label for="list">列表循环</label></p>
+                    <p><input name="radio" type="radio" id="single" value="2" /><label for="single">单曲循环</label></p>
                     <p><input name="radio" type="radio" id="shuffle" value="3" /><label for="shuffle">随机播放</label></p>
                 </div>
                 <style>
@@ -420,7 +430,7 @@
                         animation: rightx 1s linear;
                         filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
                     }
-                    .repeat:hover .icon-repeat {
+                    .repeat:hover .icon-list {
                         animation: rotate 1s linear;
                         filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
                     }
@@ -495,8 +505,9 @@
                 <script>
                     function showMode(){
                         let display = document.querySelector('.select-mode');
-                        if(display.style.display==='none') {
+                        if(display.style.display === 'none') {
                             display.style.display = 'flex'
+                            document.querySelector('.songList-item').style.display = 'none'
                         } else {
                             display.style.display = 'none'
                         }
@@ -507,22 +518,17 @@
                         <path id="路径_7" data-name="路径 7" d="M182.734,118.07a16.892,16.892,0,0,0-6.575-4.6,1.319,1.319,0,0,0-1.8,1.23v16.291a6.938,6.938,0,1,0,2.646,5.443c0-.073-.007-.146-.013-.218,0-.04.013-.073.013-.112V116.78a14.384,14.384,0,0,1,3.744,3.029,1.319,1.319,0,0,0,1.984-1.74Zm-12.673,22.66a4.3,4.3,0,1,1,4.3-4.3A4.308,4.308,0,0,1,170.061,140.73Zm-17.528-19.843h15.213a1.323,1.323,0,1,0,0-2.646H152.533a1.323,1.323,0,0,0,0,2.646Zm9.26,5.953h-9.26a1.323,1.323,0,1,0,0,2.646h9.26a1.323,1.323,0,0,0,0-2.646Zm-3.969,8.6h-5.291a1.323,1.323,0,1,0,0,2.646h5.291a1.323,1.323,0,0,0,0-2.646Z" transform="translate(-151.211 -113.376)" fill="#00b0ff"/>
                     </svg>
                 </button>
-                <div class="songList-item">
+                <div class="songList-item" style="display: none">
                     <p>播放队列</p>
                     <div class="songList-wrapper">
                         <ul class="song-item">
-                            <li><span>#</span>歌曲名</li>
-                            <li><span>01</span>嘘</li>
-                            <li><span>02</span>走过世界每个角落</li>
-                            <li><span>03</span>不再流浪</li>
-                            <li><span>04</span></li>
-                            <li><span>05</span></li>
+                            <li><span data-id="name">#</span>歌曲名</li>
                         </ul>
                     </div>
                 </div>
                 <style>
                     .songList-item {
-                        display: none;
+                        display: flex;
                         position: relative;
                         flex-direction: column;
                         align-items: center;
@@ -555,6 +561,7 @@
                     }
                     .song-item {
                         margin: 15px 5px;
+                        height: 221px;
                     }
                     .song-item li {
                         line-height: 36px;
@@ -585,8 +592,9 @@
                 <script>
                     function showList(){
                         let display = document.querySelector('.songList-item');
-                        if(display.style.display==='none') {
+                        if(display.style.display === 'none') {
                             display.style.display = 'flex'
+                            document.querySelector('.select-mode').style.display = 'none'
                         } else {
                             display.style.display = 'none'
                         }
@@ -646,9 +654,9 @@
     document.querySelector('.next').setAttribute('onclick','player(this.className)')
     let music = {
         track1: [
-            { src:'//webfs.yun.kugou.com/202005231305/e6dbce0a93468783ab50df910978dbd6/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘',subtitle:'电影《罗小黑战记》片尾曲',singer:'艾索',lyric:'./81.lrc' },
-            { src:'//webfs.yun.kugou.com/202005231303/a58821ff25712fb7f3490106d81ded70/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落',subtitle:'电影《罗小黑战记》宣传曲',singer:'周笔畅',lyric:'./82.lrc' },
-            { src:'//webfs.yun.kugou.com/202005231305/d53414f982e52b17291deb85fadcc8a1/G170/M06/06/15/ipQEAF11056AP2pzADLBs7-quTE491.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190829/20190829142458750431.jpg',title:'不再流浪',subtitle:'电影《罗小黑战记》宣传曲',singer:'周深',lyric:'./83.lrc' }
+            { src:'//webfs.yun.kugou.com/202005241203/386b4473be515c7c7df241f17ec5eb21/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',title:'嘘',subtitle:'电影《罗小黑战记》片尾曲',singer:'艾索',lyric:'./81.lrc' },
+            { src:'//webfs.yun.kugou.com/202005241203/e62a10f0b23ea3b62dc76bb811158f41/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',title:'走过世界每个角落',subtitle:'电影《罗小黑战记》宣传曲',singer:'周笔畅',lyric:'./82.lrc' },
+            { src:'//webfs.yun.kugou.com/202005241202/8dd6d146b51d50d0665b6a649870326f/G170/M06/06/15/ipQEAF11056AP2pzADLBs7-quTE491.mp3',cover:'//p3fx.kgimg.com/stdmusic/20190829/20190829142458750431.jpg',title:'不再流浪',subtitle:'电影《罗小黑战记》宣传曲',singer:'周深',lyric:'./83.lrc' }
         ]
     }
     let l_progress = document.querySelector('.living-progressBar')
@@ -770,16 +778,42 @@
                 $(this).attr("class","bubble");//高亮
                 $(this).next().addClass("await");
                 let x = index*sc/pList.length;
-                sh = x > 0 ? x : 0;
-            }
-            if(ct >= t && isNaN(nt)){
+                if(!document.hidden) {
+                    sh = x > 0 ? x : 0;
+                } else {
+                    sh = x;
+                }
+            } else if(ct >= t && isNaN(nt)){
                 $(this).prev().removeClass('bubble');
                 $(this).attr("class","bubble");
-                sh = sc-sc/pList.length;
+                if(!document.hidden) {
+                    sh = sc-sc/pList.length;
+                } else {
+                    sh = sc-sc/pList.length;
+                }
             }
         })
         $(".lyric-frame").animate({"scrollTop":sh},120);
     }
+    function renderSongList() {
+        let num
+        for(let k=0;k<len;k++) {
+            num = k+1>10 ? '':'0'
+            $('.song-item').append(`<li data-id="${k}"><span>${num}${k+1}</span>${music.track1[k].title}</li>`)
+        }
+    }
+    renderSongList()
+    let li = Array.from(document.querySelectorAll('.song-item li'))
+    li.forEach(ele => {
+        ele.onclick = () => {
+            $('.song-item li').css('background','')
+            if(ele.getAttribute('data-id')!=='name') {
+                ele.style.background = '#66c05630'
+                i = ele.getAttribute('data-id')-1
+                next(i)
+            }
+        }
+    })
     function playMode(flag) {
         switch (flag) {
             case 1 :
@@ -794,6 +828,24 @@
                 break;
         }
     }
+    $('input[type="radio"][name="radio"]').change(function () {
+        if(this.value==='1'){
+            $('.repeat svg').each(function () {
+                $(this).addClass('disappear')
+            })
+            $('.icon-list').removeClass('disappear')
+        } else if(this.value==='2') {
+            $('.repeat svg').each(function () {
+                $(this).addClass('disappear')
+            })
+            $('.icon-single').removeClass('disappear')
+        } else {
+            $('.repeat svg').each(function () {
+                $(this).addClass('disappear')
+            })
+            $('.icon-shuffle').removeClass('disappear')
+        }
+    })
     setTimeout(function () {
         document.querySelector('.duration').innerText = getTime(audio.duration)
         document.querySelector('.now').innerText = getTime(audio.currentTime)
