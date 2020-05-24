@@ -262,9 +262,7 @@
         .icon-list, .icon-songList {
             transition: all 500ms;
         }
-        .volume:hover .icon-volume,.volume:hover .icon-mute,
-        .prev:hover .icon-prev, .next:hover .icon-next,
-        .repeat:hover .icon-list, .song-list:hover .icon-songList {
+        .volume:hover .icon-volume,.volume:hover .icon-mute {
             filter: drop-shadow(0 0 8px rgba(25,198,255,1));
         }
         .volume:hover .icon-volume path,.volume:hover .icon-mute path,
@@ -797,24 +795,22 @@
         }
     }
     renderSongList()
-    let li = Array.from(document.querySelectorAll('.song-item li'))
+    let li = Array.from(document.querySelectorAll('.song-item li:not(:first-of-type)'))
     li.forEach(ele => {
         ele.onclick = () => {
             $('.song-item li').css('background','')
-            if(ele.getAttribute('data-id')!=='name') {
-                ele.style.background = '#66c05630'
-                i = ele.getAttribute('data-id')-1
-                next(i)
-            }
+            ele.style.background = '#66c05630'
+            i = ele.getAttribute('data-id')-1
+            next(i)
         }
     })
     function playMode(flag) {
         switch (flag) {
             case 1 :
-                audio.play()
+                next()
                 break;
             case 2 :
-                next()
+                audio.play()
                 break;
             case 3 :
                 i = parseInt(Math.random()*(len+1),10);
