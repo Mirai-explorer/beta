@@ -522,7 +522,7 @@
                     <p>播放队列</p>
                     <div class="songList-wrapper">
                         <ul class="song-item">
-                            <li><span data-id="name">#</span>歌曲名</li>
+                            <li data-id="name"><span>#</span>歌曲名</li>
                         </ul>
                     </div>
                 </div>
@@ -843,11 +843,14 @@
     setTimeout(function () {
         document.querySelector('.duration').innerText = getTime(audio.duration)
         document.querySelector('.now').innerText = getTime(audio.currentTime)
+        document.querySelectorAll('.song-item li')[i+1].style.background = 'rgba(102, 192, 86, 0.19)'
         parseLrc(i)
     },100)
     audio.addEventListener('loadedmetadata',function () {
         document.querySelector('.duration').innerText = getTime(audio.duration)
         document.querySelector('.now').innerText = getTime(audio.currentTime)
+        $('.song-item li').css('background','')
+        document.querySelectorAll('.song-item li')[i+1].style.background = 'rgba(102, 192, 86, 0.19)'
         parseLrc(i)
     })
     audio.addEventListener('playing',function () {
