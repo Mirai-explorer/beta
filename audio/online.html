@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>在线音乐测试</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        ul, li {
+            list-style: none;
+        }
+        ul {
+            padding-inline-start: unset;
+            margin-block-start: unset;
+            margin-block-end: unset;
+            margin-inline-start: unset;
+            margin-inline-end: unset;
+        }
+        em {
+            font-style: normal;
+            font-weight: bold;
+            color: #00b0ff;
+        }
+        audio, input {
+            outline: none;
+        }
+        input {
+            border-radius: 0;
+            font-size: 18px;
+        }
+        .app {
+            display: flex;
+        }
+        .player {
+            display: flex;
+            flex-direction: column;
+            margin: 25px 0;
+            align-items: center;
+        }
+        .audio {
+            width: 480px;
+            margin: 25px 0;
+        }
+        .form {
+            margin: 25px 0;
+            height: fit-content;
+            display: flex;
+            justify-content: center;
+        }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            margin: 25px;
+        }
+        #search-input {
+            color: #8F8F8F;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            line-height: 40px;
+            border: 1px solid #ccc;
+            width: 360px;
+        }
+        input[type="text" i] {
+            padding: 2px 6px;
+        }
+        input[type="text"]:focus {
+            box-shadow: 0 0 6px 0 #5094d5;
+            border: 1px solid #5094d5;
+        }
+        input[type="text"]:focus + input {
+            box-shadow: 0 0 6px 1px #5094d5;
+        }
+        input[type="button" i] {
+            width: 120px;
+            border: 1px solid #2d78f4;
+            background: #3385ff;
+            color: white;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+        }
+        .result {
+            display: flex;
+            flex-direction: column;
+            min-width: 700px;
+            max-width: 700px;
+            font-size: 14px;
+            color: #333;
+        }
+        .result li {
+            display: inline-flex;
+            padding: 10px 0;
+            line-height: 25px;
+            cursor: pointer;
+            align-items: center;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        .result li:hover {
+            background: #f3f4f4;
+        }
+        .fileName {
+            flex: 3;
+            margin-inline-start: 15px;
+            margin-inline-end: 10px;
+        }
+        .albumName {
+            flex: 2;
+        }
+        .duration {
+            flex: 0.5;
+            margin-inline-end: 15px;
+            text-align: right;
+        }
+        .infoBox {
+            padding: 50px;
+            height: fit-content;
+            width: 500px;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .card {
+            box-shadow: 0 2px 4px rgba(0,0,0,.16);
+        }
+        .infoBox p {
+            word-break: break-word;
+            margin-block-start: 0;
+            margin-block-end: 0;
+            line-height: 40px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00b0ff;
+            padding: 10px 0;
+        }
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 15px;
+        }
+        .sub {
+            line-height: 24px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="wrapper">
+        <div class="form">
+            <input type="text" value="" id="search-input" autocomplete="off"/><input type="button" onclick="query($('#search-input').val())" value="搜一搜"/>
+        </div>
+        <ul class="result"></ul>
+    </div>
+    <div class="player">
+        <audio class="audio" src="" type="audio/mpeg" controls></audio>
+        <div class="infoBox"></div>
+    </div>
+</div>
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-3.5.0.min.js"></script>
+<script>
+    String.prototype.myReplace=function(f,e){//吧f替换成e
+        let reg=new RegExp(f,"g"); //创建正则RegExp对象
+        return this.replace(reg,e);
+    }
+    function getInfo() {
+        let li = Array.from(document.querySelectorAll('.result li'))
+        li.forEach(ele => {
+            ele.onclick = () => {
+                $.ajax({
+                    type:"GET",
+                    url:"https://bird.ioliu.cn/v1?url=https://wwwapi.kugou.com/yy/index.php?",
+                    data:{
+                        r:'play/getdata',
+                        hash:ele.getAttribute('data-hash'),
+                        album_id:ele.getAttribute('data-album'),
+                        dfid:'1ajtgu0Xdxhv0q63Eb2tQfSS',
+                        mid:'3ab87d58fa92390e73b7b44f7083f331',
+                        platid:4
+                    },
+                    dataType:"json",
+                    success: function(data){
+                        let title = data.data.audio_name
+                        let url = data.data.play_url
+                        let lyrics = data.data.lyrics
+                        let album = data.data.album_name
+                        let cover = data.data.img
+                        let tips
+                        if(url.length){
+                            tips = '版权受限，仅供在线试听'
+                        }
+                        $('.infoBox').addClass('card')
+                        if(data.status===1){
+                            $('.infoBox').html('<img src="' + cover + '" alt="专辑封面图" /><p class="title">' + title + '</p><p class="album">专辑：' + album + '</p><p class="url">下载地址：' + tips + '</p><div class="lyrics"><p class="parent">歌词（点击展开/折叠）</p><div class="sub">' + lyrics.myReplace('\r\n', '<br />') + '</div></div>')
+                            document.title = title
+                            $('audio')[0].src = url
+                            $('audio')[0].play()
+                            $('.parent').click(function () {
+                                $(this).siblings().toggle().parent().siblings().children("div").hide()
+                            })
+                        } else {
+                            $.ajax({
+                                type:"GET",
+                                url:"https://bird.ioliu.cn/v2?url=https://wwwapi.kugou.com/yy/index.php?",
+                                data:{
+                                    r:'play/getdata',
+                                    hash:ele.getAttribute('data-hash'),
+                                    album_id:ele.getAttribute('data-album'),
+                                    dfid:'1ajtgu0Xdxhv0q63Eb2tQfSS',
+                                    mid:'3ab87d58fa92390e73b7b44f7083f331',
+                                    platid:4
+                                },
+                                dataType:"json",
+                                success: function(data){
+                                    $('.infoBox').html('<img src="' + cover + '" alt="专辑封面图" /><p class="title">' + title + '</p><p class="album">专辑：' + album + '</p><p class="url">下载地址：' + tips + '</p><div class="lyrics"><p class="parent">歌词（点击展开/折叠）</p><div class="sub">' + lyrics.myReplace('\r\n', '<br />') + '</div></div>')
+                                    document.title = title
+                                    $('audio')[0].src = url
+                                    $('audio')[0].play()
+                                    $('.parent').click(function () {
+                                        $(this).siblings().toggle().parent().siblings().children("div").hide()
+                                    })
+                                }
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
+    function query(keyword){
+        if($('#search-input').val()!==''){
+            $('.result').html('')
+            $.ajax({
+                type:"GET",
+                url:"https://bird.ioliu.cn/v1?url=https://songsearch.kugou.com/song_search_v2",
+                data:{
+                    keyword:keyword,
+                    page:1,
+                    pagesize:30,
+                    userid:-1,
+                    clientver:'',
+                    platform:'WebFilter',
+                    tag:'em',
+                    filter:2,
+                    iscorrection:1,
+                    privilege_filter:0
+                },
+                dataType:"json",
+                success: function(data){
+                    let result = data.data.lists
+                    let sec
+                    result.forEach(ele => {
+                        sec = parseInt(ele.Duration%60)
+                        if(sec<10)
+                            sec = '0'+sec
+                        let duration = parseInt(ele.Duration/60)+':'+sec
+                        $('.result').append('<li data-hash="'+ele.FileHash+'" data-album="'+ele.AlbumID+'"><span class="fileName">'+ele.FileName+'</span><span class="albumName">'+ele.AlbumName+'</span><span class="duration">'+duration+'</span></li>')
+                        getInfo()
+                    })
+                }
+            })
+        } else {
+            $('.result').append('<p>您没有输入关键词！！</p>')
+        }
+    }
+</script>
+</body>
+</html>
