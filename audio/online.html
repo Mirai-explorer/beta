@@ -1096,6 +1096,7 @@
             $('.result').html('')
             $.ajax({
                 type:"GET",
+                async:false,
                 url:"https://bird.ioliu.cn/v1?url=https://songsearch.kugou.com/song_search_v2",
                 data:{
                     keyword:keyword,
@@ -1149,13 +1150,23 @@
                         let cover = data.data.img
                         let singer = data.data.author_name
                         let title_reg = new RegExp('[^\\(]*(?=\\s\\()')
-                        let subtitle_reg = new RegExp('(?<=\\()[^\\(]*(?=\\)\\])')
-                        let subtitle2_reg = new RegExp('(?<=\\[ti:)[^\\[]*(?=\\])')
+                        let subtitle_reg
+                        let subtitle2_reg
+                        let subtitle
                         let lyrics_reg = new RegExp('\\[00[\\s\\S]*')
                         if(data.status === 1){
                             let title = data.data.song_name.match(title_reg)===null? data.data.song_name:data.data.song_name.match(title_reg)[0]
                             let lyrics = data.data.lyrics.match(lyrics_reg)[0]
-                            let subtitle = data.data.lyrics.match(subtitle_reg)===null? data.data.lyrics.match(subtitle2_reg):data.data.lyrics.match(subtitle_reg)[0]
+                            try {
+                                subtitle_reg = new RegExp('(?<=\\()[^\\(]*(?=\\)\\])')
+                                subtitle2_reg = new RegExp('(?<=\\[ti:)[^\\[]*(?=\\])')
+                                subtitle = data.data.lyrics.match(subtitle_reg)===null? data.data.lyrics.match(subtitle2_reg):data.data.lyrics.match(subtitle_reg)[0]
+                            } catch (e) {
+                                console.log(e)
+                                subtitle_reg = new RegExp('(["=]?)[^\\(]*(?=\\)\\])')
+                                subtitle2_reg = new RegExp('\\[ti:([^\\]]*)(?=\\])')
+                                subtitle = data.data.lyrics.match(subtitle_reg)===null? data.data.lyrics.match(subtitle2_reg)[1]:data.data.lyrics.match(subtitle_reg)
+                            }
                             music.track1.push({src: `${url}`, cover: `${cover}`, title: `${title}`, subtitle: `${subtitle}`, singer: `${singer}`, lyric: `${lyrics}`})
                             len++
                             renderSongList()
@@ -1181,7 +1192,17 @@
                                     let lyrics = data.data.lyrics.match(lyrics_reg)[0]
                                     cover = data.data.img
                                     singer = data.data.author_name
-                                    let subtitle = data.data.lyrics.match(subtitle_reg)===null? data.data.lyrics.match(subtitle2_reg):data.data.lyrics.match(subtitle_reg)[0]
+                                    try {
+                                        subtitle_reg = new RegExp('(?<=\\()[^\\(]*(?=\\)\\])')
+                                        subtitle2_reg = new RegExp('(?<=\\[ti:)[^\\[]*(?=\\])')
+                                        subtitle = data.data.lyrics.match(subtitle_reg)===null? data.data.lyrics.match(subtitle2_reg):data.data.lyrics.match(subtitle_reg)[0]
+                                        console.log('Method 1: succeed')
+                                    } catch (e) {
+                                        console.log('Method 2: '+e)
+                                        subtitle_reg = new RegExp('(["=]?)[^\\(]*(?=\\)\\])')
+                                        subtitle2_reg = new RegExp('\\[ti:([^\\]]*)(?=\\])')
+                                        subtitle = data.data.lyrics.match(subtitle_reg)===null? data.data.lyrics.match(subtitle2_reg)[1]:data.data.lyrics.match(subtitle_reg)
+                                    }
                                     music.track1.push({src: `${url}`, cover: `${cover}`, title: `${title}`, subtitle: `${subtitle}`, singer: `${singer}`, lyric: `${lyrics}`})
                                     len++
                                     renderSongList()
