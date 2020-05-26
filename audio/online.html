@@ -34,7 +34,7 @@
             font-size: 18px;
             outline: none;
         }
-        input, button {
+        input, button, ul, li {
             -webkit-appearance: none;
         }
         .audio-app {
@@ -1024,6 +1024,7 @@
     setTimeout(function () {
         document.querySelector('.duration').innerText = getTime(audio.duration)
         document.querySelector('.now').innerText = getTime(audio.currentTime)
+        $('.song-item li').css('background','')
         document.querySelectorAll('.song-item li')[i].style.background = 'rgba(102, 192, 86, 0.19)'
         parseLrc(i)
     },100)
@@ -1118,8 +1119,8 @@
                             sec = '0'+sec
                         let duration = parseInt(ele.Duration/60)+':'+sec
                         $('.result').append('<li data-hash="'+ele.FileHash+'" data-album="'+ele.AlbumID+'"><span class="fileName" title="'+ele.FileName+'">'+ele.FileName+'</span><span class="albumName" title="'+ele.AlbumName+'">'+ele.AlbumName+'</span><span class="duration">'+duration+'</span></li>')
-                        getInfo()
                     })
+                    getInfo()
                 }
             })
         } else {
@@ -1142,15 +1143,16 @@
                         platid:4
                     },
                     dataType:"json",
+                    async:false,
                     success: function(data){
                         let url = data.data.play_url
                         let cover = data.data.img
                         let singer = data.data.author_name
-                        let title_reg = /[^\(]*(?=\s\()/
-                        let subtitle_reg = /(?<=\()[^\(]*(?=\)\])/
-                        let subtitle2_reg = /(?<=\[ti:)[^\[]*(?=\])/
-                        let lyrics_reg = /\[00[\s\S]*/
-                        if(data.status===1){
+                        let title_reg = new RegExp('[^\\(]*(?=\\s\\()')
+                        let subtitle_reg = new RegExp('(?<=\\()[^\\(]*(?=\\)\\])')
+                        let subtitle2_reg = new RegExp('(?<=\\[ti:)[^\\[]*(?=\\])')
+                        let lyrics_reg = new RegExp('\\[00[\\s\\S]*')
+                        if(data.status === 1){
                             let title = data.data.song_name.match(title_reg)===null? data.data.song_name:data.data.song_name.match(title_reg)[0]
                             let lyrics = data.data.lyrics.match(lyrics_reg)[0]
                             let subtitle = data.data.lyrics.match(subtitle_reg)===null? data.data.lyrics.match(subtitle2_reg):data.data.lyrics.match(subtitle_reg)[0]
@@ -1172,6 +1174,7 @@
                                     platid:4
                                 },
                                 dataType:"json",
+                                async:false,
                                 success: function(data){
                                     let title = data.data.song_name.match(title_reg)===null? data.data.song_name:data.data.song_name.match(title_reg)[0]
                                     url = data.data.play_url
@@ -1191,10 +1194,6 @@
                 })
             }
         })
-    }
-    String.prototype.myReplace=function(f,e){//吧f替换成e
-        let reg=new RegExp(f,"g"); //创建正则RegExp对象
-        return this.replace(reg,e);
     }
 </script>
 </body>
