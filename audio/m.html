@@ -159,7 +159,7 @@
         .main-body {
             width: 100%;
             height: calc(100% - 100px);
-            padding: 15px 0;
+            padding-top: 15px;
             display: flex;
             flex-direction: column;
         }
@@ -219,8 +219,8 @@
             display: flex;
             align-items: center;
             width: 100%;
-            height: calc(100vh - 280px);
-            padding-top: 40px;
+            height: 100%;
+            padding-top: 30px;
             flex-direction: column;
         }
         .cover-img {
@@ -255,7 +255,7 @@
         .lyric-frame {
             width: 100%;
             height: 100px;
-            margin: 40px 0;
+            margin-top: 30px;
             overflow-y: hidden;
             overflow-x: hidden;
         }
@@ -283,7 +283,7 @@
         }
         .scrolling-lyric p {
             display: inline-flex;
-            line-height: 40px;
+            line-height: 50px;
             opacity: .2;
             visibility: hidden;
             font-size: 18px;
@@ -320,12 +320,13 @@
             flex-direction: column;
             height: fit-content;
             width: inherit;
+            margin: 5px 0;
             align-self: flex-end;
         }
         .time {
-            min-height: 40px;
+            min-height: 32px;
             padding-left: 5%;
-            line-height: 40px;
+            line-height: 32px;
         }
         .time span {
             letter-spacing: 0.05em;
@@ -387,16 +388,15 @@
             height: 100%;
         }
         .controller button {
-            width: 28px;
-            height: 28px;
+            width: 40px;
+            height: 40px;
             padding: 0;
             border-style: none;
             outline: none;
-            background-color: rgba(255,255,255,0);
         }
         .controller .play {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
         }
         .c-left, .c-right {
@@ -420,14 +420,6 @@
         .icon-prev, .icon-next,
         .icon-list, .icon-songList {
             transition: all 500ms;
-        }
-        .volume:hover .icon-volume,.volume:hover .icon-mute {
-            filter: drop-shadow(0 0 8px rgba(25,198,255,1));
-        }
-        .volume:hover .icon-volume path,.volume:hover .icon-mute path,
-        .prev:hover .icon-prev path, .next:hover .icon-next path,
-        .repeat:hover .icon-list path, .song-list:hover .icon-songList path {
-            fill: rgba(0,178,255,.8);
         }
         .c-right {
             justify-content: flex-end;
@@ -453,7 +445,13 @@
             border-radius: 4px;
         }
         .c-middle button {
-            margin: 25px;
+            margin: 15px;
+            background: #ffffff30;
+            box-shadow: 0 0 3px #00000016;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .c-right button {
             margin-left: 32px;
@@ -537,21 +535,21 @@
                 <div class="c-middle">
                     <button class="prev">
 
-                        <svg t="1590493055047" class="icon-prev" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="36047" width="28" height="28">
+                        <svg t="1590493055047" class="icon-prev" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="36047" width="18" height="18">
                             <path d="M943.705 11.8c10.321 5.183 17.325 15.601 17.534 27.675l-0.004 938.318c-0.167 12.186-7.229 22.684-17.457 27.782-4.857 2.548-10.527 4.026-16.543 4.026-6.65 0-12.876-1.806-18.217-4.955l-716.617-469c-9.689-5.299-16.151-15.421-16.151-27.053 0-11.63 6.462-21.753 15.991-26.972l716.945-468.955c5.177-3.048 11.404-4.848 18.052-4.848 6.013 0 11.682 1.473 16.665 4.077z" fill="#ffffff" p-id="36048"></path><path d="M228.435 77.809v868.712c-3.889 42.573-39.416 75.664-82.673 75.664s-78.784-33.091-82.649-75.34l-0.024-869.036c2.811-43.55 38.822-77.809 82.835-77.809s80.024 34.259 82.822 77.564z" fill="#ffffff" p-id="36049"></path>
                         </svg>
                     </button>
                     <button class="play">
-                        <svg class="icon-play" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+                        <svg class="icon-play" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
                             <path d="M893.035 463.821679C839.00765 429.699141 210.584253 28.759328 179.305261 8.854514 139.495634-16.737389 99.686007 17.385148 99.686007 57.194775v909.934329c0 45.496716 42.653172 68.245075 76.775709 48.340262 45.496716-28.435448 676.763657-429.375262 716.573284-454.967165 34.122537-22.748358 34.122537-76.775709 0-96.680522z" fill="#ffffff" p-id="1818"></path>
                         </svg>
-                        <svg class="icon-pause disappear" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+                        <svg class="icon-pause disappear" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
                             <path d="M735.9 64.9c-51.2 0-96 44.7-96 95.8v702.6c0 51.1 44.8 95.8 96 95.8s96-44.7 96-95.8V160.7c0-51.1-44.8-95.8-96-95.8z m-447.8 0c-51.2 0-96 44.7-96 95.8v702.6c0 51.1 44.8 95.8 96 95.8s96-44.7 96-95.8V160.7c-0.1-51.1-44.9-95.8-96-95.8z" p-id="18648" fill="#ffffff"></path>
                         </svg>
                     </button>
                     <button class="next">
 
-                        <svg t="1590493286156" class="icon-next" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="38778" width="28" height="28">
+                        <svg t="1590493286156" class="icon-next" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="38778" width="18" height="18">
                             <path d="M91.009 992.703c-10.595-5.485-17.19-15.925-17.19-27.269l0-920.117c0-11.312 6.59599999-21.752 17.19-27.237 10.594-5.515 23.553-5.172 33.814 0.841l703.081 460.074c9.728 5.703 15.591 15.643 15.591 26.396 0 10.71999999-5.863 20.693-15.59100001 26.396l-703.08099999 460.074c-5.397 3.148-11.527 4.737-17.69 4.737-5.53 0-11.094-1.27800001-16.124-3.895z" p-id="38779" fill="#ffffff"></path><path d="M792.524 928.009l0-852.001c0-42.032 36.4-76.007 81.252-76.007 44.85000001 0 81.252 33.97500001 81.252 76.007l0 852.001c0 41.95499999-36.4 76.007-81.252 76.007s-81.252-34.051-81.252-76.007z" p-id="38780" fill="#ffffff"></path>
                         </svg>
                     </button>
@@ -578,58 +576,17 @@
                         <p><input name="radio" type="radio" id="shuffle" value="3" /><label for="shuffle">随机播放</label></p>
                     </div>
                     <style>
-                        .prev:hover .icon-prev {
-                            animation: leftx 1s linear;
-                            filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
+
+                        .prev:hover .icon-prev,
+                        .next:hover .icon-next, .repeat:hover .icon-list,
+                        .song-list:hover .icon-songList {
+                            filter: drop-shadow(0 0 4px rgba(255,255,255,.8));
                         }
                         .icon-play {
                             transform: translateX(3px);
                         }
-                        .play:hover .icon-play {
-                            animation: threed 1s linear;
-                            filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
-                        }
-                        .next:hover .icon-next {
-                            animation: rightx 1s linear;
-                            filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
-                        }
-                        .repeat:hover .icon-list {
-                            animation: rotate 1s linear;
-                            filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
-                        }
-                        .song-list:hover .icon-songList {
-                            animation: scalex 1s linear;
-                            filter: drop-shadow(0 0 3px rgba(0,176,255,.8));
-                        }
-                        @keyframes leftx {
-                            0% { transform: translateX(0) }
-                            50% { transform: translateX(-7.68px) }
-                            85% { transform: translateX(-12.36px) }
-                            90% { transform: translateX(-12.36px) }
-                            100% { transform: translateX(0) }
-                        }
-                        @keyframes rightx {
-                            0% { transform: translateX(0) }
-                            50% { transform: translateX(7.68px) }
-                            85% { transform: translateX(12.36px) }
-                            90% { transform: translateX(12.36px) }
-                            100% { transform: translateX(0) }
-                        }
-                        @keyframes threed {
-                            0% { transform: translateX(0) rotate(0) }
-                            25% { transform: translateX(-6.18px) rotate(-36deg) }
-                            75% { transform: translateX(6.18px) rotate(36deg) }
-                            90% { transform: translateY(-12.36px) rotate(0) }
-                            100% { transform: translateX(0) rotate(0) }
-                        }
-                        @keyframes rotate {
-                            from { transform: rotate(0deg) }
-                            to { transform: rotate(360deg) }
-                        }
-                        @keyframes scalex {
-                            0% { transform: scale(1) }
-                            66.7% { transform: scale(1.2) }
-                            100% { transform: scale(1) }
+                        .play:hover .icon-play, .play:hover .icon-pause {
+                            filter: drop-shadow(0 0 8px rgba(255,255,255,.8));
                         }
                         .select-mode {
                             display: flex;
