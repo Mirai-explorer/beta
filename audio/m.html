@@ -107,8 +107,8 @@
             transition: 500ms ease-in;
             height: calc(100vh - 50px);
         }
-        .result-header:hover, .list-container:hover {
-            overflow-y: auto;
+        .list-container {
+            overflow-y: scroll;
         }
         .result-header::-webkit-scrollbar, .list-container::-webkit-scrollbar {
             width: 8px;
@@ -561,11 +561,11 @@
                                 let w = document.querySelector('.wrapper')
                                 let s = document.querySelector('.service')
                                 w.style.transform = 'translateX(-100%)'
-                                w.style.transition = 'transform 500ms ease'
+                                w.style.transition = 'transform 200ms ease-out'
                                 s.style.visibility = 'visible'
                                 s.style.transform = 'translateX(0)'
                                 s.style.opacity = '1'
-                                s.style.transition = 'all 500ms ease'
+                                s.style.transition = 'all 200ms ease-out'
                             }
                         </script>
                     </div>
