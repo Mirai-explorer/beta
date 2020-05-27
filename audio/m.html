@@ -1109,10 +1109,12 @@
                 sh = sc-sc/pList.length;
             }
         })
-        if(document.querySelector('.bubble').scrollWidth > document.querySelector('.bubble').clientWidth){
-            let delay = ($('.bubble').next().attr('data-time') - $('.bubble').attr('data-time') - 0.18)*1000
-            console.log(delay)
-            $('.bubble').animate({"scrollLeft":document.querySelector('.bubble').scrollWidth},delay);
+        if(document.querySelector('.bubble')!==null){
+            if(document.querySelector('.bubble').scrollWidth > document.querySelector('.bubble').clientWidth){
+                let delay = ($('.bubble').next().attr('data-time') - $('.bubble').attr('data-time') - 0.18)*1000
+                console.log(delay)
+                $('.bubble').animate({"scrollLeft":document.querySelector('.bubble').scrollWidth},delay);
+            }
         }
         if(!document.hidden) {
             $(".lyric-frame").animate({"scrollTop":sh},120);
