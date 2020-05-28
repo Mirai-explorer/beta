@@ -1243,7 +1243,7 @@
             $(".lyric-frame").animate({"scrollTop":sh},120);
         }
     }
-    function renderSongList() {
+    function renderSongList(id) {
         let num
         let i_trash = '<svg t="1590658835513" class="icon-trash" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6730" width="20" height="20"><path d="M358.016 781.10208a27.96032 27.96032 0 0 0 27.9296-27.9296V401.60768c0-15.40096-12.52864-27.9296-27.9296-27.9296s-27.9296 12.52864-27.9296 27.9296v351.55968c0.59392 15.31392 13.12768 27.93472 27.9296 27.93472zM665.984 781.10208a27.9552 27.9552 0 0 0 27.92448-27.9296V401.60768c0-15.40096-12.52352-27.9296-27.92448-27.9296s-27.92448 12.52864-27.92448 27.9296v351.55968a27.96032 27.96032 0 0 0 27.92448 27.93472zM512 781.10208a27.96032 27.96032 0 0 0 27.9296-27.9296V401.60768c0-15.40096-12.52864-27.9296-27.9296-27.9296s-27.9296 12.52864-27.9296 27.9296v351.55968a27.96544 27.96544 0 0 0 27.9296 27.93472z" p-id="6731" fill="#333333"></path><path d="M928.95232 188.0576h-213.23776v-38.1696c0-39.43424-32.08704-71.52128-71.52128-71.52128h-263.68c-39.43424 0-71.52128 32.08704-71.52128 71.52128v38.1696H95.04768a27.96032 27.96032 0 0 0-27.9296 27.9296 27.9552 27.9552 0 0 0 27.9296 27.92448H198.6048V830.5152c0 63.86176 51.95264 115.8144 115.81952 115.8144h395.15648c63.86176 0 115.8144-51.95264 115.8144-115.8144V243.20512h103.55712a27.96032 27.96032 0 0 0 27.9296-27.9296c0-15.26272-12.27264-27.21792-27.9296-27.21792zM364.14464 149.888a16.19456 16.19456 0 0 1 16.36864-16.36864h263.67488a16.19456 16.19456 0 0 1 16.36864 16.36864v38.1696H364.14464v-38.1696z m405.39648 680.6272c0 33.06496-26.90048 59.96544-59.96032 59.96544H314.42432c-33.06496 0-59.96544-26.90048-59.96544-59.96544V243.20512h515.08224V830.5152z" p-id="6732" fill="#333333"></path></svg>'
         $('.song-item').html('')
@@ -1251,32 +1251,36 @@
             num = k+1>10 ? '':'0'
             $('.song-item').append(`<li data-id="${k}"><div class="list-id">${num}${k+1}</div><div class="list-item"><div class="song-detail"><span class="ls-title">${music.track1[k].title}</span><span class="ls-singer">${music.track1[k].singer}</span></div><div class="icon-trash"><button class="trash-btn" data-id=${k} onclick="removeSong(event,$(this).attr('data-id'),)">${i_trash}</button></div></div></li>`)
         }
+        if(len-1!==0) {
+            if(id<i){
+                document.querySelectorAll('.song-item li')[len-1].classList.add('active')
+            } else {
+                document.querySelectorAll('.song-item li')[i].classList.add('active')
+            }
+        } else {
+            document.querySelector('.song-item li').classList.add('active')
+        }
         $('em[data-id="i"]').html(len)
     }
     function removeSong(event,id) {
         event.stopPropagation()
-        console.log(id+','+i)
-        if(id!=i){
-            console.log('不等'+i+','+id)
-            music.track1.splice(id,1)
+        console.log(id + ',' + i)
+        id = parseInt(id)
+        if (len-1 !== 0) {
+            music.track1.splice(id, 1)
             len--
-            renderSongList()
-            document.querySelectorAll('.song-item li')[i].classList.add('active')
+            if (id === i) {
+                console.log('相等，当前播放：' + i + ',操作序号：' + id)
+                if(i<len){
+                    change()
+                } else {
+                    next(i)
+                }
+            }
+            renderSongList(id)
             watchman()
         } else {
-            if(len-1!==0) {
-                console.log('相等'+i+','+id)
-                music.track1.splice(id,1)
-                len--
-                i = id + 1
-                next(i)
-                renderSongList()
-                document.querySelectorAll('.song-item li')[i].classList.add('active')
-                watchman()
-            } else {
-                document.querySelector('.song-item li').classList.add('active')
-                alert('这是最后一首了喵~')
-            }
+            alert('这是最后一首了喵~')
         }
     }
     function watchman(){
