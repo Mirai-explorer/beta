@@ -1607,59 +1607,63 @@
                         obj1 = {src: `${url}`}
                     }
                 })
-                $.ajax({
-                    type:"GET",
-                    url:"https://bird.ioliu.cn/v1?url=https://music.163.com/api/song/detail/?",
-                    data:{
-                        id:id,
-                        ids:'['+id+']'
-                    },
-                    dataType:"json",
-                    async:false,
-                    success: function(data){
-                        let cover = data.songs[0].album.picUrl
-                        let title = data.songs[0].name
-                        let subtitle = data.songs[0].alias[0]
-                        let combine = () => {
-                            let a = []
-                            let ar = data.songs[0].artists
-                            for(let k=0;k<ar.length;k++) {
-                                a.push(ar[k].name)
+                if(obj1.src!==''){
+                    $.ajax({
+                        type:"GET",
+                        url:"https://bird.ioliu.cn/v1?url=https://music.163.com/api/song/detail/?",
+                        data:{
+                            id:id,
+                            ids:'['+id+']'
+                        },
+                        dataType:"json",
+                        async:false,
+                        success: function(data){
+                            let cover = data.songs[0].album.picUrl
+                            let title = data.songs[0].name
+                            let subtitle = data.songs[0].alias[0]
+                            let combine = () => {
+                                let a = []
+                                let ar = data.songs[0].artists
+                                for(let k=0;k<ar.length;k++) {
+                                    a.push(ar[k].name)
+                                }
+                                return a.join('/')
                             }
-                            return a.join('/')
+                            let singer = combine()
+                            obj2 = {cover: `${cover}`, title: `${title}`, subtitle: `${subtitle}`, singer: `${singer}`}
                         }
-                        let singer = combine()
-                        obj2 = {cover: `${cover}`, title: `${title}`, subtitle: `${subtitle}`, singer: `${singer}`}
+                    })
+                    $.ajax({
+                        type:"GET",
+                        url:"https://bird.ioliu.cn/v1?url=https://music.163.com/api/song/lyric?",
+                        data:{
+                            os:'pc',
+                            id:id,
+                            lv:-1,
+                            kv:-1,
+                            tv:-1
+                        },
+                        dataType:"json",
+                        async:false,
+                        success: function(data){
+                            let lyric = data.lrc.lyric
+                            obj3 = {lyric: `${lyric}`}
+                        }
+                    })
+                    let obj = {
+                        ...obj1,
+                        ...obj2,
+                        ...obj3
                     }
-                })
-                $.ajax({
-                    type:"GET",
-                    url:"https://bird.ioliu.cn/v1?url=https://music.163.com/api/song/lyric?",
-                    data:{
-                        os:'pc',
-                        id:id,
-                        lv:-1,
-                        kv:-1,
-                        tv:-1
-                    },
-                    dataType:"json",
-                    async:false,
-                    success: function(data){
-                        let lyric = data.lrc.lyric
-                        obj3 = {lyric: `${lyric}`}
-                    }
-                })
-                let obj = {
-                    ...obj1,
-                    ...obj2,
-                    ...obj3
+                    music.track1.push(obj)
+                    obj1 = obj2 = obj3 = null
+                    len++
+                    renderSongList()
+                    watchman()
+                    window.alert('已添加至歌单')
+                } else {
+                    window.alert('客官，您选择的歌曲暂无版权呢~~ >_<')
                 }
-                music.track1.push(obj)
-                obj1 = obj2 = obj3 = null
-                len++
-                renderSongList()
-                watchman()
-                window.alert('已添加至歌单')
             }
         })
     }
