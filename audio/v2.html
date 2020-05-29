@@ -1423,9 +1423,11 @@
                 i - 1 >= 0 ? i-- : i = len - 1
                 next(i)
             } else {
-                i--
+                if((i - 1 >= 0) && (id < i)){
+                    i--
+                }
             }
-            renderSongList(id)
+            renderSongList()
             watchman()
             storageList()
         } else {
@@ -1824,7 +1826,7 @@
         }
         let new_time
         if(time.length===12){
-            new_time = insertStr(insertStr(insertStr(insertStr(insertStr(time,4,"/"),7,"/"),10," "),13,":"),16,":00")+86400
+            new_time = insertStr(insertStr(insertStr(insertStr(insertStr(time,4,"/"),7,"/"),10," "),13,":"),16,":00")
         } else if(time.length===14) {
             new_time = insertStr(insertStr(insertStr(insertStr(insertStr(time,4,"/"),7,"/"),10," "),13,":"),16,":")
         }
@@ -1859,11 +1861,11 @@
                         let subtitle2_reg
                         let subtitle
                         let lyrics_reg = new RegExp('\\[00[\\s\\S]*')
-                        let timestamp = toTimestamp(url.split('/')[3])+86400000
                         if(data.status === 1){
                             if(url!==''){
                                 let title = data.data.song_name.match(title_reg)===null? data.data.song_name:data.data.song_name.match(title_reg)[0]
                                 let lyrics = data.data.lyrics===null? '[00:00.01]暂无歌词':data.data.lyrics.match(lyrics_reg)[0]
+                                let timestamp = toTimestamp(url.split('/')[3])+86400000
                                 try {
                                     subtitle_reg = new RegExp('(?<=\\()[^\\(]*(?=\\)\\])')
                                     subtitle2_reg = new RegExp('(?<=\\[ti:)[^\\[]*(?=\\])')
@@ -1901,7 +1903,7 @@
                                     if(data.data.play_url!==''){
                                         let title = data.data.song_name.match(title_reg)===null? data.data.song_name:data.data.song_name.match(title_reg)[0]
                                         url = data.data.play_url
-                                        timestamp = toTimestamp(url.split('/')[3])+86400000
+                                        let timestamp = toTimestamp(url.split('/')[3])+86400000
                                         let lyrics = data.data.lyrics===null? '[00:00.01]暂无歌词':data.data.lyrics.match(lyrics_reg)[0]
                                         cover = data.data.img
                                         singer = data.data.author_name
@@ -2039,9 +2041,9 @@
                 async:false,
                 success: function(data){
                     let url = data.data.play_url
-                    let timestamp = toTimestamp(url.split('/')[3])+86400000
                     if(data.status === 1){
                         if(url!==''){
+                            let timestamp = toTimestamp(url.split('/')[3])+86400000
                             music.track1[i].src = url
                             music.track1[i].timestamp = timestamp
                             renderSongList()
@@ -2068,7 +2070,7 @@
                             success: function(data){
                                 if(data.data.play_url!==''){
                                     url = data.data.play_url
-                                    timestamp = toTimestamp(url.split('/')[3])+86400000
+                                    let timestamp = toTimestamp(url.split('/')[3])+86400000
                                     music.track1[i].src = url
                                     music.track1[i].timestamp = timestamp
                                     renderSongList()
