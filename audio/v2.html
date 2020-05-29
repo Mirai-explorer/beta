@@ -154,14 +154,11 @@
             background: #f8f8f8;
             outline: none;
             border: none;
+            transition: all 1s ease-out;
         }
         .result-tab button:active {
-            animation: ripple 1s ease-out;
-        }
-        @keyframes ripple {
-            0% { background: #f8f8f8 }
-            30% { background: #f1f1f1 }
-            100% { background: #f8f8f8 }
+            background: #e0e2e5;
+            scale: 0.9;
         }
         .result li {
             min-height: 30px;
@@ -553,13 +550,13 @@
             <audio id="player" src='' type="audio/mp3"></audio>
             <div class="header">
                 <div class="h-left">
-                    <span class="song-title"></span>
-                    <span class="singer"></span>
-                    <span class="song-subtitle"></span>
+                    <span class="song-title">音乐🎵感动常在</span>
+                    <span class="singer">Mirai探索者</span>
+                    <span class="song-subtitle">&lt;专辑名称&gt;</span>
                 </div>
             </div>
             <div class="middle">
-                <div class="cover-img"><img src='' alt="专辑封面"></div>
+                <div class="cover-img"><img src='//img.zcool.cn/community/01e8055541ba72000001a64b73d929.jpg@1280w_1l_2o_100sh.jpg' alt="专辑封面"></div>
                 <div class="lyric-frame">
                     <div class="scrolling-lyric"></div>
                 </div>
@@ -999,6 +996,13 @@
                         height: 32px;
                         border-radius: 50%;
                     }
+                    .back, .form input[type="button"] {
+                        transition: all 500ms ease-out;
+                    }
+                    .back:active, .form input[type="button"]:active {
+                        background: #F1F1F1;
+                        scale: 0.9;
+                    }
                 </style>
                 <script>
                     function hideService() {
@@ -1017,16 +1021,28 @@
                         <svg t="1590640185342" class="icon-kugou" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2769" width="25" height="25"><path d="M510.723192 1024c-280.897756 0-510.723192-229.825436-510.723192-510.723192s229.825436-510.723192 510.723192-510.723192 510.723192 229.825436 510.723192 510.723192c0 283.451372-229.825436 510.723192-510.723192 510.723192z m0-967.820449c-252.80798 0-457.097257 206.842893-457.097257 457.097257C53.625935 766.084788 260.468828 970.374065 510.723192 970.374065c252.80798 0 457.097257-206.842893 457.097257-457.097257 0-252.80798-204.289277-457.097257-457.097257-457.097257z" fill="#2F94FD" p-id="2770"></path><path d="M331.970075 273.236908h127.680798v165.985037l160.877805-165.985037h178.753118s-219.610973 204.289277-229.825437 214.50374c-10.214464 10.214464-15.321696 28.089776-2.553616 48.518704 15.321696 20.428928 191.521197 224.718204 191.521197 224.718204l-160.877805-2.553616-160.877806-191.521197-15.321696 194.074813-132.78803 2.553616L331.970075 273.236908z" fill="#2F94FD" p-id="2771"></path></svg>
                     </button>
                     <button class="ncmusic" onclick="resultToggle(this.className)">
-                        <svg t="1590643823578" class="icon-ncmusic" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3893" width="25" height="25"><path d="M627.086668 5.114963c28.132297-7.672445 58.822075-7.672445 86.954372 0 33.24726 7.672445 63.937038 23.017334 89.511853 43.477186 10.229926 7.672445 17.902371 15.344889 23.017334 28.132297 7.672445 17.902371 5.114963 38.362223-5.114963 53.707112-7.672445 12.787408-23.017334 23.017334-40.919704 25.574815-12.787408 2.557482-25.574815 0-38.362223-7.672445-5.114963-2.557482-10.229926-10.229926-17.902371-12.787407-17.902371-10.229926-35.804741-20.459852-56.264593-17.902371-15.344889 0-28.132297 7.672445-35.804742 17.902371-10.229926 10.229926-12.787408 23.017334-10.229926 35.804741 7.672445 25.574815 12.787408 53.707112 20.459853 79.281927 51.14963 2.557482 99.741779 15.344889 143.218965 40.919704 40.919704 25.574815 79.281927 58.822075 109.971705 97.184298 25.574815 33.24726 46.034667 71.609483 56.264593 112.529187 12.787408 43.477186 17.902371 89.511853 12.787408 132.989039-2.557482 38.362223-10.229926 74.166964-23.017334 109.971705-33.24726 84.39689-92.069335 161.121336-171.351261 209.713485-56.264593 35.804741-122.759113 58.822075-189.253633 66.49452-46.034667 5.114963-92.069335 5.114963-138.104002-2.557482-94.626816-15.344889-181.581188-61.379556-250.633189-130.431558-66.49452-66.49452-112.529187-153.448891-132.989039-245.518225-7.672445-69.052001-7.672445-138.104002 7.672445-207.156004 17.902371-81.839409 61.379556-161.121336 117.644149-222.500892 48.592149-51.14963 107.414224-89.511853 171.351262-117.64415 7.672445-2.557482 12.787408-5.114963 20.459852-7.672444 15.344889-2.557482 30.689778 0 43.477186 10.229926 17.902371 12.787408 25.574815 33.24726 23.017334 53.707112-2.557482 20.459852-17.902371 38.362223-35.804741 46.034667-63.937038 25.574815-122.759113 69.052001-163.678818 122.759113C205.102218 373.392302 179.527402 432.214377 171.854958 493.593933c-7.672445 61.379556 0 122.759113 20.459852 181.581188 30.689778 84.39689 94.626816 156.006373 173.908743 196.926077 48.592149 25.574815 102.299261 38.362223 156.006373 38.362223 43.477186 0 89.511853-7.672445 130.431558-23.017334 35.804741-12.787408 71.609483-33.24726 99.741779-58.822074 28.132297-23.017334 51.14963-53.707112 66.494519-84.396891 7.672445-15.344889 17.902371-33.24726 20.459853-51.14963 15.344889-51.14963 17.902371-107.414224 2.557481-158.563854-12.787408-43.477186-38.362223-81.839409-71.609482-109.971706-15.344889-12.787408-30.689778-25.574815-48.592149-35.804741-15.344889-7.672445-30.689778-15.344889-48.592149-17.902371 12.787408 46.034667 23.017334 92.069335 35.804741 135.546521 2.557482 10.229926 5.114963 23.017334 5.114963 33.24726 2.557482 46.034667-15.344889 94.626816-46.034667 130.431557-28.132297 33.24726-69.052001 58.822075-112.529187 66.49452-46.034667 10.229926-97.184298 0-138.104002-25.574815-38.362223-25.574815-66.49452-63.937038-81.839409-104.856743-7.672445-23.017334-12.787408-48.592149-12.787407-74.166964-2.557482-56.264593 12.787408-109.971705 43.477185-156.006373 35.804741-53.707112 94.626816-92.069335 158.563855-109.971705-5.114963-17.902371-10.229926-35.804741-12.787408-53.707112-12.787408-38.362223-10.229926-81.839409 7.672445-115.086668 10.229926-20.459852 23.017334-38.362223 40.919704-51.149631C583.609483 25.574815 604.069335 12.787408 627.086668 5.114963m-148.333928 414.312006c-17.902371 17.902371-28.132297 40.919704-33.24726 63.937038-5.114963 20.459852-5.114963 43.477186 0 66.49452 5.114963 23.017334 17.902371 46.034667 38.362223 61.379556 15.344889 10.229926 35.804741 15.344889 56.264594 10.229926 35.804741-5.114963 63.937038-38.362223 63.937038-74.166964-2.557482-7.672445-2.557482-17.902371-5.114963-25.574815-12.787408-48.592149-25.574815-99.741779-38.362223-148.333928-30.689778 7.672445-58.822075 23.017334-81.839409 46.034667z" fill="#E72D2C" p-id="3894"></path></svg>
+                        <svg t="1590643823578" class="icon-ncmusic" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3893" width="25" height="25" style="filter: grayscale(1) brightness(2.5)"><path d="M627.086668 5.114963c28.132297-7.672445 58.822075-7.672445 86.954372 0 33.24726 7.672445 63.937038 23.017334 89.511853 43.477186 10.229926 7.672445 17.902371 15.344889 23.017334 28.132297 7.672445 17.902371 5.114963 38.362223-5.114963 53.707112-7.672445 12.787408-23.017334 23.017334-40.919704 25.574815-12.787408 2.557482-25.574815 0-38.362223-7.672445-5.114963-2.557482-10.229926-10.229926-17.902371-12.787407-17.902371-10.229926-35.804741-20.459852-56.264593-17.902371-15.344889 0-28.132297 7.672445-35.804742 17.902371-10.229926 10.229926-12.787408 23.017334-10.229926 35.804741 7.672445 25.574815 12.787408 53.707112 20.459853 79.281927 51.14963 2.557482 99.741779 15.344889 143.218965 40.919704 40.919704 25.574815 79.281927 58.822075 109.971705 97.184298 25.574815 33.24726 46.034667 71.609483 56.264593 112.529187 12.787408 43.477186 17.902371 89.511853 12.787408 132.989039-2.557482 38.362223-10.229926 74.166964-23.017334 109.971705-33.24726 84.39689-92.069335 161.121336-171.351261 209.713485-56.264593 35.804741-122.759113 58.822075-189.253633 66.49452-46.034667 5.114963-92.069335 5.114963-138.104002-2.557482-94.626816-15.344889-181.581188-61.379556-250.633189-130.431558-66.49452-66.49452-112.529187-153.448891-132.989039-245.518225-7.672445-69.052001-7.672445-138.104002 7.672445-207.156004 17.902371-81.839409 61.379556-161.121336 117.644149-222.500892 48.592149-51.14963 107.414224-89.511853 171.351262-117.64415 7.672445-2.557482 12.787408-5.114963 20.459852-7.672444 15.344889-2.557482 30.689778 0 43.477186 10.229926 17.902371 12.787408 25.574815 33.24726 23.017334 53.707112-2.557482 20.459852-17.902371 38.362223-35.804741 46.034667-63.937038 25.574815-122.759113 69.052001-163.678818 122.759113C205.102218 373.392302 179.527402 432.214377 171.854958 493.593933c-7.672445 61.379556 0 122.759113 20.459852 181.581188 30.689778 84.39689 94.626816 156.006373 173.908743 196.926077 48.592149 25.574815 102.299261 38.362223 156.006373 38.362223 43.477186 0 89.511853-7.672445 130.431558-23.017334 35.804741-12.787408 71.609483-33.24726 99.741779-58.822074 28.132297-23.017334 51.14963-53.707112 66.494519-84.396891 7.672445-15.344889 17.902371-33.24726 20.459853-51.14963 15.344889-51.14963 17.902371-107.414224 2.557481-158.563854-12.787408-43.477186-38.362223-81.839409-71.609482-109.971706-15.344889-12.787408-30.689778-25.574815-48.592149-35.804741-15.344889-7.672445-30.689778-15.344889-48.592149-17.902371 12.787408 46.034667 23.017334 92.069335 35.804741 135.546521 2.557482 10.229926 5.114963 23.017334 5.114963 33.24726 2.557482 46.034667-15.344889 94.626816-46.034667 130.431557-28.132297 33.24726-69.052001 58.822075-112.529187 66.49452-46.034667 10.229926-97.184298 0-138.104002-25.574815-38.362223-25.574815-66.49452-63.937038-81.839409-104.856743-7.672445-23.017334-12.787408-48.592149-12.787407-74.166964-2.557482-56.264593 12.787408-109.971705 43.477185-156.006373 35.804741-53.707112 94.626816-92.069335 158.563855-109.971705-5.114963-17.902371-10.229926-35.804741-12.787408-53.707112-12.787408-38.362223-10.229926-81.839409 7.672445-115.086668 10.229926-20.459852 23.017334-38.362223 40.919704-51.149631C583.609483 25.574815 604.069335 12.787408 627.086668 5.114963m-148.333928 414.312006c-17.902371 17.902371-28.132297 40.919704-33.24726 63.937038-5.114963 20.459852-5.114963 43.477186 0 66.49452 5.114963 23.017334 17.902371 46.034667 38.362223 61.379556 15.344889 10.229926 35.804741 15.344889 56.264594 10.229926 35.804741-5.114963 63.937038-38.362223 63.937038-74.166964-2.557482-7.672445-2.557482-17.902371-5.114963-25.574815-12.787408-48.592149-25.574815-99.741779-38.362223-148.333928-30.689778 7.672445-58.822075 23.017334-81.839409 46.034667z" fill="#E72D2C" p-id="3894"></path></svg>
                     </button>
+                    <style>
+                        .icon-kugou, .icon-ncmusic {
+                            transition: all 600ms ease;
+                        }
+                    </style>
                     <script>
                         resultToggle = (name) => {
+                            let header = document.querySelectorAll('.result-header')
+                            let i_k = document.querySelector('.icon-kugou')
+                            let i_n = document.querySelector('.icon-ncmusic')
                             if(name==='kugou') {
-                                document.querySelectorAll('.result-header')[1].style.display = 'none'
-                                document.querySelectorAll('.result-header')[0].style.display = ''
+                                header[1].style.display = 'none'
+                                header[0].style.display = ''
+                                i_k.style.filter = 'grayscale(0) brightness(1)'
+                                i_n.style.filter = 'grayscale(1) brightness(2.5)'
                             } else {
-                                document.querySelectorAll('.result-header')[0].style.display = 'none'
-                                document.querySelectorAll('.result-header')[1].style.display = ''
+                                header[0].style.display = 'none'
+                                header[1].style.display = ''
+                                i_n.style.filter = 'grayscale(0) brightness(1)'
+                                i_k.style.filter = 'grayscale(1) brightness(1.5)'
                             }
                         }
                     </script>
@@ -1205,12 +1221,19 @@
         let str = localStorage.getItem('music')
         music = JSON.parse(decodeURIComponent(atob(str)))
     } else {
-        music = {track1:[{src:'https://webfs.yun.kugou.com/202005291548/06372293289ddc7dc5f428e6310594a3/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3',code:'CA731EA1E9A9C7FF263CD61514920885',cover:'//p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',album_id:'28378420',title:'嘘',subtitle:'电影《罗小黑战记》片尾曲',singer:'艾索',lyric:'./81.lrc'},{src:'https://webfs.yun.kugou.com/202005291552/a36057ce0abe016191ea558983a06be5/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',code:'A9B736C861369BBBCEC698DF97DDE81E',cover:'//p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',album_id:'28214886',title:'走过世界每个角落',subtitle:'电影《罗小黑战记》宣传曲',singer:'周笔畅',lyric:'./82.lrc'},{src:'https://webfs.yun.kugou.com/202005282300/87bdbe398ee4a010ac5610f65453005f/G170/M06/06/15/ipQEAF11056AP2pzADLBs7-quTE491.mp3',code:'41F59F4C1326C635743A4892FCBF6688',cover:'//p3fx.kgimg.com/stdmusic/20190829/20190829142458750431.jpg',album_id:'27818427',title:'不再流浪',subtitle:'电影《罗小黑战记》宣传曲',singer:'周深',lyric:'./83.lrc'}]}
+        music = {track1:[{src:'https://webfs.yun.kugou.com/202005292339/db29fefa3c1d5c74920f77816b15a430/G170/M06/13/04/SocBAF1ySSyAFCVFACISzVt4TmM896.mp3',code:'CA731EA1E9A9C7FF263CD61514920885',timestamp:1590853140000,cover:'//p3fx.kgimg.com/stdmusic/20190906/20190906194502479607.jpg',album_id:'28378420',title:'嘘',subtitle:'电影《罗小黑战记》片尾曲',singer:'艾索',lyric:'./81.lrc'},{src:'https://webfs.yun.kugou.com/202005292339/5a044d3c31528202e1ed4ebf0f6b1f02/G167/M0A/00/15/h5QEAF1uMZOAOL5BADtvWWHuEzQ719.mp3',code:'A9B736C861369BBBCEC698DF97DDE81E',timestamp:1590853140000,cover:'//p3fx.kgimg.com/stdmusic/20190903/20190903171802930123.jpg',album_id:'28214886',title:'走过世界每个角落',subtitle:'电影《罗小黑战记》宣传曲',singer:'周笔畅',lyric:'./82.lrc'},{src:'https://webfs.yun.kugou.com/202005292340/65ead254bc8c6330591240752203405d/G170/M06/06/15/ipQEAF11056AP2pzADLBs7-quTE491.mp3',code:'41F59F4C1326C635743A4892FCBF6688',timestamp:1590853200000,cover:'//p3fx.kgimg.com/stdmusic/20190829/20190829142458750431.jpg',album_id:'27818427',title:'不再流浪',subtitle:'电影《罗小黑战记》宣传曲',singer:'周深',lyric:'./83.lrc'}]}
     }
     let l_progress = document.querySelector('.living-progressBar')
     let n_volumeBar = document.querySelector('.volume-n')
     let i = 0
     let len = music.track1.length
+    function prejudge() {
+        let timestamp = music.track1[i].timestamp
+        let new_stamp = Date.parse(new Date())
+        if(timestamp-60000<=new_stamp) {
+            update(music.track1[i].code)
+        }
+    }
     function change() {
         l_progress.style.width = '0'
         cover.src = music.track1[i].cover
@@ -1220,9 +1243,7 @@
         audio.src = music.track1[i].src
         $('.song-item li').removeClass('active')
         document.querySelectorAll('.song-item li')[i].classList.add('active')
-        if(audio.networkState!==2&&audio.networkState!==3){
-            update(music.track1[i].code)
-        }
+        prejudge()
         i_play.classList.add('disappear')
         audio.play()
     }
@@ -1265,9 +1286,7 @@
         audio.src = music.track1[i].src
         renderSongList()
         watchman()
-        if(audio.networkState!==2&&audio.networkState!==3) {
-            update(music.track1[i].code)
-        }
+        prejudge()
         document.querySelector('.duration').innerText = getTime(audio.duration)
         document.querySelector('.now').innerText = getTime(audio.currentTime)
         parseLrc(i)
@@ -1397,23 +1416,21 @@
         event.stopPropagation()
         console.log(id + ',' + i)
         id = parseInt(id)
-        if (len-1 !== 0) {
+        if (len - 1 !== 0) {
             music.track1.splice(id, 1)
             len--
             if (id === i) {
-                console.log('相等，当前播放：' + i + ',操作序号：' + id)
-                if(i<len){
-                    change()
-                } else {
-                    next(i)
-                }
+                i - 1 >= 0 ? i-- : i = len - 1
+                next(i)
+            } else {
+                i--
             }
             renderSongList(id)
             watchman()
+            storageList()
         } else {
             alert('这是最后一首了喵~')
         }
-        storageList()
     }
     function watchman(){
         let li = Array.from(document.querySelectorAll('.song-item li'))
@@ -1801,6 +1818,19 @@
             $('.result').html('<p  style="line-height:50px;text-align:center;font-size:16px;">您没有输入关键词！！</p>')
         }
     }
+    function toTimestamp(time){
+        function insertStr(source, start, newStr){
+            return source.slice(0, start) + newStr + source.slice(start);
+        }
+        let new_time
+        if(time.length===12){
+            new_time = insertStr(insertStr(insertStr(insertStr(insertStr(time,4,"/"),7,"/"),10," "),13,":"),16,":00")+86400
+        } else if(time.length===14) {
+            new_time = insertStr(insertStr(insertStr(insertStr(insertStr(time,4,"/"),7,"/"),10," "),13,":"),16,":")
+        }
+        let timestamp = new Date(new_time).getTime()
+        return timestamp
+    }
     function getKugou() {
         let kugou = Array.from(document.querySelectorAll('ul[data-id="kugou"] li'))
         kugou.forEach(ele => {
@@ -1829,6 +1859,7 @@
                         let subtitle2_reg
                         let subtitle
                         let lyrics_reg = new RegExp('\\[00[\\s\\S]*')
+                        let timestamp = toTimestamp(url.split('/')[3])+86400000
                         if(data.status === 1){
                             if(url!==''){
                                 let title = data.data.song_name.match(title_reg)===null? data.data.song_name:data.data.song_name.match(title_reg)[0]
@@ -1843,7 +1874,7 @@
                                     subtitle2_reg = new RegExp('\\[ti:([^\\]]*)(?=\\])')
                                     subtitle = data.data.lyrics.match(subtitle_reg)===null? data.data.lyrics.match(subtitle2_reg)[1]:data.data.lyrics.match(subtitle_reg)
                                 }
-                                music.track1.push({src: url, cover: cover, album_id: album_id, title: title, subtitle: subtitle, singer: singer, lyric: lyrics, code: code})
+                                music.track1.push({src: url, code: code, timestamp: timestamp, cover: cover, album_id: album_id, title: title, subtitle: subtitle, singer: singer, lyric: lyrics})
                                 len++
                                 renderSongList()
                                 watchman()
@@ -1870,6 +1901,7 @@
                                     if(data.data.play_url!==''){
                                         let title = data.data.song_name.match(title_reg)===null? data.data.song_name:data.data.song_name.match(title_reg)[0]
                                         url = data.data.play_url
+                                        timestamp = toTimestamp(url.split('/')[3])+86400000
                                         let lyrics = data.data.lyrics===null? '[00:00.01]暂无歌词':data.data.lyrics.match(lyrics_reg)[0]
                                         cover = data.data.img
                                         singer = data.data.author_name
@@ -1886,7 +1918,7 @@
                                             subtitle2_reg = new RegExp('\\[ti:([^\\]]*)(?=\\])')
                                             subtitle = data.data.lyrics.match(subtitle_reg)===null? data.data.lyrics.match(subtitle2_reg)[1]:data.data.lyrics.match(subtitle_reg)
                                         }
-                                        music.track1.push({src: url, cover: cover, album_id: album_id, title: title, subtitle: subtitle, singer: singer, lyric: lyrics, code: code})
+                                        music.track1.push({src: url, code: code, timestamp: timestamp, cover: cover, album_id: album_id, title: title, subtitle: subtitle, singer: singer, lyric: lyrics})
                                         len++
                                         renderSongList()
                                         watchman()
@@ -1923,7 +1955,9 @@
                     async:false,
                     success: function(data){
                         let url = data.data[0].url
-                        obj1 = {src: url, code: id}
+                        let nid = data.data[0].id
+                        let timestamp = toTimestamp(url.split('/')[3])
+                        obj1 = {src: url, code: nid, timestamp: timestamp}
                     }
                 })
                 if(obj1.src!==''){
@@ -2005,13 +2039,14 @@
                 async:false,
                 success: function(data){
                     let url = data.data.play_url
+                    let timestamp = toTimestamp(url.split('/')[3])+86400000
                     if(data.status === 1){
                         if(url!==''){
-                            url = data.data.play_url
                             music.track1[i].src = url
+                            music.track1[i].timestamp = timestamp
                             renderSongList()
                             watchman()
-                            change()
+                            play()
                             storageList()
                         } else {
                             window.alert('客官，您选择的歌曲暂无版权呢~~ >_<')
@@ -2033,10 +2068,12 @@
                             success: function(data){
                                 if(data.data.play_url!==''){
                                     url = data.data.play_url
+                                    timestamp = toTimestamp(url.split('/')[3])+86400000
                                     music.track1[i].src = url
+                                    music.track1[i].timestamp = timestamp
                                     renderSongList()
                                     watchman()
-                                    change()
+                                    play()
                                     storageList()
                                 } else {
                                     window.alert('客官，您选择的歌曲暂无版权呢~~ >_<')
@@ -2060,15 +2097,17 @@
                 async:false,
                 success: function(data){
                     let url = data.data[0].url
-                    obj1 = {src: url}
+                    let timestamp = toTimestamp(url.split('/')[3])
+                    obj1 = {src: url, timestamp: timestamp}
                 }
             })
             if(obj1.src!==''){
                 music.track1[i].src = obj1.src
+                music.track1[i].timestamp = obj1.timestamp
                 obj1 = null
                 renderSongList()
                 watchman()
-                change()
+                play()
                 storageList()
             } else {
                 window.alert('客官，您选择的歌曲暂无版权呢~~ >_<')
