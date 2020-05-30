@@ -1283,13 +1283,26 @@
         title.innerText = music.track1[i].title
         singer.innerText = music.track1[i].singer
         subtitle.innerText = music.track1[i].subtitle
-        audio.src = music.track1[i].src
+        parseLrc(i)
         renderSongList()
         watchman()
-        prejudge()
-        document.querySelector('.duration').innerText = getTime(audio.duration)
-        document.querySelector('.now').innerText = getTime(audio.currentTime)
-        parseLrc(i)
+        if(music.track1[i].timestamp-60000<=Date.parse(new Date())) {
+            update(music.track1[i].code)
+            audio.pause()
+        } else {
+            audio.src = music.track1[i].src
+            document.querySelector('.duration').innerText = getTime(audio.duration)
+            document.querySelector('.now').innerText = getTime(audio.currentTime)
+        }
+        /****
+         * audio.src = music.track1[i].src
+         * renderSongList()
+         * watchman()
+         * prejudge()
+         * document.querySelector('.duration').innerText = getTime(audio.duration)
+         * document.querySelector('.now').innerText = getTime(audio.currentTime)
+         * parseLrc(i)
+         ****/
     }
     audio.addEventListener('loadstart',function () {
         i_pause.classList.add('disappear')
@@ -2050,8 +2063,10 @@
                             watchman()
                             play()
                             storageList()
+                        } else if(url===undefined) {
+                            window.alert('>_< 很抱歉遇到了些问题，该歌曲暂时无法播放')
                         } else {
-                            window.alert('客官，您选择的歌曲暂无版权呢~~ >_<')
+                            window.alert('抱歉，该歌曲因版权问题已暂时下架 >_<')
                         }
                     } else {
                         $.ajax({
@@ -2077,8 +2092,10 @@
                                     watchman()
                                     play()
                                     storageList()
+                                } else if(data.data.play_url===undefined) {
+                                    window.alert('>_< 很抱歉遇到了些问题，该歌曲暂时无法播放')
                                 } else {
-                                    window.alert('客官，您选择的歌曲暂无版权呢~~ >_<')
+                                    window.alert('抱歉，该歌曲因版权问题已暂时下架 >_<')
                                 }
                             }
                         })
@@ -2111,8 +2128,10 @@
                 watchman()
                 play()
                 storageList()
+            } else if(obj1.src===undefined) {
+                window.alert('>_< 很抱歉遇到了些问题，该歌曲暂时无法播放')
             } else {
-                window.alert('客官，您选择的歌曲暂无版权呢~~ >_<')
+                window.alert('抱歉，该歌曲因版权问题已暂时下架 >_<')
             }
         }
     }
