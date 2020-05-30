@@ -1289,6 +1289,8 @@
         if(music.track1[i].timestamp-60000<=Date.parse(new Date())) {
             update(music.track1[i].code)
             audio.pause()
+            document.querySelector('.duration').innerText = getTime(audio.duration)
+            document.querySelector('.now').innerText = getTime(audio.currentTime)
         } else {
             audio.src = music.track1[i].src
             document.querySelector('.duration').innerText = getTime(audio.duration)
