@@ -1957,9 +1957,11 @@
                 let obj3
                 $.ajax({
                     type:"GET",
-                    url:"https://www.apicp.cn/API/wyy/api.php",
+                    url:"https://api.imjad.cn/cloudmusic/?",
                     data:{
-                        id:id
+                        type:'song',
+                        id:id,
+                        br:320000
                     },
                     dataType:"json",
                     async:false,
@@ -2104,9 +2106,11 @@
             let obj1
             $.ajax({
                 type:"GET",
-                url:"https://www.apicp.cn/API/wyy/api.php",
+                url:"https://api.imjad.cn/cloudmusic/?",
                 data:{
-                    id:code
+                    type:'song',
+                    id:code,
+                    br:320000
                 },
                 dataType:"json",
                 async:false,
