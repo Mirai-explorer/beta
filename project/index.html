@@ -1,180 +1,330 @@
 <!doctype html>
-<html lang="zh-Hans">
+<html lang="zh">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-  <title>武汉实时公交</title>
-  <link rel="stylesheet" href="./bus.css"/>
-  <style>
-    html, body, #container {
-      height: 100%;
-      width: 100%;
-    }
-
-    .amap-icon img{
-      width: 25px;
-      height: 34px;
-    }
-
-    #bus-title {
-      font-size: 20px;
-      font-color: black;
-      font-weight: 600;
-    }
-
-    #bus-info {
-      font-size: 16px;
-      font-color: black;
-      font-weight: 500;
-    }
-
-    #detail {
-      font-size: 14px;
-      font-color: black;
-      font-weight: 500;
-    }
-
-  </style>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>智能公交换乘查询系统</title>
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+        #panel {
+            position: fixed;
+            background-color: white;
+            max-height: 92.5%;
+            overflow-y: auto;
+            top: 60px;
+            right: 10px;
+            width: 320px;
+        }
+        #panel .amap-call {
+            background-color: #009cf9;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+        #panel .amap-lib-transfer {
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            overflow: hidden;
+        }
+        .amap-call, .clearfix li {
+            display: none;
+        }
+        :checked ~ .input-item {
+            max-height:666px;
+        }
+        :checked ~ .btn {
+            display: inline-block;
+        }
+        .input-item {
+            max-height:0;
+            overflow:hidden;
+            transition:max-height .3s;
+        }
+        .btn {
+            display: none;
+            transition: display .3s;
+        }
+    </style>
+    <link rel="stylesheet" href="./map.css" />
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=e1e4bccba104b1457b60a12b0584acaa&plugin=AMap.Transfer,AMap.AutoComplete"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
 <div id="container"></div>
-<div class="input-card">
-  <h4>地图自适应</h4>
-  <input id="setFitView" type="button" class="btn" value="地图自适应显示" />
-  <input id="refresh" type="button" class="btn" value="刷新" />
-  <select id="select">
-    <option value="" data-dir="0">上行</option>
-    <option value="" data-dir="1">下行</option>
-  </select>
-  <input id="bus-num" type="text" class="num" value="" />
-  <input id="search" type="button" class="btn" value="搜索" />
-</div>
+<div id="panel"></div>
 <div class="info">
-  <div id="centerCoord"></div>
-  <div id="tips"></div>
+    <input id="check" type="checkbox" class="check" value="显示/隐藏" checked/>
+    <div class="input-item">
+        <div class="input-item-prepend">
+            <span class="input-item-text" style="width:4rem;">起点</span>
+        </div>
+        <input id='start' type="text">
+    </div>
+    <div class="input-item">
+        <div class="input-item-prepend">
+            <span class="input-item-text" style="width:4rem;">终点</span>
+        </div>
+        <input id='end' type="text">
+    </div>
+    <div class="input-item">
+        <div class="input-item-prepend">
+            <span class="input-item-text">乘车偏好</span>
+        </div>
+        <select id="policy">
+            <option value='0'>最快到达</option>
+            <option value='1'>花费最省</option>
+            <option value='2'>最少换乘</option>
+            <option value='3'>最少步行</option>
+            <option value='4'>最舒适</option>
+            <option value='5'>不乘地铁</option>
+        </select>
+    </div>
+    <input id="search" type="button" class="btn" value="查询" />
+    <input id="use-l" type="button" class="btn" value="使用当前位置" />
+    <input id="traffic" type="button" class="btn" value="实时路况" onclick="toggle()" />
+    <div class="input-item">
+        <div class="input-item-prepend">
+            <span class="input-item-text" style="width:4rem;">方向</span>
+        </div>
+        <select id="select">
+            <option value="" data-dir="0">上行</option>
+            <option value="" data-dir="1">下行</option>
+        </select>
+    </div>
+    <div class="input-item">
+        <div class="input-item-prepend">
+            <span class="input-item-text">线路号</span>
+        </div>
+        <input id="bus-num" type="text" class="num" value="" />
+    </div>
+    <div class="bus-info" id="bus-info">
+        <div id="tips"></div>
+    </div>
+    <input id="sss" type="button" class="btn" value="搜索" />
+    <input id="refresh" type="button" class="btn" value="刷新位置" />
+    <input id="clear" type="button" class="btn" value="清空" onclick="clearInfo()" />
 </div>
-<script type="text/javascript" src="//webapi.amap.com/maps?v=1.4.15&key=01879f83f7b83834ea4e3f975b759c64"></script>
 <script type="text/javascript">
-  function query(callback) {
-    let num = $("#bus-num").val()
-    let dir = $("#select option:selected").attr("data-dir")
-    $.ajax({
-      async: false,
-      url: "https://bird.ioliu.cn/v1?url=http://bus.wuhancloud.cn:9087/website/web/420100/search.do",
-      type: "GET",
-      data: {"keyword":num,"type":"line"},
-      success: function (str) {
-        var id = str.data.lines[dir].lineId
-        $.ajax({
-          async: false,
-          url: "https://bird.ioliu.cn/v1?url=http://bus.wuhancloud.cn:9087/website/web/420100/line/"+id+".do",
-          type: "GET",
-          data: {"Type":"LineDetail"},
-          success: function (str) {
-            var buses = str.data.buses
-            var stops = str.data.stops
-            var direction = new Array()
-            direction[0] = "上行"
-            direction[1] = "下行"
-            console.log(str.data.lineName+"路（"+str.data.startStopName+"→"+str.data.endStopName+"）")
-            console.log("运营时间："+str.data.firstTime+"~"+str.data.lastTime+"，票价："+str.data.price+"，站点数："+str.data.stopsNum+"，行车方向："+direction[str.data.direction])
-            $('#tips').append("<p id='bus-title'>"+str.data.lineName+"路（"+str.data.startStopName+"→"+str.data.endStopName+"）</p>")
-            $('#tips').append("<p id='bus-info'>运营时间："+str.data.firstTime+"~"+str.data.lastTime+"&nbsp;&nbsp;票价："+str.data.price+"元</p>")
-            var state = new Array()
-            state[0] = "即将到站"
-            state[1] = "到达本站"
-            if(buses.length != 0 ){
-              var coord = [];
-              for(var i = 0;i < buses.length;i++){
-                var a = buses[i].split('|')
-                if(stops[a[2]-1]!=undefined) {
-                  console.log("车号：" + a[0] + "，下一站：" + stops[a[2]-1].stopName + "，状态：" + state[a[3]] + "，当前位置：[" + a[4] + "," + a[5] + "]")
-                  $('#tips').append("<p id='detail'>车号：" + a[0] + "，下一站：" + stops[a[2]-1].stopName + "，状态：" + state[a[3]] + "</p>")
-                } else {
-                  console.log("车号：" + a[0] + "，已抵达终到站，状态：" + state[a[3]] + "，当前位置：[" + a[4] + "," + a[5] + "]")
-                  $('#tips').append("<p id='detail'>车号：" + a[0] + "，已抵达终到站，状态：" + state[a[3]] + "</p>")
-                }
-                coord.push([a[4],a[5]])
-              }
-              callback(coord)
+    var map = new AMap.Map("container", {
+        resizeEnable: true,
+        center: [116.397428, 39.90923]
+    });
+    //实时路况图层
+    var trafficLayer = new AMap.TileLayer.Traffic({
+        zIndex: 10,
+        zooms: [7, 22],
+        visible: false,
+    });
+
+    trafficLayer.setMap(map);
+
+    var isVisible = true;
+    function toggle() {
+        if (isVisible) {
+            trafficLayer.hide();
+            isVisible = false;
+        } else {
+            trafficLayer.show();
+            isVisible = true;
+        }
+    }
+    var policy;
+    switch (parseInt(document.getElementById('policy').value)) {
+        case 0:
+            policy = AMap.TransferPolicy.LEAST_TIME;
+            break;
+        case 1:
+            policy = AMap.TransferPolicy.LEAST_FEE;
+            break;
+        case 2:
+            policy = AMap.TransferPolicy.TRANSFER;
+            break;
+        case 3:
+            policy = AMap.TransferPolicy.LEAST_WALK;
+            break;
+        case 4:
+            policy = AMap.TransferPolicy.MOST_COMFORT;
+            break;
+        case 5:
+            policy = AMap.TransferPolicy.NO_SUBWAY;
+            break;
+    }
+    var transerOption = {
+        map: map,
+        city: '武汉市',
+        panel: 'panel',
+        policy: policy //乘车策略
+    };
+    //构造公交换乘类
+    var transfer = new AMap.Transfer(transerOption);
+    //根据起、终点名称查询公交换乘路线
+    function routeSearch() {
+        var startKeyWord  = document.getElementById('start').value
+        var endKeyWord  = document.getElementById('end').value
+        if(!startKeyWord && !endKeyWord) return
+        transfer.search([
+            {keyword: startKeyWord,city:'武汉'},
+            //第一个元素city缺省时取transOptions的city属性
+            {keyword: endKeyWord,city:'武汉'}
+            //第二个元素city缺省时取transOptions的cityd属性
+        ], function(status, result) {
+            // result即是对应的公交路线数据信息
+            if (status === 'complete') {
+                log.success('绘制公交路线完成')
             } else {
-              console.log("暂无待发车辆或当前非运营时间")
-              $('#tips').append("<p id='detail'>暂无待发车辆或当前非运营时间</p>")
+                log.error('公交路线数据查询失败' + result)
             }
-          }
-        })
-      }
-    });
-  }
-  var map = new AMap.Map('container', {
-    resizeEnable: true,
-    center: [114.355799,30.561318],
-    zoom: 13
-  });
-
-  map.clearMap();  // 清除地图覆盖物
-
-  function mark(callback2) {
-    query(function (coordinates) {
-      var markers = [];
-      for(var i = 0;i < coordinates.length;i++) {
-        markers.push({icon: 'https://mirai-explorer.github.io/service/icons/poi-marker-'+(i+1)+'.png', position: coordinates[i]})
-      }
-      callback2(markers)
-    })
-  }
-
-  // 添加一些分布不均的点到地图上,地图上添加三个点标记，作为参照
-  function addPins() {
-    mark(function (markers) {
-      markers.forEach(function (marker) {
-        console.log(markers)
-        new AMap.Marker({
-          map: map,
-          icon: marker.icon,
-          position: [marker.position[0], marker.position[1]],
-          offset: new AMap.Pixel(-13, -30)
         });
-      });
-    })
-  }
+    }
+    document.getElementById('search').onclick = routeSearch;
+    AMap.plugin('AMap.Geolocation', function() {
+        var geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            timeout: 10000,          //超过10秒后停止定位，默认：5s
+            position:'LB',    //定位按钮的停靠位置
+            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            zoomToAccuracy: true,   //定位成功后是否自动调整地图视野到定位点
 
-  function onCenter() {
-    var center = map.getCenter();
-
-    var centerText = '当前中心点坐标：' + center.getLng() + ',' + center.getLat();
-    document.getElementById('centerCoord').innerHTML = centerText;
-
-    // 添加事件监听, 使地图自适应显示到合适的范围
-    AMap.event.addDomListener(document.getElementById('setFitView'), 'click', function() {
-      var newCenter = map.setFitView();
-      document.getElementById('centerCoord').innerHTML = '当前中心点坐标：' + newCenter.getCenter();
+        });
+        map.addControl(geolocation);
+        geolocation.getCurrentPosition(function(status,result){
+            if(status=='complete'){
+                onComplete(result)
+            }else{
+                onError(result)
+            }
+        });
     });
-  }
-  onCenter();
+    //解析定位结果
+    function onComplete(data) {
+        log.success('定位成功');
+    }
+    //解析定位错误信息
+    function onError(data) {
+        log.success('定位失败，错误信息：'+data.message);
+    }
 
-  function localInitial(){
-    $('#tips').empty()
-    map.clearMap()
-    addPins()
-    onCenter()
-  }
+    var start = new AMap.Autocomplete({
+        input: "start"
+    });
+    var end = new AMap.Autocomplete({
+        input: "end"
+    });
 
-  $('#select').on('change',function(){
-    let num = $("#bus-num").val()
-    let dir = $("#select option:selected").attr("data-dir")
-    localInitial()
-  })
+    function clearInfo(){
+        var p = $('#tips');
+        p.html('');
+        map.clearMap();
+    }
+    function query(callback) {
+        let num = $("#bus-num").val()
+        let dir = $("#select option:selected").attr("data-dir")
+        $.ajax({
+            async: false,
+            url: "https://bird.ioliu.cn/v1?url=http://bus.wuhancloud.cn:9087/website/web/420100/search.do",
+            type: "GET",
+            data: {"keyword":num,"type":"line"},
+            success: function (str) {
+                var id = str.data.lines[dir].lineId
+                $.ajax({
+                    async: false,
+                    url: "https://bird.ioliu.cn/v1?url=http://bus.wuhancloud.cn:9087/website/web/420100/line/"+id+".do",
+                    type: "GET",
+                    data: {"Type":"LineDetail"},
+                    success: function (str) {
+                        var buses = str.data.buses
+                        var stops = str.data.stops
+                        var direction = new Array()
+                        direction[0] = "上行"
+                        direction[1] = "下行"
+                        console.log(str.data.lineName+"路（"+str.data.startStopName+"→"+str.data.endStopName+"）")
+                        console.log("运营时间："+str.data.firstTime+"~"+str.data.lastTime+"，票价："+str.data.price+"，站点数："+str.data.stopsNum+"，行车方向："+direction[str.data.direction])
+                        $('#tips').append("<p id='bus-title'>"+str.data.lineName+"路（"+str.data.startStopName+"→"+str.data.endStopName+"）</p>")
+                        $('#tips').append("<p id='bus-info'>运营时间："+str.data.firstTime+"~"+str.data.lastTime+"&nbsp;&nbsp;票价："+str.data.price+"</p>")
+                        var state = new Array()
+                        state[0] = "即将到站"
+                        state[1] = "到达本站"
+                        if(buses.length != 0 ){
+                            var coord = [];
+                            for(var i = 0;i < buses.length;i++){
+                                var a = buses[i].split('|')
+                                if(stops[a[2]-1]!=undefined) {
+                                    console.log("车号：" + a[0] + "，下一站：" + stops[a[2]-1].stopName + "，状态：" + state[a[3]] + "，当前位置：[" + a[4] + "," + a[5] + "]")
+                                    $('#tips').append("<p id='detail'>车号：" + a[0] + "，下一站：" + stops[a[2]-1].stopName + "，状态：" + state[a[3]] + "</p>")
+                                } else {
+                                    console.log("车号：" + a[0] + "，已抵达终到站，状态：" + state[a[3]] + "，当前位置：[" + a[4] + "," + a[5] + "]")
+                                    $('#tips').append("<p id='detail'>车号：" + a[0] + "，已抵达终到站，状态：" + state[a[3]] + "</p>")
+                                }
+                                coord.push([a[4],a[5]])
+                            }
+                            callback(coord)
+                        } else {
+                            console.log("暂无待发车辆或当前非运营时间")
+                            $('#tips').append("<p id='detail'>暂无待发车辆或当前非运营时间</p>")
+                        }
+                    }
+                })
+            }
+        });
+    }
 
-  $('#refresh').on('click',function(){
-    localInitial()
-  })
+    function mark(callback2) {
+        query(function (coordinates) {
+            var markers = [];
+            for(var i = 0;i < coordinates.length;i++) {
+                markers.push({icon: 'https://mirai-explorer.github.io/service/icons/poi-marker-'+(i+1)+'.png', position: coordinates[i]})
+            }
+            callback2(markers)
+        })
+    }
 
-  $('#search').on('click',function(){
-    localInitial()
-  });
+    // 添加一些分布不均的点到地图上,地图上添加三个点标记，作为参照
+    function addPins() {
+        mark(function (markers) {
+            markers.forEach(function (marker) {
+                console.log(markers)
+                new AMap.Marker({
+                    map: map,
+                    icon: marker.icon,
+                    position: [marker.position[0], marker.position[1]],
+                    offset: new AMap.Pixel(-13, -30)
+                });
+            });
+        })
+    }
+
+    function onCenter() {
+        var center = map.getCenter();
+    }
+    onCenter();
+
+    function localInitial(){
+        $('#tips').empty()
+        map.clearMap()
+        addPins()
+        onCenter()
+    }
+
+    $('#select').on('change',function(){
+        let num = $("#bus-num").val()
+        let dir = $("#select option:selected").attr("data-dir")
+        localInitial()
+    })
+
+    $('#refresh').on('click',function(){
+        localInitial()
+    })
+
+    $('#sss').on('click',function(){
+        localInitial()
+    });
 </script>
 </body>
 </html>
