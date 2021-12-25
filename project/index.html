@@ -228,14 +228,14 @@
         let dir = $("#select option:selected").attr("data-dir")
         $.ajax({
             async: false,
-            url: "https://bird.ioliu.cn/v1?url=http://bus.wuhancloud.cn:9087/website/web/420100/search.do",
+            url: "http://bus.wuhancloud.cn:9087/website/web/420100/search.do",
             type: "GET",
             data: {"keyword":num,"type":"line"},
             success: function (str) {
                 var id = str.data.lines[dir].lineId
                 $.ajax({
                     async: false,
-                    url: "https://bird.ioliu.cn/v1?url=http://bus.wuhancloud.cn:9087/website/web/420100/line/"+id+".do",
+                    url: "http://bus.wuhancloud.cn:9087/website/web/420100/line/"+id+".do",
                     type: "GET",
                     data: {"Type":"LineDetail"},
                     success: function (str) {
