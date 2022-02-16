@@ -10,8 +10,14 @@
 				background-color: #fffcf2;
 			}
 			.title {
-				margin: 10px 0;
-				font-weight: bold;
+                                box-sizing:border-box;
+                                max-width:900px;
+                                max-height:240px;
+                                font-size:22px;
+                                padding-top:20px;
+                                overflow:hidden;
+                                background:no-repeat center top / 100% 100%;
+                                background-image:linear-gradient(to top, rgba(255,255,255,1), rgba(255,255,255,0)), url('../../src/headimg.jpg');
 			}
 			.tl {
 				font-size: 27px;
@@ -39,8 +45,6 @@
 	<body>
 		<div class="container">
 			<div class="title">
-				<p class="tl">兰德索尔智力竞赛连结</p>
-				<p class="stl">ランドソルクイズコネクト！</p>
 			</div>
 			<p class="select">请选择难度</p>
 			<p>
