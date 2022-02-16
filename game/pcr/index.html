@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Sample</title>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+		<style>
+			body {
+				background-color: #fffcf2;
+			}
+			.title {
+				margin: 20px 0;
+				font-size: 2rem;
+				font-weight: bold;
+			}
+			input {
+				border: 1px solid var(--orange);
+			}
+			input:focus {
+				outline: none;
+				border: 2px solid var(--orange);
+			}
+			td:last-child {
+				color: var(--orange);
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<p class="title">兰德索尔智力连结　ランドソルクイズコネクト！</p>
+			<p>
+				<button id="normal" class="btn btn-success">NORMAL</button>
+				<button id="hard" class="btn btn-warning">HARD</button>
+				<button id="veryhard" class="btn btn-danger">VERY HARD</button>
+			</p>
+			<table id="mainTable" class="table table-striped sampleTable">
+			</table>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		<script src="../src/fancyTable.js"></script>
+		<script type="text/javascript">
+			var data = "";
+			var str = "";
+			function getData() {
+				$.ajax({
+				type:"get",
+				url:"https://unicorn.js.org/data/source.json",
+				dataType:"json",
+				success:function(dataob) {
+					data = dataob;
+				},
+				error:function() {
+					alert("数据请求失败");
+				},
+				async:false
+			});
+			}
+			$(document).ready(function() {
+				// And a simple one
+				getData();
+				for(var i=0;i<data.length;i++){
+					str += "<tr><td>"+data[i].taq_no+"</td><td>"+data[i].genre+"</td><td>"+data[i].detail+"</td><td>"+data[i].detail_2+"</td><td>"+data[i].word+"</td></tr>";
+                			}
+                			$("#mainTable").html(str);
+				// And make them fancy
+				var fancyTableA = $("#sampleTableA").fancyTable({
+					sortColumn:0,
+					pagination: true,
+					perPage:5,
+					globalSearch:true
+				});
+				$("#mainTable").fancyTable({
+					pagination: true,
+					perPage:10
+				});
+			});
+		</script>
+	</body>
+</html>
