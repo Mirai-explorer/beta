@@ -224,6 +224,7 @@
 					$(elm).find("td").first().parent().find("td").each(function() {
 						elm.fancyTable.searchArr.push("");
 						var searchField = $("<input>",{
+							"lang": "zh-CN",
 							"aria-label": "Search column",
 							"data-n": nInputElm,
 							"placeholder": settings.inputPlaceholder,
