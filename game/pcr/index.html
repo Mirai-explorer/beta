@@ -32,14 +32,19 @@
 			.modal {
 				display: none;
 				position: fixed;
-				top: 0;
-				left: 0;
+				top: calc((100vh - 300px)/2);
+				left: calc((100vw - 300px)/2);
 				right: 0;
 				bottom: 0;
 				background: white;
 			}
 			.modal:target {
 				display: block;
+				width: 300px;
+				height: 300px;
+				padding: 20px;
+				border-left: 6px solid #2196F3;
+				background-color: #ddffff;
 			}
 			input {
 				border: 1px solid var(--orange);
@@ -85,13 +90,13 @@
 			</table>
 			<p lang="zh-CN">数据来源：感谢NGA<a href="https://bbs.nga.cn/read.php?tid=30680031">@uid:753955</a>解包</p>
 		</div>
-		<div class="modal" id="modal">
-			<p>类别1为战斗·体育类题目</p>
-			<p>类别2为语言·故事类题目</p>
-			<p>类别3为文化·杂学类题目</p>
-			<p>类别4为科学·地理·数学类题目</p>
-			<p>类别5为美食·生活类题目</p>
-			<p>类别6为人·生物类题目</p>
+		<div class="modal" id="modal" lang="zh-CN">
+			<p>1:战斗·体育类</p>
+			<p>2:语言·故事类</p>
+			<p>3:文化·杂学类</p>
+			<p>4:科学·地理·数学类</p>
+			<p>5:为美食·生活类</p>
+			<p>6:人·生物类</p>
 			<a href="#">关闭</a>
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
