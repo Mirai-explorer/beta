@@ -15,45 +15,174 @@
                                 
 			}
 			.title {
-                                box-sizing:border-box;
-                                width:100%;
-                                max-width:900px;
-				margin-top:.5rem;
-                                padding-top:24%;
-                                overflow:hidden;
-                                background:no-repeat 0% 56% / cover;
-                                background-image:url('../../src/headimg.jpg');
+				box-sizing: border-box;
+				width: 100%;
+				max-width: 900px;
+				margin-top: .5rem;
+				padding-top: 24%;
+				overflow: hidden;
+				background: url('../../src/headimg.jpg') no-repeat 0 56%;
 			}
+
 			.select {
-			        font-weight: bold;
+				font-weight: bold;
 			}
+
 			.container p {
 				margin: .5rem 0;
 			}
-			.modal {
-				display: none;
+
+			dialog {
+				border: 2px solid #745691;
+				border-radius: 5px;
+				background-color: #FFFFFF;
+				padding: 0;
+				width: 90%;
+				max-width: 350px;
+			}
+
+			dialog::backdrop {
 				position: fixed;
-				top: calc((100vh - 300px)/2);
-				left: calc((100vw - 300px)/2);
-				right: 0;
-				bottom: 0;
-				background: white;
+				top: 0px;
+				right: 0px;
+				bottom: 0px;
+				left: 0px;
+				background: rgba(0, 0, 0, 0.1);
 			}
-			.modal:target {
-				display: block;
-				width: 300px;
-				height: 300px;
-				padding: 20px;
-				border-left: 6px solid #2196F3;
-				background-color: #ddffff;
+
+			form {
+				margin: 0;
 			}
+
+			.d-header {
+				box-sizing: inherit;
+				background-color: #745691;
+				padding: 5px 20px;
+			}
+
+			.d-header h1 {
+				color: white;
+				font-weight: bold;
+				font-size: 24px;
+				margin: 15px 10px;
+			}
+
+			.type {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+			}
+
+			.type div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 16px;
+				margin: 12px 8px;
+				width: 80px;
+				height: 80px;
+				border-radius: 5px;
+			}
+
+			.type div:nth-child(1) {
+				color: #337AB7;
+				border: 2px solid #337AB7;
+				background-color: #337AB74F;
+			}
+
+			.type div:nth-child(2) {
+				color: #008000;
+				border: 2px solid #008000;
+				background-color: #0080004F;
+			}
+
+			.type div:nth-child(3) {
+				color: #FDB127;
+				border: 2px solid #FDB127;
+				background-color: #FDB1274F;
+			}
+
+			.type div:nth-child(4) {
+				color: #800080;
+				border: 2px solid #800080;
+				background-color: #8000804F;
+			}
+
+			.type div:nth-child(5) {
+				color: #31708F;
+				border: 2px solid #31708F;
+				background-color: #31708F4F;
+			}
+
+			.type div:nth-child(6) {
+				color: #FFC0CB;
+				border: 2px solid #FFC0CB;
+				background-color: #FFC0CB4F;
+			}
+
+			menu {
+				padding: 10px 20px;
+				margin: 0;
+				display: flex;
+				justify-content: right;
+				align-items: center;
+				background-color: #F0F0F0;
+			}
+
+			menu button {
+				border: none;
+				border-radius: 5px;
+				background-color: #745691;
+				width: 80px;
+				height: 36px;
+				color: white;
+				transition: all 0.3s ease-out;
+			}
+
+			menu button:hover {
+				border: none;
+				background-color: #6d4099;
+				transition: all 0.3s ease-in;
+			}
+
+			menu button:focus {
+				outline: none;
+			}
+
+			.waves {
+				position: relative;
+				cursor: pointer;
+				display: inline-block;
+				overflow: hidden;
+				text-align: center;
+				-webkit-tap-highlight-color: transparent;
+				z-index: 1;
+			}
+
+			.waves .waves-animation {
+				position: absolute;
+				border-radius: 50%;
+				width: 25px;
+				height: 25px;
+				opacity: 0;
+				background: rgba(255, 255, 255, 0.2);
+				transition: all 0.7s ease-out;
+				transition-property: transform, opacity, -webkit-transform;
+				-webkit-transform: scale(0);
+				transform: scale(0);
+				pointer-events: none
+			}
+
 			input {
 				border: 1px solid var(--orange);
 			}
+
 			input:focus {
 				outline: none;
 				border: 2px solid var(--orange);
 			}
+
 			td:last-child {
 				font-weight: bold;
 			}
@@ -80,7 +209,7 @@
 				<thead>
 					<tr>
 						<th>序号</th>
-						<th><a href="#modal">类别（查看说明）</a></th>
+						<th><a href="#" onclick="modal.showModal()">类别（查看说明）</a></th>
 						<th>问题</th>
 						<th>题干</th>
 						<th>答案</th>
@@ -91,27 +220,38 @@
 			</table>
 			<p lang="zh-CN">数据来源：感谢NGA<a href="https://bbs.nga.cn/read.php?tid=30680031">@uid:753955</a>解包</p>
 		</div>
-		<div class="modal" id="modal" lang="zh-CN">
-			<p>1:战斗·体育类</p>
-			<p>2:语言·故事类</p>
-			<p>3:文化·杂学类</p>
-			<p>4:科学·地理·数学类</p>
-			<p>5:美食·生活类</p>
-			<p>6:人·生物类</p>
-			<a href="#">关闭</a>
-		</div>
+		<dialog id="modal">
+			<form lang="zh-CN" method="dialog">
+				<header class="d-header">
+					<h1>分类说明</h1>
+				</header>
+				<div class="type">
+					<div>战斗<br/>体育</div>
+					<div>语言<br/>故事</div>
+					<div>文化<br/>杂学</div>
+					<div>科学<br/>地理<br/>数学</div>
+					<div>美食<br/>生活</div>
+					<div>人<br/>生物</div>
+				</div>
+				<menu>
+					<button class="waves" value="close">关闭</button>
+				</menu>
+			</form>
+		</dialog>
 		<script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+		<script crossorigin="anonymous"
+				src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
 		<script src="../../src/js/fancyTable.js"></script>
 		<script type="text/javascript">
 			function renderTable() {
-				var str = "";
-				for(var i=0;i<data.length;i++){
-					str += "<tr data-type="+data[i].genre+"><td>"+data[i].taq_no+"</td><td>"+data[i].genre+"</td><td>"+data[i].detail+"</td><td>"+data[i].detail_2+"</td><td>"+data[i].word+"</td></tr>";
-                			}
-                			$("#mainTable").html(str);
+				let str = "";
+				for (let i = 0; i < data.length; i++) {
+					str += "<tr data-type=" + data[i].genre + "><td>" + data[i].taq_no + "</td><td>" + data[i].genre + "</td><td>" + data[i].detail + "</td><td>" + data[i].detail_2 + "</td><td>" + data[i].word + "</td></tr>";
+				}
+				$("#mainTable").html(str);
 			}
-			$(document).ready(function() {
+
+			$(document).ready(function () {
 				$("#normal").on("click",function() {
 					$.ajax({
 						type:"get",
@@ -161,15 +301,93 @@
 						error:function() {
 							alert("数据请求失败");
 						},
-						async:false
+						async: false
 					});
 					renderTable();
 					$("#mainTable").fancyTable({
 						pagination: true,
-						perPage:10
+						perPage: 10
 					});
 				});
 			});
+			document.addEventListener('DOMContentLoaded', function () {
+				var duration = 750;
+				// 样式string拼凑
+				var forStyle = function (position) {
+					var cssStr = '';
+					for (var key in position) {
+						if (position.hasOwnProperty(key)) cssStr += key + ':' + position[key] + ';';
+					}
+					;
+					return cssStr;
+				}
+
+				// 获取鼠标点击位置
+				var forRect = function (target) {
+					var position = {
+						top: 0,
+						left: 0
+					}, ele = document.documentElement;
+					'undefined' != typeof target.getBoundingClientRect && (position = target.getBoundingClientRect());
+					return {
+						top: position.top + window.pageYOffset - ele.clientTop,
+						left: position.left + window.pageXOffset - ele.clientLeft
+					}
+				}
+
+				var show = function (event) {
+					var pDiv = event.target,
+							cDiv = document.createElement('div');
+					pDiv.appendChild(cDiv);
+					var rectObj = forRect(pDiv),
+							_height = event.pageY - rectObj.top,
+							_left = event.pageX - rectObj.left,
+							_scale = 'scale(' + pDiv.clientWidth / 100 * 10 + ')';
+					var position = {
+						top: _height + 'px',
+						left: _left + 'px'
+					};
+					cDiv.className = cDiv.className + " waves-animation",
+							cDiv.setAttribute("style", forStyle(position)),
+							position["-webkit-transform"] = _scale,
+							position["-moz-transform"] = _scale,
+							position["-ms-transform"] = _scale,
+							position["-o-transform"] = _scale,
+							position.transform = _scale,
+							position.opacity = "1",
+							position["-webkit-transition-duration"] = duration + "ms",
+							position["-moz-transition-duration"] = duration + "ms",
+							position["-o-transition-duration"] = duration + "ms",
+							position["transition-duration"] = duration + "ms",
+							position["-webkit-transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)",
+							position["-moz-transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)",
+							position["-o-transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)",
+							position["transition-timing-function"] = "cubic-bezier(0.250, 0.460, 0.450, 0.940)",
+							cDiv.setAttribute("style", forStyle(position));
+					var finishStyle = {
+						opacity: 0,
+						"-webkit-transition-duration": duration + "ms",
+						"-moz-transition-duration": duration + "ms",
+						"-o-transition-duration": duration + "ms",
+						"transition-duration": duration + "ms",
+						"-webkit-transform": _scale,
+						"-moz-transform": _scale,
+						"-ms-transform": _scale,
+						"-o-transform": _scale,
+						top: _height + "px",
+						left: _left + "px",
+					};
+					setTimeout(function () {
+						cDiv.setAttribute("style", forStyle(finishStyle));
+						setTimeout(function () {
+							pDiv.removeChild(cDiv);
+						}, duration);
+					}, 100)
+				}
+				document.querySelector('.waves').addEventListener('click', function (e) {
+					show(e);
+				}, !1);
+			}, !1);
 		</script>
 	</body>
 </html>
