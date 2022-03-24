@@ -1,10 +1,420 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Title</title>
+    <style>
+        :root {
+            --orange-d: #D47920;
+            --orange-m: #E18B24;
+            --orange-l: #F89E2C;
+            --orange-bg: #F89E2C0D;
+            --red-d: #CB4949;
+            --red-m: #D65452;
+            --red-l: #F87271;
+            --red-bg: #F872710D;
+            --blue-d: #3464B6;
+            --blue-m: #4474C6;
+            --blue-l: #5086DE;
+            --blue-bg: #5086DE0D;
+            --purple-d: #7148A4;
+            --purple-m: #9564CF;
+            --purple-l: #9F6ADC;
+            --purple-bg: #9F6ADC0D;
+            --green-d: #3C9A39;
+            --green-m: #56B24F;
+            --green-l: #61BF5E;
+            --green-bg: #61BF5E0D;
+            --cyan-d: #298AB7;
+            --cyan-m: #46B2D8;
+            --cyan-l: #4BBFE4;
+            --cyan-bg: #4BBFE40D;
+            --zoom: 0.5;
+        }
+
+        *, ::after, ::before {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "PingFang SC";
+            background-color: #fffcf2;
+        }
+
+        ex-card {
+            display: flex;
+            flex-direction: column;
+            width: calc(800px * var(--zoom));
+            height: calc(360px * var(--zoom));
+            max-width: calc(100vw - 30px);
+            border-radius: 2px;
+            /* border: 2px solid; */
+            margin: 5px 0;
+            box-shadow: 1px 1px 4px 2px #cccccc;
+        }
+
+        .orange {
+            border-color: var(--orange-d);
+            background-color: var(--orange-bg);
+        }
+
+        .orange .genre, .orange .answer {
+            color: var(--orange-d);
+        }
+
+        .orange .question {
+            background-image: linear-gradient(45deg, var(--orange-d) 0, var(--orange-m) 45%, var(--orange-l) 100%);
+        }
+
+        .red {
+            border-color: var(--red-d);
+            background-color: var(--red-bg);
+        }
+
+        .red .genre, .red .answer {
+            color: var(--red-d);
+        }
+
+        .red .question {
+            background-image: linear-gradient(45deg, var(--red-d) 0, var(--red-m) 33.3%, var(--red-l) 100%);
+        }
+
+        .blue {
+            border-color: var(--blue-d);
+            background-color: var(--blue-bg);
+        }
+
+        .blue .genre, .blue .answer {
+            color: var(--blue-d);
+        }
+
+        .blue .question {
+            background-image: linear-gradient(45deg, var(--blue-d), var(--blue-m), var(--blue-l));
+        }
+
+        .purple {
+            border-color: var(--purple-d);
+            background-color: var(--purple-bg);
+        }
+
+        .purple .genre, .purple .answer {
+            color: var(--purple-d);
+        }
+
+        .purple .question {
+            background-image: linear-gradient(45deg, var(--purple-d), var(--purple-m), var(--purple-l));
+        }
+
+        .green {
+            border-color: var(--green-d);
+            background-color: var(--green-bg);
+        }
+
+        .green .genre, .green .answer {
+            color: var(--green-d);
+        }
+
+        .green .question {
+            background-image: linear-gradient(45deg, var(--green-d) 0, var(--green-m) 33.3%, var(--green-l) 100%);
+        }
+
+        .cyan {
+            border-color: var(--cyan-d);
+            background-color: var(--cyan-bg);
+        }
+
+        .cyan .genre, .cyan .answer {
+            color: var(--cyan-d);
+        }
+
+        .cyan .question {
+            background-image: linear-gradient(45deg, var(--cyan-d) 0, var(--cyan-m) 33.3%, var(--cyan-l) 100%);
+        }
+
+        .container {
+            display: grid;
+            align-content: center;
+            justify-content: center;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .genre {
+            display: inline-flex;
+            justify-content: space-between;
+            line-height: calc(40px * var(--zoom));
+            padding: 0 10px;
+            font-size: calc(20px * var(--zoom));
+        }
+
+        .question {
+            color: #FFFFFF;
+            font-size: calc(30px * var(--zoom));
+            padding: 0 10px;
+            display: inline-flex;
+            align-items: center;
+            line-height: calc(60px * var(--zoom));
+        }
+
+        .content {
+
+        }
+
+        .core {
+            padding: 0 calc(50px * var(--zoom));
+            font-size: calc(35px * var(--zoom));
+            margin-top: calc(20px * var(--zoom));
+            margin-bottom: calc(10px * var(--zoom));
+        }
+
+        .answer {
+            font-family: "Meiryo";
+            font-weight: bold;
+            padding: 0 calc(50px * var(--zoom));
+            font-size: calc(60px * var(--zoom));
+            text-align: center;
+        }
+
+        footer {
+            display: inline-flex;
+            justify-content: space-between;
+            line-height: calc(30px * var(--zoom));
+            padding: 0 10px;
+            font-size: calc(20px * var(--zoom));
+        }
+    </style>
 </head>
 <body>
-$END$
+<main class="container">
+    <div class="quiz-box orange">
+        <nav class="genre">
+            <span class="gl"></span>
+            <span class="gr">サイエンス·地理·数学</span>
+        </nav>
+        <header class="question">
+            <div class="content">4024 この問題の答えは？</div>
+        </header>
+        <main>
+            <section class="core">
+                10,000,000×10÷2＝？<br>（答えをひらがなで読むと）
+            </section>
+            <section class="answer">
+                ごせんまん
+            </section>
+        </main>
+        <footer class="toolbar">
+            <span class="tl"></span>
+            <span class="tr">123</span>
+        </footer>
+    </div>
+    <script>
+        class Card extends HTMLElement {
+            constructor() {
+                super();
+                const shadow = this.attachShadow({mode: 'open'});
+                const style = document.createElement('style');
+                style.textContent = `
+        .orange {
+            border-color: var(--orange-d);
+            background-color: var(--orange-bg);
+        }
+        .orange .genre, .orange .answer {
+            color: var(--orange-d);
+        }
+        .orange .question {
+            background-image: linear-gradient(45deg, var(--orange-d) 0, var(--orange-m) 45%, var(--orange-l) 100%);
+        }
+
+        .red {
+            border-color: var(--red-d);
+            background-color: var(--red-bg);
+        }
+        .red .genre, .red .answer {
+            color: var(--red-d);
+        }
+        .red .question {
+            background-image: linear-gradient(45deg, var(--red-d) 0, var(--red-m) 33.3%, var(--red-l) 100%);
+        }
+
+        .blue {
+            border-color: var(--blue-d);
+            background-color: var(--blue-bg);
+        }
+        .blue .genre, .blue .answer {
+            color: var(--blue-d);
+        }
+        .blue .question {
+            background-image: linear-gradient(45deg, var(--blue-d), var(--blue-m), var(--blue-l));
+        }
+
+        .purple {
+            border-color: var(--purple-d);
+            background-color: var(--purple-bg);
+        }
+        .purple .genre, .purple .answer {
+            color: var(--purple-d);
+        }
+        .purple .question {
+            background-image: linear-gradient(45deg, var(--purple-d), var(--purple-m), var(--purple-l));
+        }
+
+        .green {
+            border-color: var(--green-d);
+            background-color: var(--green-bg);
+        }
+        .green .genre, .green .answer {
+            color: var(--green-d);
+        }
+        .green .question {
+            background-image: linear-gradient(45deg, var(--green-d) 0, var(--green-m) 33.3%, var(--green-l) 100%);
+        }
+
+        .cyan {
+            border-color: var(--cyan-d);
+            background-color: var(--cyan-bg);
+        }
+        .cyan .genre, .cyan .answer {
+            color: var(--cyan-d);
+        }
+        .cyan .question {
+            background-image: linear-gradient(45deg, var(--cyan-d) 0, var(--cyan-m) 33.3%, var(--cyan-l) 100%);
+        }
+        .genre {
+            display: inline-flex;
+            justify-content: space-between;
+            line-height: calc(40px * var(--zoom));
+            padding: 0 10px;
+            font-size: calc(20px * var(--zoom));
+        }
+        .question {
+            color: #FFFFFF;
+            font-size: calc(30px * var(--zoom));
+            padding: 0 10px;
+            display: inline-flex;
+            align-items: center;
+            line-height: calc(60px * var(--zoom));
+        }
+        .content {
+
+        }
+
+        .core {
+            padding: 0 calc(50px * var(--zoom));
+            font-size: calc(35px * var(--zoom));
+            margin-top: calc(20px * var(--zoom));
+            margin-bottom: calc(10px * var(--zoom));
+        }
+
+        .answer {
+            font-family: "Meiryo";
+            font-weight: bold;
+            padding: 0 calc(50px * var(--zoom));
+            font-size: calc(60px * var(--zoom));
+            text-align: center;
+        }
+
+        footer {
+            display: inline-flex;
+            justify-content: space-between;
+            line-height: calc(30px * var(--zoom));
+            padding: 0 10px;
+            font-size: calc(20px * var(--zoom));
+        }
+                `;
+                shadow.appendChild(style);
+            }
+
+            // 生命周期：首次被插入文档DOM时
+            connectedCallback() {
+                console.log('卡片已生成');
+            }
+
+            // 生命周期：从文档DOM中删除时
+            disconnectedCallback() {
+                console.log('卡片已移除');
+            }
+
+            // 生命周期：被移动到新的文档时
+            adoptedCallback() {
+                console.log('卡片已迁移');
+            }
+
+            // 生命周期：监听属性变化
+            attributeChangedCallback() {
+                console.log('卡片属性已变更');
+            }
+        }
+
+        customElements.define('ex-card', Card);
+
+        function initData() {
+            fetch('https://unicorn.js.org/data/source_n.json')
+                .then(response => response.json())
+                .then(data => console.log(data));
+        }
+
+        function appendNode(node) {
+            const genre = document.createElement('nav');
+            genre.setAttribute('class', 'genre');
+            const gl = document.createElement('span');
+            gl.setAttribute('class', 'gl')
+            const gr = document.createElement('span');
+            gr.setAttribute('class', 'gr')
+            gr.innerText = 'サイエンス·地理·数学';
+            const question = document.createElement('header')
+            question.setAttribute('class', 'question')
+            const content = document.createElement('div')
+            content.setAttribute('class', 'content')
+            content.innerText = '4024 この問題の答えは？';
+            const quiz = document.createElement('main')
+            quiz.setAttribute('class', 'quiz')
+            const core = document.createElement('section')
+            core.setAttribute('class', 'core')
+            core.innerHTML = '10,000,000×10÷2＝？<br>（答えをひらがなで読むと）';
+            const answer = document.createElement('section')
+            answer.setAttribute('class', 'answer')
+            answer.innerText = 'ごせんまん';
+            const toolbar = document.createElement('footer')
+            toolbar.setAttribute('class', 'toolbar')
+            const tl = document.createElement('span');
+            tl.setAttribute('class', 'tl')
+            const tr = document.createElement('span');
+            tr.setAttribute('class', 'tr')
+            tr.innerText = '123';
+            node.appendChild(genre);
+            node.appendChild(question);
+            node.appendChild(quiz);
+            node.appendChild(toolbar);
+            genre.appendChild(gl);
+            genre.appendChild(gr);
+            question.appendChild(content);
+            quiz.appendChild(core);
+            quiz.appendChild(answer);
+            toolbar.appendChild(tl);
+            toolbar.appendChild(tr);
+        }
+
+        function renderCard() {
+            for (let i = 0; i < 1; i++) {
+                const card = document.createElement('ex-card');
+                document.getElementsByClassName('container')[0].appendChild(card);
+                const node = document.getElementsByTagName('ex-card')[0];
+                node.setAttribute('class', 'red');
+                appendNode(node.shadowRoot);
+            }
+        }
+
+        document.onreadystatechange = function () {
+            if (document.readyState === "complete") {
+                initData();
+                renderCard();
+            }
+        }
+    </script>
+</main>
 </body>
 </html>

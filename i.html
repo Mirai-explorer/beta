@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-$END$
+<h1 id="p1">我的第一个HTML页面</h1>
+<p>我的第一个段落。</p>
+<iframe allowfullscreen frameborder="0" height="405" id="ytplayer"
+        src="https://www.youtube.com/embed/?listType=playlist&list=PLPq8soy4FhfZbLWD7LxZKzWO2X1PSiLmE&modestbranding=1"
+        type="text/html" width="720"></iframe>
+<script>
+    window.onload = function () {
+        var s = document.getElementById('ytplayer').contentWindow.document.querySelector('[data-sessionlink=player-title]');//document.title;
+        var ss = s.replace(" - YouTube", "");
+        document.querySelector('#p1').innerText = '1';
+        document.querySelectorAll('span[dir=auto]')[0].innerHTML;
+    }
+</script>
 </body>
 </html>

@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta X-Content-Type-Options="nosniff">
+    <meta content="no-referrer" name="referrer">
+    <title>File(s) size</title>
+    <script>
+        function callbackfunction(j) {
+            let u = j.durl[0].url;
+            document.getElementById('container').html('<video width="800" height="450" src="' + u + '" preload="auto" autoplay="" controls="" class="embed-responsive-item"></video>')
+            $("#page1").attr("href", j.durl[0].url);
+        }
+
+        function parseVideo() {
+            fetch('https://api.bilibili.com/x/player/playurl?cid=548383865&appkey=ba02c181c8820321&otype=json&type=&quality=16&qn=16&fnver=0&fnval=16&avid=724670580&sign=7d1ce24d44e3c56bfb2fa642a859ed7f', {
+                referrer: 'no-referer'
+            })
+                .then(response => response.json())
+                .then(data => console.log(data));
+        }
+
+        parseVideo();
+    </script>
 </head>
 <body>
-$END$
+<div id="container">
+    <video controls height="450" id="video"
+           poster="https://i0.hdslb.com/bfs/archive/125744dd16045308ded6ab087a1ed3d174643b92.jpg" width="800"></video>
+</div>
 </body>
 </html>

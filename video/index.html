@@ -1,10 +1,1378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <title>Title</title>
+    <style>
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            -ms-overflow-style: scrollbar;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        ::selection {
+            background: #ec8f65;
+            color: var(--wh1);
+        }
+
+        :root {
+            --wh1: #ffffff;
+            --bg1: var(--wh1);
+        }
+
+        a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            vertical-align: baseline;
+            font-style: normal;
+        }
+
+        a, input {
+            text-decoration: none;
+            outline: none;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #222;
+            background-color: #fff;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-area {
+            margin: 20px 0;
+            height: calc(33.75vw + 46px);
+            min-height: 496px;
+            width: 60vw;
+            min-width: 800px;
+        }
+
+        @media (min-width: 1681px) {
+            .main-area {
+                height: calc(33.75vw + 56px);
+                max-height: 1136px;
+                width: 60vw;
+                max-width: 1920px;
+            }
+        }
+
+        .player * {
+            webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .player {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            margin: 0 auto;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            border-radius: 4px;
+            text-align: left;
+            -webkit-box-shadow: 0 0 8px #e5e9ef;
+            box-shadow: 0 0 8px #e5e9ef;
+            white-space: nowrap;
+            zoom: 1
+        }
+
+        .player-layer {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+            width: 100%;
+            pointer-events: auto;
+        }
+
+        .mode-fullscreen, .mode-webfullscreen {
+            position: fixed;
+            border-radius: 0;
+            z-index: 100000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .player-wrap {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            min-height: 0;
+            z-index: auto;
+            overflow: hidden;
+            background-color: #000;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none
+        }
+
+        .mode-fullscreen .player-wrap {
+            height: 100%;
+        }
+
+        .player-wrap-ifs {
+
+        }
+
+        .player-video-top {
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            visibility: visible;
+            opacity: 1;
+            color: #fff;
+            z-index: 17;
+            pointer-events: none;
+            -webkit-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+
+        .player-video-top-mask {
+            display: none;
+            width: 100%;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x top;
+            -webkit-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+
+        .player.mode-fullscreen .player-layer .player-video-wrap .player-video-top-mask, .player.mode-webfullscreen .player-layer .player-video-wrap .player-video-top-mask {
+            display: block;
+        }
+
+        .video-top-title {
+            opacity: 1; /*缩放时透明度为0不显示，全屏后透明度为1显示*/
+            width: 100% !important; /* 默认占满 */
+            margin: 18px 0 0 19px; /* 预留边距 */
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+            z-index: 2;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .player-video-state {
+            display: none;
+        }
+
+        .player-video-panel {
+            display: none;
+        }
+
+        .player-video-popup {
+            display: none;
+        }
+
+        .player-video-subtitle {
+            display: none;
+        }
+
+        .player-video-danmaku {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 11;
+            cursor: pointer;
+            pointer-events: none;
+        }
+
+        .danmaku-block {
+            position: absolute;
+            line-height: 1.125;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            white-space: pre;
+            -webkit-perspective: 500px;
+            perspective: 500px;
+            will-change: transform opacity;
+            pointer-events: none;
+        }
+
+        .player-video {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .player-video video {
+            display: block;
+            width: 100%;
+            max-height: 100%;
+        }
+
+        .player-video video::-webkit-media-controls {
+            display: none !important;
+        }
+
+        .player-video-inner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            z-index: 19;
+            pointer-events: none;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .player-video-control-wrap {
+            z-index: 70;
+            padding: 0 12px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .player.mode-fullscreen .player-video-control-wrap {
+            bottom: 0;
+        }
+
+        .player-video-control-mask {
+            width: 100%;
+            height: 100px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==) repeat-x bottom;
+            -webkit-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .player-layer.video-control-show .video-control-bottom, .player-layer.video-control-show .player-video-control-mask {
+            opacity: 1;
+            visibility: visible;
+            -webkit-transition: opacity .2s ease-in;
+            transition: opacity .2s ease-in;
+        }
+
+        .player-video-control {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 71;
+            height: 44px;
+            line-height: 36px;
+            zoom: 1;
+        }
+
+        .video-control-top {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 32px;
+            opacity: 0;
+            visibility: hidden;
+            -webkit-transition: opacity .2s ease-out;
+            transition: opacity .2s ease-out;
+            z-index: 1;
+        }
+
+        .video-control-bottom {
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            height: 29px;
+            line-height: 22px;
+            margin: 14px 0 0;
+            opacity: 0;
+            visibility: hidden;
+            -webkit-transition: all .2s ease-out;
+            transition: all .2s ease-out;
+        }
+
+        .control-bottom-left {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-flex: 0;
+            -ms-flex: none;
+            flex: none;
+        }
+
+        .control-bottom-center {
+
+        }
+
+        @media screen and (min-width: 750px) {
+            .player.mode-fullscreen .player-video-control-wrap .control-bottom-center, .player.mode-webfullscreen .player-video-control-wrap .control-bottom-center {
+                line-height: 34px;
+                padding: 0 60px;
+                -webkit-box-flex: 1;
+                -ms-flex-positive: 1;
+                flex-grow: 1;
+                height: 34px;
+            }
+        }
+
+        @media screen and (min-width: 750px) {
+            .player.mode-fullscreen .player-video-control-wrap, .player.mode-fullscreen .player-video-control-wrap .player-video-control, .player.mode-webfullscreen .player-video-control-wrap, .player.mode-webfullscreen .player-video-control-wrap .player-video-control {
+                height: 54px;
+                line-height: 54px;
+            }
+        }
+
+        @media screen and (min-width: 750px) {
+            .player.mode-fullscreen .player-video-control-wrap .control-bottom-center .player-video-sendbar, .player.mode-webfullscreen .player-video-control-wrap .control-bottom-center .player-video-sendbar {
+                height: 34px;
+                line-height: 34px;
+                margin: 0 auto;
+                background: none;
+                max-width: 729px;
+                padding: 0;
+                border: none;
+            }
+        }
+
+        .player-video-sendbar {
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            position: relative;
+            height: 46px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            padding: 0 12px;
+            font-size: 13px;
+            background: #fff;
+            background: var(--bg1, #fff);
+            zoom: 1;
+        }
+
+        .player.mode-fullscreen .player-video-sendbar, .player.mode-light-off .player-video-sendbar, .player.mode-webfullscreen .player-video-sendbar {
+            background: #212121;
+        }
+
+        @media (min-width: 1681px) {
+            .player-video-sendbar {
+                height: 56px;
+                font-size: 14px;
+            }
+        }
+
+        .player-video-sendbar .player-video-danmaku-root {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: end;
+            -ms-flex-pack: end;
+            justify-content: flex-end;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+        }
+
+        .mode-fullscreen .player-video-sendbar .player-video-danmaku-root, .mode-webfullscreen .player-video-sendbar .player-video-danmaku-root {
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            min-width: unset;
+            max-width: none;
+        }
+
+        .control-bottom-right {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: end;
+            -ms-flex-pack: end;
+            justify-content: flex-end;
+        }
+
+        .video-control-slider {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            vertical-align: middle;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            height: 12px;
+            cursor: pointer;
+        }
+
+        .player-video-toast-wrap {
+            display: none;
+        }
+
+        .player-video-draggable-mask {
+            display: none;
+        }
+
+        .video-control-bottom .video-btn {
+            height: 22px;
+            line-height: 22px;
+        }
+
+        .player-video-control .video-btn {
+            cursor: pointer;
+            text-align: center;
+            width: 36px;
+            color: hsla(0, 0%, 100%, .8);
+            fill: hsla(0, 0%, 100%, .9);
+            font-size: 0;
+            z-index: 2;
+        }
+
+        .video-btn.video-btn-start {
+            width: 36px;
+            margin-left: -12px;
+            padding-left: 12px;
+        }
+
+        .player button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            outline: none;
+            color: inherit;
+            text-align: inherit;
+            font: inherit;
+            line-height: inherit;
+            width: 100%;
+        }
+
+        .p-svgicon, .p-svgicon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .p-svgicon {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-transition: fill .3s;
+            transition: fill .3s;
+            vertical-align: middle;
+            display: inline-block;
+            font-size: 0;
+        }
+
+        .video-btn .p-svgicon {
+            height: 22px;
+            opacity: .9;
+        }
+
+        .video-btn-next {
+            display: inline-block;
+            width: 36px;
+        }
+
+        .video-time {
+            line-height: 22px;
+            height: 22px;
+            font-size: 12px;
+            position: relative;
+            margin: 0 10px 0 0;
+            cursor: pointer;
+            min-width: 90px;
+        }
+
+        .video-time-seek {
+            display: none;
+            width: 60px;
+            padding: 0 5px;
+            height: 20px;
+            font-size: 12px;
+            color: hsla(0, 0%, 100%, .9);
+            line-height: 20px;
+            position: absolute;
+            text-align: center;
+            top: 0;
+            left: 6px;
+            background: hsla(0, 0%, 100%, .2);
+            border: 1px solid transparent;
+        }
+
+        .video-time-wrap {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            white-space: nowrap;
+            color: hsla(0, 0%, 100%, .9);
+        }
+
+        .video-time-now {
+
+        }
+
+        .video-time-divider {
+            padding: 0 2px;
+        }
+
+        .video-time-total {
+
+        }
+
+        .video-btn.video-btn-quality {
+            font-size: 14px;
+            height: 22px;
+            line-height: 22px;
+            width: auto;
+            position: relative;
+            margin-right: 10px;
+        }
+
+        .bui {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            vertical-align: middle;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+
+        .bui-select {
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            position: relative;
+            cursor: pointer;
+            line-height: normal;
+        }
+
+        .bui-select.video-quality-menu {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            height: 22px;
+        }
+
+        .bui-select.bui-select-quality-menu .bui-select-wrap {
+            position: relative;
+            height: 100%;
+        }
+
+        .bui-select.bui-dark .bui-select-wrap {
+            height: 22px;
+        }
+
+        .bui-select .bui-select-wrap {
+            height: 24px;
+            width: 100%;
+        }
+
+        .bui-select-border {
+            border: none;
+            font-size: 0;
+            height: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .bui-select.bui-dark .bui-select-border {
+            border: 1px solid hsla(0, 0%, 100%, .2);
+        }
+
+        .bui-select .bui-select-border {
+            border-radius: 2px;
+            width: 100%;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            font-size: 12px;
+            border: 1px solid silver;
+        }
+
+        .bui-select .bui-select-tag {
+            position: relative;
+            padding: 0 22px 0 7px;
+            height: 22px;
+            line-height: 22px;
+        }
+
+        .bui-select.bui-select-quality-menu .bui-select-tag {
+            padding: 0;
+            text-align: center;
+            font-size: 14px;
+            height: auto;
+            width: 100%;
+        }
+
+        .bui-select.bui-select-quality-menu .bui-select-tag {
+            line-height: 22px;
+        }
+
+        .video-btn-quality .bui-select-tag {
+            font-weight: 600;
+        }
+
+        .bui-select .bui-select-list {
+            padding: 0;
+            list-style-type: none;
+            margin: 0;
+            overflow: hidden;
+            -webkit-transition: all .2s;
+            -o-transition: all .2s;
+            transition: all .2s;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            height: 0;
+            width: 100%;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            background: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bui-select.bui-dark .bui-select-list {
+            background: #212121;
+        }
+
+        .bui-select.bui-select-quality-menu .bui-select-list {
+            opacity: 0;
+            visibility: hidden;
+            background: rgba(21, 21, 21, .9);
+            border-radius: 2px;
+            height: auto !important;
+        }
+
+        .player-video-quality-menu .bui-select-list {
+            border-radius: 4px;
+        }
+
+        .bui-select .bui-select-item {
+            padding: 0 22px 0 7px;
+            height: 22px;
+            line-height: 22px;
+            -webkit-transition: background .3s;
+            -o-transition: background .3s;
+            transition: background .3s;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+
+        .bui-select.bui-dark .bui-select-tag, .bui-select.bui-dark .bui-select-item {
+            height: 20px;
+            line-height: 20px;
+        }
+
+        .bui-select.bui-select-quality-menu .bui-select-item {
+            padding: 0 20px;
+            height: 36px;
+            line-height: 36px;
+            white-space: nowrap;
+        }
+
+        .bui-select .bui-select-item.bui-select-item-active {
+            cursor: default;
+        }
+
+        .bui-select.bui-select-quality-menu .bui-select-item.bui-select-item-active {
+            color: #00a1d6;
+        }
+
+        .player-video-quality-menu .bui-select-list .bui-select-item {
+            width: 145px;
+            padding: 0 12px;
+        }
+
+        .bui-select .bui-select-item * {
+            pointer-events: none;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .video-quality-value {
+            margin-right: 4px;
+        }
+
+        .video-btn.video-btn-speed {
+            position: relative;
+            width: 50px;
+        }
+
+        .video-control-bottom .video-btn-speed:hover {
+            padding-top: 40px !important;
+            transform: translateY(-40px) !important;
+        }
+
+        .player-video-control .video-btn-speed:hover {
+            fill: var(--wh1);
+            color: var(--wh1);
+        }
+
+        .video-btn-speed.player-speed-show .video-btn-speed-menu-wrap {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .player-video-control .video-btn-speed-self {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .video-btn-speed-menu-wrap {
+            position: absolute;
+            bottom: 40px;
+            left: -10px;
+            width: 70px;
+            font-size: 14px;
+            text-align: center;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            overflow: hidden;
+            visibility: hidden;
+            opacity: 0;
+            background: rgba(21, 21, 21, .9);
+            border-radius: 2px;
+        }
+
+        .video-btn-speed-list-item {
+            position: relative;
+            height: 36px;
+            line-height: 36px;
+            cursor: pointer;
+        }
+
+        .video-btn-speed-list-item:hover {
+            background: hsla(0, 0%, 100%, .1);
+        }
+
+        .video-btn-speed-list-item.player-active {
+            color: #00a1d6;
+        }
+    </style>
 </head>
 <body>
-$END$
+<div class="page-container">
+    <div class="main-area">
+        <div class="player">
+            <div class="player-layer">
+                <div class="player-wrap player-wrap-ifs">
+                    <div class="player-video-top">
+                        <div class="player-video-top-mask"></div>
+                        <div class="video-top-title">【視聴動画】ミュージカルが聴こえる？【プリンセスコネクト！Re:Dive】</div>
+                        <div class="video-top-button">
+                            <button></button>
+                        </div>
+                    </div>
+                    <div class="player-video-state">播放状态悬浮图标</div>
+                    <div class="player-video-panel">播放前加载页面</div>
+                    <div class="player-video-popup">播放后推荐板块</div>
+                    <div class="player-video-subtitle">视频字幕</div>
+                    <div class="player-video-danmaku">
+                        <div class="danmaku-block">1</div>
+                        <div class="danmaku-block">2</div>
+                        <div class="danmaku-block">3</div>
+                        <div class="danmaku-block">4</div>
+                    </div>
+                    <div class="player-video">
+                        <video controlslist="nodownload" data-id="0">
+                            <source src="./source.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="player-video-inner"></div>
+                    <div class="player-video-control-wrap">
+                        <div class="player-video-control-mask"></div>
+                        <div class="player-video-control">
+                            <div class="video-control-top">
+                                <div class="video-progress"></div>
+                            </div>
+                            <div class="video-control-bottom">
+                                <div class="control-bottom-left">
+                                    <div class="video-btn video-btn-start video-state-pause">
+                                        <button aria-label="播放" class="player-iconfont">
+                                            <span class="p-svgicon"><svg height="28" preserveAspectRatio="xMidYMid meet"
+                                                                         style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px);"
+                                                                         viewBox="0 0 28 28" width="28"
+                                                                         xmlns="http://www.w3.org/2000/svg"><defs><clipPath
+                                                    id="__lottie_element_271"><rect height="28" width="28" x="0"
+                                                                                    y="0"></rect></clipPath></defs><g
+                                                    clip-path="url(#__lottie_element_271)"><g
+                                                    opacity="0.1571945284363933" style="display: none;"
+                                                    transform="matrix(0.44737711548805237,0,0,0.44737711548805237,21.8426513671875,14.069077491760254)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M-5.484000205993652,-10 C-7.953000068664551,-10 -8,-7.984000205993652 -8,-7.984000205993652 C-8,-7.984000205993652 -8.008000373840332,7.984000205993652 -8.008000373840332,7.984000205993652 C-8.008000373840332,7.984000205993652 -7.984000205993652,9.991999626159668 -5.5,9.991999626159668 C-3.0160000324249268,9.991999626159668 -3.003999948501587,7.995999813079834 -3.003999948501587,7.995999813079834 C-3.003999948501587,7.995999813079834 -2.9839999675750732,-8 -2.9839999675750732,-8 C-2.9839999675750732,-8 -3.015000104904175,-10 -5.484000205993652,-10z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path><path
+                                                    d=" M-5.484000205993652,-10 C-7.953000068664551,-10 -8,-7.984000205993652 -8,-7.984000205993652 C-8,-7.984000205993652 -8.008000373840332,7.984000205993652 -8.008000373840332,7.984000205993652 C-8.008000373840332,7.984000205993652 -7.984000205993652,9.991999626159668 -5.5,9.991999626159668 C-3.0160000324249268,9.991999626159668 -3.003999948501587,7.995999813079834 -3.003999948501587,7.995999813079834 C-3.003999948501587,7.995999813079834 -2.9839999675750732,-8 -2.9839999675750732,-8 C-2.9839999675750732,-8 -3.015000104904175,-10 -5.484000205993652,-10z"
+                                                    fill-opacity="0" stroke="rgb(255,255,255)" stroke-linecap="butt"
+                                                    stroke-linejoin="miter" stroke-miterlimit="4" stroke-opacity="1"
+                                                    stroke-width="0"></path></g></g><g opacity="0.06339313936927979"
+                                                                                       style="display: none;"
+                                                                                       transform="matrix(0.7192779779434204,0,0,0.7192779779434204,22.750051498413086,14)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M-5.484000205993652,-10 C-7.953000068664551,-10 -8,-7.984000205993652 -8,-7.984000205993652 C-8,-7.984000205993652 -8.008000373840332,7.984000205993652 -8.008000373840332,7.984000205993652 C-8.008000373840332,7.984000205993652 -7.984000205993652,9.991999626159668 -5.5,9.991999626159668 C-3.0160000324249268,9.991999626159668 -3.003999948501587,7.995999813079834 -3.003999948501587,7.995999813079834 C-3.003999948501587,7.995999813079834 -2.9839999675750732,-8 -2.9839999675750732,-8 C-2.9839999675750732,-8 -3.015000104904175,-10 -5.484000205993652,-10z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path><path
+                                                    d=" M-5.484000205993652,-10 C-7.953000068664551,-10 -8,-7.984000205993652 -8,-7.984000205993652 C-8,-7.984000205993652 -8.008000373840332,7.984000205993652 -8.008000373840332,7.984000205993652 C-8.008000373840332,7.984000205993652 -7.984000205993652,9.991999626159668 -5.5,9.991999626159668 C-3.0160000324249268,9.991999626159668 -3.003999948501587,7.995999813079834 -3.003999948501587,7.995999813079834 C-3.003999948501587,7.995999813079834 -2.9839999675750732,-8 -2.9839999675750732,-8 C-2.9839999675750732,-8 -3.015000104904175,-10 -5.484000205993652,-10z"
+                                                    fill-opacity="0" stroke="rgb(255,255,255)" stroke-linecap="butt"
+                                                    stroke-linejoin="miter" stroke-miterlimit="4" stroke-opacity="1"
+                                                    stroke-width="0"></path></g></g><g opacity="1"
+                                                                                       style="display: block;"
+                                                                                       transform="matrix(1,0,0,1,14,14)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path d="M0 0"
+                                                                                                      fill="rgb(255,255,255)"
+                                                                                                      fill-opacity="1"></path><path
+                                                    d="M0 0" fill-opacity="0" stroke="rgb(255,255,255)"
+                                                    stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4"
+                                                    stroke-opacity="1" stroke-width="0"></path></g><g opacity="1"
+                                                                                                      transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M-7.031000137329102,-10.875 C-7.031000137329102,-10.875 -8.32800006866455,-11.25 -9.42199993133545,-10.468999862670898 C-10.109999656677246,-9.906999588012695 -10,-7.992000102996826 -10,-7.992000102996826 C-10,-7.992000102996826 -10,8.015999794006348 -10,8.015999794006348 C-10,8.015999794006348 -10.125,10.241999626159668 -9,10.991999626159668 C-7.875,11.741999626159668 -5,10.031000137329102 -5,10.031000137329102 C-5,10.031000137329102 7.968999862670898,1.875 7.968999862670898,1.875 C7.968999862670898,1.875 9,1.062000036239624 9,0 C9,-1.062000036239624 7.968999862670898,-1.937999963760376 7.968999862670898,-1.937999963760376 C7.968999862670898,-1.937999963760376 -7.031000137329102,-10.875 -7.031000137329102,-10.875z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path><path
+                                                    d=" M-7.031000137329102,-10.875 C-7.031000137329102,-10.875 -8.32800006866455,-11.25 -9.42199993133545,-10.468999862670898 C-10.109999656677246,-9.906999588012695 -10,-7.992000102996826 -10,-7.992000102996826 C-10,-7.992000102996826 -10,8.015999794006348 -10,8.015999794006348 C-10,8.015999794006348 -10.125,10.241999626159668 -9,10.991999626159668 C-7.875,11.741999626159668 -5,10.031000137329102 -5,10.031000137329102 C-5,10.031000137329102 7.968999862670898,1.875 7.968999862670898,1.875 C7.968999862670898,1.875 9,1.062000036239624 9,0 C9,-1.062000036239624 7.968999862670898,-1.937999963760376 7.968999862670898,-1.937999963760376 C7.968999862670898,-1.937999963760376 -7.031000137329102,-10.875 -7.031000137329102,-10.875z"
+                                                    fill-opacity="0" stroke="rgb(255,255,255)" stroke-linecap="butt"
+                                                    stroke-linejoin="miter" stroke-miterlimit="4" stroke-opacity="1"
+                                                    stroke-width="0"></path></g></g></g></svg></span>
+                                            <span class="p-svgicon"><svg height="28" preserveAspectRatio="xMidYMid meet"
+                                                                         style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px);"
+                                                                         viewBox="0 0 28 28" width="28"
+                                                                         xmlns="http://www.w3.org/2000/svg"><defs><clipPath
+                                                    id="__lottie_element_953"><rect height="28" width="28" x="0"
+                                                                                    y="0"></rect></clipPath></defs><g
+                                                    clip-path="url(#__lottie_element_953)"><g opacity="1"
+                                                                                              style="display: block;"
+                                                                                              transform="matrix(1,0,0,1,14,14)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M-5.484000205993652,-10 C-7.953000068664551,-10 -8,-7.984000205993652 -8,-7.984000205993652 C-8,-7.984000205993652 -8.008000373840332,7.984000205993652 -8.008000373840332,7.984000205993652 C-8.008000373840332,7.984000205993652 -7.984000205993652,9.991999626159668 -5.5,9.991999626159668 C-3.0160000324249268,9.991999626159668 -3.003999948501587,7.995999813079834 -3.003999948501587,7.995999813079834 C-3.003999948501587,7.995999813079834 -2.9839999675750732,-8 -2.9839999675750732,-8 C-2.9839999675750732,-8 -3.015000104904175,-10 -5.484000205993652,-10z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path><path
+                                                    d=" M-5.484000205993652,-10 C-7.953000068664551,-10 -8,-7.984000205993652 -8,-7.984000205993652 C-8,-7.984000205993652 -8.008000373840332,7.984000205993652 -8.008000373840332,7.984000205993652 C-8.008000373840332,7.984000205993652 -7.984000205993652,9.991999626159668 -5.5,9.991999626159668 C-3.0160000324249268,9.991999626159668 -3.003999948501587,7.995999813079834 -3.003999948501587,7.995999813079834 C-3.003999948501587,7.995999813079834 -2.9839999675750732,-8 -2.9839999675750732,-8 C-2.9839999675750732,-8 -3.015000104904175,-10 -5.484000205993652,-10z"
+                                                    fill-opacity="0" stroke="rgb(255,255,255)" stroke-linecap="butt"
+                                                    stroke-linejoin="miter" stroke-miterlimit="4" stroke-opacity="1"
+                                                    stroke-width="0"></path></g></g><g opacity="1"
+                                                                                       style="display: block;"
+                                                                                       transform="matrix(1,0,0,1,24.812000274658203,14)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M-5.484000205993652,-10 C-7.953000068664551,-10 -8,-7.984000205993652 -8,-7.984000205993652 C-8,-7.984000205993652 -8.008000373840332,7.984000205993652 -8.008000373840332,7.984000205993652 C-8.008000373840332,7.984000205993652 -7.984000205993652,9.991999626159668 -5.5,9.991999626159668 C-3.0160000324249268,9.991999626159668 -3.003999948501587,7.995999813079834 -3.003999948501587,7.995999813079834 C-3.003999948501587,7.995999813079834 -2.9839999675750732,-8 -2.9839999675750732,-8 C-2.9839999675750732,-8 -3.015000104904175,-10 -5.484000205993652,-10z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path><path
+                                                    d=" M-5.484000205993652,-10 C-7.953000068664551,-10 -8,-7.984000205993652 -8,-7.984000205993652 C-8,-7.984000205993652 -8.008000373840332,7.984000205993652 -8.008000373840332,7.984000205993652 C-8.008000373840332,7.984000205993652 -7.984000205993652,9.991999626159668 -5.5,9.991999626159668 C-3.0160000324249268,9.991999626159668 -3.003999948501587,7.995999813079834 -3.003999948501587,7.995999813079834 C-3.003999948501587,7.995999813079834 -2.9839999675750732,-8 -2.9839999675750732,-8 C-2.9839999675750732,-8 -3.015000104904175,-10 -5.484000205993652,-10z"
+                                                    fill-opacity="0" stroke="rgb(255,255,255)" stroke-linecap="butt"
+                                                    stroke-linejoin="miter" stroke-miterlimit="4" stroke-opacity="1"
+                                                    stroke-width="0"></path></g></g><g
+                                                    opacity="0.0000037954715928378848" style="display: block;"
+                                                    transform="matrix(1,0,0,1,4,14)"><g opacity="1"
+                                                                                        transform="matrix(1,0,0,1,0,0)"><path
+                                                    d="M0 0" fill="rgb(255,255,255)" fill-opacity="1"></path><path
+                                                    d="M0 0" fill-opacity="0" stroke="rgb(255,255,255)"
+                                                    stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4"
+                                                    stroke-opacity="1" stroke-width="0"></path></g><g opacity="1"
+                                                                                                      transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M-7.031000137329102,-10.875 C-7.031000137329102,-10.875 -8.32800006866455,-11.25 -9.42199993133545,-10.468999862670898 C-10.109999656677246,-9.906999588012695 -10,-7.992000102996826 -10,-7.992000102996826 C-10,-7.992000102996826 -10,8.015999794006348 -10,8.015999794006348 C-10,8.015999794006348 -10.125,10.241999626159668 -9,10.991999626159668 C-7.875,11.741999626159668 -5,10.031000137329102 -5,10.031000137329102 C-5,10.031000137329102 7.968999862670898,1.875 7.968999862670898,1.875 C7.968999862670898,1.875 9,1.062000036239624 9,0 C9,-1.062000036239624 7.968999862670898,-1.937999963760376 7.968999862670898,-1.937999963760376 C7.968999862670898,-1.937999963760376 -7.031000137329102,-10.875 -7.031000137329102,-10.875z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path><path
+                                                    d=" M-7.031000137329102,-10.875 C-7.031000137329102,-10.875 -8.32800006866455,-11.25 -9.42199993133545,-10.468999862670898 C-10.109999656677246,-9.906999588012695 -10,-7.992000102996826 -10,-7.992000102996826 C-10,-7.992000102996826 -10,8.015999794006348 -10,8.015999794006348 C-10,8.015999794006348 -10.125,10.241999626159668 -9,10.991999626159668 C-7.875,11.741999626159668 -5,10.031000137329102 -5,10.031000137329102 C-5,10.031000137329102 7.968999862670898,1.875 7.968999862670898,1.875 C7.968999862670898,1.875 9,1.062000036239624 9,0 C9,-1.062000036239624 7.968999862670898,-1.937999963760376 7.968999862670898,-1.937999963760376 C7.968999862670898,-1.937999963760376 -7.031000137329102,-10.875 -7.031000137329102,-10.875z"
+                                                    fill-opacity="0" stroke="rgb(255,255,255)" stroke-linecap="butt"
+                                                    stroke-linejoin="miter" stroke-miterlimit="4" stroke-opacity="1"
+                                                    stroke-width="0"></path></g></g></g></svg></span>
+                                        </button>
+                                    </div>
+                                    <div class="video-btn video-btn-next">
+                                        <button aria-label="下一个"
+                                                class="player-iconfont player-iconfont-next player-tooltips-trigger">
+                                            <span class="p-svgicon"><svg viewBox="0 0 22 22"
+                                                                         xmlns="http://www.w3.org/2000/svg"><path
+                                                    d="M16 5a1 1 0 00-1 1v4.615a1.431 1.431 0 00-.615-.829L7.21 5.23A1.439 1.439 0 005 6.445v9.11a1.44 1.44 0 002.21 1.215l7.175-4.555a1.436 1.436 0 00.616-.828V16a1 1 0 002 0V6C17 5.448 16.552 5 16 5z"></path></svg></span>
+                                        </button>
+                                    </div>
+                                    <div class="video-time">
+                                        <label for="vt-seek"></label>
+                                        <input autofocus class="video-time-seek" id="vt-seek" type="text" value="00:00">
+                                        <div class="video-time-wrap">
+                                            <span class="video-time-now">--</span>
+                                            <span class="video-time-divider">/</span>
+                                            <span class="video-time-total">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-bottom-center"></div>
+                                <div class="control-bottom-right">
+                                    <div class="video-btn video-btn-quality">
+                                        <div class="video-quality-menu bui bui-select bui-dark bui-select-quality-menu">
+                                            <div class="bui-select-wrap">
+                                                <div class="bui-select-border">
+                                                    <div class="bui-select-tag">
+                                                    <span class="bui-select-applied">
+                                                        <span class="video-quality-value">1080P</span>
+                                                        <span class="video-quality-desc">超高清</span>
+                                                    </span>
+                                                    </div>
+                                                    <div class="bui-select-list-wrap">
+                                                        <ul class="bui-select-list">
+                                                            <li class="bui-select-item">
+                                                                <span class="video-quality-value">1080P</span>
+                                                                <span class="video-quality-desc">超高清</span>
+                                                            </li>
+                                                            <li class="bui-select-item">
+                                                                <span class="video-quality-value">720P</span>
+                                                                <span class="video-quality-desc">高清</span>
+                                                            </li>
+                                                            <li class="bui-select-item">
+                                                                <span class="video-quality-value">480P</span>
+                                                                <span class="video-quality-desc">清晰</span>
+                                                            </li>
+                                                            <li class="bui-select-item">
+                                                                <span class="video-quality-value">360P</span>
+                                                                <span class="video-quality-desc">流畅</span>
+                                                            </li>
+                                                            <li class="bui-select-item">
+                                                                自动
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="video-btn video-btn-playlist"></div>
+                                    <div class="video-btn video-btn-speed">
+                                        <button aria-label="倍速" class="video-btn-speed-self">倍速</button>
+                                        <div class="video-btn-speed-menu-wrap">
+                                            <ul class="video-btn-speed-menu">
+                                                <li class="video-btn-speed-list-item" data-value="2">2.0x</li>
+                                                <li class="video-btn-speed-list-item" data-value="1.5">1.5x</li>
+                                                <li class="video-btn-speed-list-item" data-value="1.25">1.25x</li>
+                                                <li class="video-btn-speed-list-item player-active" data-value="1">
+                                                    1.0x
+                                                </li>
+                                                <li class="video-btn-speed-list-item" data-value="0.75">0.75x</li>
+                                                <li class="video-btn-speed-list-item" data-value="0.5">0.5x</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="video-btn video-btn-subtitle">
+                                        <button aria-label="字幕" class="player-iconfont player-iconfont-subtitle">字幕
+                                        </button>
+                                    </div>
+                                    <div class="video-btn video-btn-volume">
+                                        <button aria-label="音量" class="player-iconfont player-iconfont-subtitle">音量
+                                        </button>
+                                    </div>
+                                    <div class="video-btn video-btn-setting">
+                                        <button aria-label="设置" class="player-iconfont player-iconfont-subtitle">设置
+                                        </button>
+                                    </div>
+                                    <div class="video-btn video-btn-pip">
+                                        <button aria-label="开启画中画" class="player-iconfont player-iconfont-subtitle">
+                                            开启画中画
+                                        </button>
+                                    </div>
+                                    <div class="video-btn video-btn-widescreen"></div>
+                                    <div class="video-btn video-btn-web-fullscreen"></div>
+                                    <div class="video-btn video-btn-fullscreen video-state-fullscreen-off">
+                                        <button aria-label="进入全屏"
+                                                class="player-iconfont player-iconfont-fullscreen-off player-tooltips-trigger">
+                                            <span class="p-svgicon"><svg height="88" preserveAspectRatio="xMidYMid meet"
+                                                                         style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px);"
+                                                                         viewBox="0 0 88 88" width="88"
+                                                                         xmlns="http://www.w3.org/2000/svg"><defs><clipPath
+                                                    id="__lottie_element_355"><rect height="88" width="88" x="0"
+                                                                                    y="0"></rect></clipPath></defs><g
+                                                    clip-path="url(#__lottie_element_355)"><g opacity="1"
+                                                                                              style="display: block;"
+                                                                                              transform="matrix(1,0,0,1,44,74.22000122070312)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M19.219999313354492,0.2199999988079071 C7.480000019073486,7.630000114440918 -7.480000019073486,7.630000114440918 -19.219999313354492,0.2199999988079071 C-19.219999313354492,0.2199999988079071 -16.219999313354492,-5.78000020980835 -16.219999313354492,-5.78000020980835 C-6.389999866485596,0.75 6.409999847412109,0.75 16.239999771118164,-5.78000020980835 C16.239999771118164,-5.78000020980835 19.219999313354492,0.2199999988079071 19.219999313354492,0.2199999988079071z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,68.58000183105469,27.895000457763672)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M11.420000076293945,16.104999542236328 C11.420000076293945,16.104999542236328 4.78000020980835,16.104999542236328 4.78000020980835,16.104999542236328 C4.78000020980835,16.104999542236328 4.78000020980835,14.635000228881836 4.78000020980835,14.635000228881836 C4.25,4.054999828338623 -1.940000057220459,-5.425000190734863 -11.420000076293945,-10.164999961853027 C-11.420000076293945,-10.164999961853027 -8.479999542236328,-16.104999542236328 -8.479999542236328,-16.104999542236328 C3.7200000286102295,-10.005000114440918 11.420000076293945,2.4649999141693115 11.420000076293945,16.104999542236328 C11.420000076293945,16.104999542236328 11.420000076293945,16.104999542236328 11.420000076293945,16.104999542236328z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,19.450000762939453,27.895000457763672)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M-4.809999942779541,16.104999542236328 C-4.809999942779541,16.104999542236328 -11.449999809265137,16.104999542236328 -11.449999809265137,16.104999542236328 C-11.449999809265137,2.4649999141693115 -3.75,-10.005000114440918 8.449999809265137,-16.104999542236328 C8.449999809265137,-16.104999542236328 11.449999809265137,-10.164999961853027 11.449999809265137,-10.164999961853027 C1.4900000095367432,-5.204999923706055 -4.809999942779541,4.974999904632568 -4.809999942779541,16.104999542236328 C-4.809999942779541,16.104999542236328 -4.809999942779541,16.104999542236328 -4.809999942779541,16.104999542236328z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,44.0099983215332,65.96499633789062)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M-0.009999999776482582,5.34499979019165 C-5.46999979019165,5.355000019073486 -10.800000190734863,3.7149999141693115 -15.319999694824219,0.6549999713897705 C-15.319999694824219,0.6549999713897705 -12.319999694824219,-5.34499979019165 -12.319999694824219,-5.34499979019165 C-5,0.08500000089406967 5,0.08500000089406967 12.319999694824219,-5.34499979019165 C12.319999694824219,-5.34499979019165 15.319999694824219,0.6549999713897705 15.319999694824219,0.6549999713897705 C10.800000190734863,3.7249999046325684 5.460000038146973,5.355000019073486 -0.009999999776482582,5.34499979019165z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,62.275001525878906,31.780000686645508)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M9.015000343322754,10.850000381469727 C9.015000343322754,10.850000381469727 9.015000343322754,12.220000267028809 9.015000343322754,12.220000267028809 C9.015000343322754,12.220000267028809 2.434999942779541,12.220000267028809 2.434999942779541,12.220000267028809 C2.434999942779541,12.220000267028809 2.434999942779541,11.220000267028809 2.434999942779541,11.220000267028809 C2.075000047683716,3.740000009536743 -2.305000066757202,-2.9700000286102295 -9.015000343322754,-6.309999942779541 C-9.015000343322754,-6.309999942779541 -6.014999866485596,-12.220000267028809 -6.014999866485596,-12.220000267028809 C-6.014999866485596,-12.220000267028809 -6.014999866485596,-12.220000267028809 -6.014999866485596,-12.220000267028809 C2.7850000858306885,-7.800000190734863 8.524999618530273,1.0099999904632568 9.015000343322754,10.850000381469727 C9.015000343322754,10.850000381469727 9.015000343322754,10.850000381469727 9.015000343322754,10.850000381469727z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,25.729999542236328,31.780000686645508)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M-2.440000057220459,12.220000267028809 C-2.440000057220459,12.220000267028809 -9.050000190734863,12.220000267028809 -9.050000190734863,12.220000267028809 C-9.050000190734863,1.8700000047683716 -3.2100000381469727,-7.590000152587891 6.050000190734863,-12.220000267028809 C6.050000190734863,-12.220000267028809 9.050000190734863,-6.309999942779541 9.050000190734863,-6.309999942779541 C2.0199999809265137,-2.809999942779541 -2.430000066757202,4.360000133514404 -2.440000057220459,12.220000267028809 C-2.440000057220459,12.220000267028809 -2.440000057220459,12.220000267028809 -2.440000057220459,12.220000267028809z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,44,57.654998779296875)"><g opacity="1"
+                                                                                                         transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M0,4.974999904632568 C-4.110000133514404,4.994999885559082 -8.119999885559082,3.6449999809265137 -11.380000114440918,1.1349999904632568 C-11.380000114440918,1.1349999904632568 -8.319999694824219,-4.974999904632568 -8.319999694824219,-4.974999904632568 C-3.6700000762939453,-0.5049999952316284 3.6700000762939453,-0.5049999952316284 8.319999694824219,-4.974999904632568 C8.319999694824219,-4.974999904632568 11.380000114440918,1.1349999904632568 11.380000114440918,1.1349999904632568 C8.109999656677246,3.634999990463257 4.110000133514404,4.985000133514404 0,4.974999904632568 C0,4.974999904632568 0,4.974999904632568 0,4.974999904632568z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,55.9900016784668,35.665000915527344)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M6.619999885559082,7.40500020980835 C6.619999885559082,7.40500020980835 6.619999885559082,8.335000038146973 6.619999885559082,8.335000038146973 C6.619999885559082,8.335000038146973 0.009999999776482582,8.335000038146973 0.009999999776482582,8.335000038146973 C0.009999999776482582,3.7850000858306885 -2.549999952316284,-0.375 -6.619999885559082,-2.4049999713897705 C-6.619999885559082,-2.4049999713897705 -3.619999885559082,-8.335000038146973 -3.619999885559082,-8.335000038146973 C2.380000114440918,-5.324999809265137 6.300000190734863,0.6949999928474426 6.619999885559082,7.40500020980835 C6.619999885559082,7.40500020980835 6.619999885559082,7.40500020980835 6.619999885559082,7.40500020980835z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,31.9950008392334,35.665000915527344)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M6.635000228881836,-2.4049999713897705 C2.565000057220459,-0.375 0.004999999888241291,3.7850000858306885 0.004999999888241291,8.335000038146973 C0.004999999888241291,8.335000038146973 -6.635000228881836,8.335000038146973 -6.635000228881836,8.335000038146973 C-6.635000228881836,1.274999976158142 -2.6449999809265137,-5.184999942779541 3.674999952316284,-8.335000038146973 C3.674999952316284,-8.335000038146973 6.635000228881836,-2.4049999713897705 6.635000228881836,-2.4049999713897705z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,44,66.322998046875)"><g opacity="1"
+                                                                                                      transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M8.319000244140625,-13.677000045776367 C8.319000244140625,-13.677000045776367 19.2189998626709,8.123000144958496 19.2189998626709,8.123000144958496 C13.659000396728516,11.642999649047852 7.068999767303467,13.67300033569336 -0.0010000000474974513,13.67300033569336 C-7.071000099182129,13.67300033569336 -13.66100025177002,11.642999649047852 -19.22100067138672,8.123000144958496 C-19.22100067138672,8.123000144958496 -8.321000099182129,-13.677000045776367 -8.321000099182129,-13.677000045776367 C-6.160999774932861,-11.597000122070312 -3.2309999465942383,-10.32699966430664 -0.0010000000474974513,-10.32699966430664 C3.2290000915527344,-10.32699966430664 6.169000148773193,-11.597000122070312 8.319000244140625,-13.677000045776367z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,64.68399810791016,27.89699935913086)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M15.314000129699707,16.10700035095215 C15.314000129699707,16.10700035095215 -8.685999870300293,16.10700035095215 -8.685999870300293,16.10700035095215 C-8.685999870300293,11.406999588012695 -11.38599967956543,7.336999893188477 -15.315999984741211,5.367000102996826 C-15.315999984741211,5.367000102996826 -4.576000213623047,-16.10300064086914 -4.576000213623047,-16.10300064086914 C7.214000225067139,-10.192999839782715 15.314000129699707,2.006999969482422 15.314000129699707,16.10700035095215z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,23.31599998474121,27.89699935913086)"><g
+                                                    opacity="1" transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M4.584000110626221,-16.10300064086914 C4.584000110626221,-16.10300064086914 15.314000129699707,5.367000102996826 15.314000129699707,5.367000102996826 C11.383999824523926,7.336999893188477 8.684000015258789,11.406999588012695 8.684000015258789,16.10700035095215 C8.684000015258789,16.10700035095215 -15.315999984741211,16.10700035095215 -15.315999984741211,16.10700035095215 C-15.315999984741211,2.006999969482422 -7.216000080108643,-10.192999839782715 4.584000110626221,-16.10300064086914z"
+                                                    fill="rgb(255,255,255)" fill-opacity="1"></path></g></g><g
+                                                    opacity="1" style="display: block;"
+                                                    transform="matrix(1,0,0,1,44,44)"><g opacity="1"
+                                                                                         transform="matrix(1,0,0,1,0,0)"><path
+                                                    d=" M0,-4 C2.140000104904175,-4 3.890000104904175,-2.319999933242798 4,-0.20000000298023224 C4,-0.20000000298023224 4,0 4,0 C4,0 4,0.20000000298023224 4,0.20000000298023224 C3.890000104904175,2.319999933242798 2.140000104904175,4 0,4 C-2.2100000381469727,4 -4,2.2100000381469727 -4,0 C-4,-2.2100000381469727 -2.2100000381469727,-4 0,-4z"
+                                                    fill="rgb(255,255,255)"
+                                                    fill-opacity="1"></path></g></g></g></svg></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="video-control-slider">
+                                <div class="video-track"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="player-video-toast-wrap">高能分布</div>
+                    <div class="player-video-draggable-mask">进度条拖动缩略图</div>
+                </div>
+                <div class="player-bottom-area">
+                    <div class="player-video-sendbar player-normal-mode">
+                        <div class="player-video-info"></div>
+                        <div class="player-video-danmaku-root"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const vp = document.querySelector('.player-video video')
+    vp.addEventListener("loadeddata", handlePlay)
+    displayBars()
+    toolBar()
+
+    function parseTime(t) {
+        let m, s
+        m = Math.floor(t / 60)
+        s = Math.floor(t % 60)
+        m += ''
+        s += ''
+        m = (m.length === 1) ? '0' + m : m
+        s = (s.length === 1) ? '0' + s : s
+        return m + ':' + s
+    }
+
+    function ajax(type, url, callback) {
+        let xhr = new XMLHttpRequest()
+        xhr.addEventListener('load', function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let data = JSON.parse(xhr.responseText)
+                callback.call(data.video)
+            }
+        })
+        xhr.open(type, url)
+        xhr.send()
+    }
+
+    function handlePlay() {
+        console.log(vp.readyState)
+        let now = document.querySelector('.video-time-now')
+        let total = document.querySelector('.video-time-total')
+        now.innerHTML = parseTime(vp.currentTime)
+        total.innerHTML = parseTime(vp.duration)
+        let start = document.querySelector('.video-btn-start button')
+        vp.onclick = function () {
+
+        }
+        vp.addEventListener("timeupdate", function () {
+            now.innerHTML = parseTime(vp.currentTime)
+        })
+        vp.addEventListener("play", function () {
+            document.querySelectorAll('.video-state-pause span')[0].style.display = 'none'
+            document.querySelectorAll('.video-state-pause span')[1].style.display = ''
+        })
+        vp.addEventListener("pause", function () {
+            document.querySelectorAll('.video-state-pause span')[1].style.display = 'none'
+            document.querySelectorAll('.video-state-pause span')[0].style.display = ''
+        })
+        vp.addEventListener("ended", function (e) {
+            document.querySelectorAll('.video-state-pause span')[1].style.display = 'none'
+            document.querySelectorAll('.video-state-pause span')[0].style.display = ''
+        })
+        start.addEventListener('click', function () {
+            let instance = new player
+            instance.play()
+        })
+
+        class player {
+            constructor() {
+                this.player = document.querySelector('.player-video video');
+            }
+
+            get state() {
+                return this.player.paused;
+            }
+
+            play() {
+                if (this.state) {
+                    this.player.play()
+                    console.log(this.state + '，已播放')
+                } else {
+                    this.player.pause()
+                    console.log(this.state + '，已暂停')
+                }
+            }
+        }
+    }
+
+    let data
+    ajax('get', './v_data.json', function () {
+        data = this
+    })
+
+    function changePlay() {
+        let next = document.querySelector('.video-btn-next button')
+        next.onclick = function () {
+            let id = vp.getAttribute('data-id')
+            id < data.length - 1 ? id++ : id = 0
+            vp.src = data[id].url
+            vp.onloadeddata = vp.play()
+            console.log('当前播放' + id)
+            vp.setAttribute('data-id', id)
+        }
+    }
+
+    changePlay()
+
+    function displayBars() {
+        let pw = document.querySelector('.player-wrap')
+        let pl = document.querySelector('.player-layer')
+        let vcm = document.querySelector('.player-video-control-mask')
+        let vcw = document.querySelector('.player-video-control-wrap')
+        let timer = null, isMove = false
+        vp.addEventListener("mousemove", function () {
+            isMove = true
+            clearTimeout(timer)
+            console.log('已清除计时器')
+            if (isMove) {
+                vp.style.cursor = ''
+                pl.classList.add('video-control-show')
+            }
+            timer = setTimeout(function () {
+                isMove = false
+                vp.style.cursor = 'none'
+                pl.classList.remove('video-control-show')
+                console.log('已设置计时器')
+            }, 500)
+        })
+        vp.addEventListener("mouseleave", function () {
+            pl.classList.remove('video-control-show')
+            vp.style.cursor = ''
+        })
+        vcw.addEventListener("mouseover", function () {
+            pl.classList.add('video-control-show')
+        }, true)
+        vcw.addEventListener("mouseleave", function () {
+            pl.classList.remove('video-control-show')
+        })
+    }
+
+    function moveNode(on, nn) {
+        for (let i = 0; i < on.childElementCount; i++) {
+            nn.appendChild(on.children[i])
+        }
+    }
+
+    function fsListen(pl) {
+        document.addEventListener("fullscreenchange", function (e) {
+            if (document.fullscreenElement !== null) {
+                pl.classList.add('mode-fullscreen')
+                let on = document.querySelector('.player-bottom-area')
+                let nn = document.querySelector('.control-bottom-center')
+                moveNode(on, nn)
+                console.log('已进入全屏')
+            } else {
+                pl.classList.remove('mode-fullscreen')
+                let nn = document.querySelector('.player-bottom-area')
+                let on = document.querySelector('.control-bottom-center')
+                moveNode(on, nn)
+                console.log('已退出全屏')
+            }
+        });
+    }
+
+    function toolBar() {
+        let fs = document.querySelector('.video-btn-fullscreen button')
+        let pl = document.querySelector('.player-layer')
+        fs.addEventListener("click", function () {
+            if (document.fullscreenElement === null) {
+                pl.requestFullscreen.call(pl)
+            } else {
+                document.exitFullscreen()
+            }
+        })
+        fsListen(pl)
+
+        function setTime() {
+            let t = document.querySelector('.video-time')
+            let vts = document.querySelector('.video-time-seek')
+            let vtw = document.querySelector('.video-time-wrap')
+            t.addEventListener("click", function () {
+                vtw.style.display = 'none'
+                vts.style.display = 'inline-block'
+                vts.focus()
+            })
+            vts.addEventListener("focus", function () {
+                vts.value = parseTime(vp.currentTime)
+            })
+            vts.addEventListener("change", function () {
+                console.log(this.value)
+                vp.play()
+                vp.currentTime = this.value
+                vts.style.display = 'none'
+                vtw.style.display = 'block'
+                document.querySelectorAll('.video-state-pause span')[0].style.display = 'none'
+                document.querySelectorAll('.video-state-pause span')[1].style.display = ''
+            })
+        }
+
+        setTime()
+
+        function switchSelect() {
+            let sl = document.querySelector('.video-btn-speed')
+            sl.addEventListener('mouseover', function () {
+                sl.classList.add('player-speed-show')
+            }, true)
+            sl.addEventListener('mouseleave', function () {
+                sl.classList.remove('player-speed-show')
+            }, false)
+        }
+
+        switchSelect()
+
+        function bubbleList() {
+            let ul = document.querySelector(".video-btn-speed-menu")
+            let vbs = document.querySelector('.video-btn-speed')
+            let vbss = document.querySelector('.video-btn-speed-self')
+            ul.addEventListener('click', function (e) {
+                let target = e.target
+                if (target.tagName.toLowerCase() === "li") {
+                    let li = this.querySelectorAll(".video-btn-speed-list-item")
+                    let len = li.length;
+                    for (let i = 0; i < len; i++) {
+                        li[i].classList.remove('player-active')
+                    }
+                    index = Array.prototype.indexOf.call(li, target)
+                    vp.playbackRate = target.getAttribute('data-value')
+                    target.classList.add('player-active')
+                    vbs.classList.remove('player-speed-show')
+                    vbss.innerHTML = target.innerHTML
+                }
+            })
+        } //列表冒泡函数
+        bubbleList()
+    }
+</script>
 </body>
 </html>

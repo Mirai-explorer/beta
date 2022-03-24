@@ -1,40 +1,40 @@
 {
-    "video":[
-        {
-            "url":"./source.mp4",
-            "name":"ミュージカルが聴こえる？",
-            "desc":"歌/クルミ（CV:植田佳奈）/n ストーリーイベント「スイート・タイニー・ステージ！　駆け出し女優とリトルレディ」/nEDテーマ「ミュージカルが聴こえる？」",
-            "creator":"プリンセスコネクト!Re:Dive チャンネル",
-            "update":"",
-            "visitors":"",
-            "cover":""
-        },
-        {
-            "url":"./source2.mp4",
-            "name":"Asymmetric World",
-            "desc":"歌/ぺコリーヌ（CV:M・A・O ）、キャル（CV:立花理香）/nストーリーイベント「Re:member　僕の願いが紡ぐ未来」/nEDテーマ「Asymmetric World」",
-            "creator":"プリンセスコネクト!Re:Dive チャンネル",
-            "update":"",
-            "visitors":"",
-            "cover":""
-        },
-        {
-            "url":"./source3.mp4",
-            "name":"ぷりん・あ・ら・くりすますなの！",
-            "desc":"歌/ミヤコ（CV:雨宮天）/nストーリーイベント「メリープリンクリスマス！　空舞う少女とまごころのお菓子」/nEDテーマ「ぷりん・あ・ら・くりすますなの！」",
-            "creator":"プリンセスコネクト!Re:Dive チャンネル",
-            "update":"",
-            "visitors":"",
-            "cover":""
-        },
-        {
-            "url":"./source4.mp4",
-            "name":"恋キラリマジック☆彡",
-            "desc":"歌/リマ(CV:徳井青空)/nストーリーイベント「シンデレラレッスン　華やかなる日々はリンゴの味」/nEDテーマ「恋キラリマジック☆彡」",
-            "creator":"プリンセスコネクト!Re:Dive チャンネル",
-            "update":"",
-            "visitors":"",
-            "cover":""
-        }
-    ]
+  "video": [
+    {
+      "url": "./source.mp4",
+      "name": "ミュージカルが聴こえる？",
+      "desc": "歌/クルミ（CV:植田佳奈）/n ストーリーイベント「スイート・タイニー・ステージ！　駆け出し女優とリトルレディ」/nEDテーマ「ミュージカルが聴こえる？」",
+      "creator": "プリンセスコネクト!Re:Dive チャンネル",
+      "update": "",
+      "visitors": "",
+      "cover": ""
+    },
+    {
+      "url": "./source2.mp4",
+      "name": "Asymmetric World",
+      "desc": "歌/ぺコリーヌ（CV:M・A・O ）、キャル（CV:立花理香）/nストーリーイベント「Re:member　僕の願いが紡ぐ未来」/nEDテーマ「Asymmetric World」",
+      "creator": "プリンセスコネクト!Re:Dive チャンネル",
+      "update": "",
+      "visitors": "",
+      "cover": ""
+    },
+    {
+      "url": "./source3.mp4",
+      "name": "ぷりん・あ・ら・くりすますなの！",
+      "desc": "歌/ミヤコ（CV:雨宮天）/nストーリーイベント「メリープリンクリスマス！　空舞う少女とまごころのお菓子」/nEDテーマ「ぷりん・あ・ら・くりすますなの！」",
+      "creator": "プリンセスコネクト!Re:Dive チャンネル",
+      "update": "",
+      "visitors": "",
+      "cover": ""
+    },
+    {
+      "url": "./source4.mp4",
+      "name": "恋キラリマジック☆彡",
+      "desc": "歌/リマ(CV:徳井青空)/nストーリーイベント「シンデレラレッスン　華やかなる日々はリンゴの味」/nEDテーマ「恋キラリマジック☆彡」",
+      "creator": "プリンセスコネクト!Re:Dive チャンネル",
+      "update": "",
+      "visitors": "",
+      "cover": ""
+    }
+  ]
 }
