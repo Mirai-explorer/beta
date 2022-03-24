@@ -38,6 +38,19 @@
             outline: none;
         }
 
+        .player input, .player textarea {
+            -webkit-touch-callout: initial;
+            -webkit-user-select: initial;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: initial;
+        }
+
+        [role=button], a, area, button, input:not([type=range]), label, select, summary, textarea {
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+        }
+
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif;
@@ -971,7 +984,7 @@
                                                 <!-- 加载进度 -->
                                                 <div class="bui-bar bui-bar-buffer"></div>
                                                 <!-- 播放进度 -->
-                                                <div class="bui-bar bui-bar-normal"></div>
+                                                <div class="bui-bar bui-bar-normal" role="progressbar"></div>
                                             </div>
                                             <div class="bui-thumb">
                                                 <div class="bui-thumb-dot-special"></div>
@@ -1459,35 +1472,63 @@
         }
     }
 
-    function fsListen(pl) {
-        document.addEventListener("fullscreenchange", function (e) {
-            if (document.fullscreenElement !== null) {
-                pl.classList.add('mode-fullscreen')
-                let on = document.querySelector('.player-bottom-area')
-                let nn = document.querySelector('.control-bottom-center')
-                moveNode(on, nn)
-                console.log('已进入全屏')
-            } else {
-                pl.classList.remove('mode-fullscreen')
-                let nn = document.querySelector('.player-bottom-area')
-                let on = document.querySelector('.control-bottom-center')
-                moveNode(on, nn)
-                console.log('已退出全屏')
+    /* safari不支持此特性，暂不启用**
+        function fsListen(pl) {
+            let on, nn
+            try {
+                document.addEventListener("fullscreenchange", () => {
+                    if (document.fullscreenElement) {
+                        pl.classList.add('mode-fullscreen')
+                        on = document.querySelector('.player-bottom-area')
+                        nn = document.querySelector('.control-bottom-center')
+                        moveNode(on, nn)
+                    } else {
+                        pl.classList.remove('mode-fullscreen')
+                        nn = document.querySelector('.player-bottom-area')
+                        on = document.querySelector('.control-bottom-center')
+                        moveNode(on, nn)
+                    }
+                })
+            } catch (e) {
             }
-        });
-    }
+        }
+     */
     function toolBar() {
         const fs = document.querySelector('.video-btn-fullscreen button')
         const pl = document.querySelector('.player-layer')
+        let on, nn
         fs.addEventListener("click", function () {
-            if (document.fullscreenElement === null) {
-                pl.requestFullscreen.call(pl) || pl.webkitEnterFullscreen
+            if (document.fullscreenElement || document.webkitFullscreenElement) {
+                try {
+                    document.exitFullscreen()
+                    pl.classList.remove('mode-fullscreen')
+                    nn = document.querySelector('.player-bottom-area')
+                    on = document.querySelector('.control-bottom-center')
+                    moveNode(on, nn)
+
+                } catch {
+                    document.webkitExitFullscreen()
+                    pl.classList.remove('mode-fullscreen')
+                    nn = document.querySelector('.player-bottom-area')
+                    on = document.querySelector('.control-bottom-center')
+                    moveNode(on, nn)
+                }
             } else {
-                document.exitFullscreen() || document.webkitExitFullscreen
+                try {
+                    pl.requestFullscreen()
+                    pl.classList.add('mode-fullscreen')
+                    on = document.querySelector('.player-bottom-area')
+                    nn = document.querySelector('.control-bottom-center')
+                    moveNode(on, nn)
+                } catch {
+                    pl.webkitRequestFullScreen()
+                    pl.classList.add('mode-fullscreen')
+                    on = document.querySelector('.player-bottom-area')
+                    nn = document.querySelector('.control-bottom-center')
+                    moveNode(on, nn)
+                }
             }
         })
-        fsListen(pl)
-
         function setTime() {
             let t = document.querySelector('.video-time')
             let vts = document.querySelector('.video-time-seek')
@@ -1502,8 +1543,8 @@
             })
             vts.addEventListener("change", function () {
                 console.log(this.value)
-                vp.play()
                 vp.currentTime = this.value
+                vp.play()
                 vts.style.display = 'none'
                 vtw.style.display = 'block'
                 document.querySelectorAll('.video-state-pause span')[0].style.display = 'none'
