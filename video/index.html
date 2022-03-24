@@ -332,7 +332,7 @@
             zoom: 1;
         }
 
-        .video-control-top {
+        .player-layer .video-control-top {
             position: absolute;
             left: 0;
             right: 0;
@@ -342,6 +342,99 @@
             -webkit-transition: opacity .2s ease-out;
             transition: opacity .2s ease-out;
             z-index: 1;
+        }
+
+        .player-layer.video-control-show .video-control-top {
+            opacity: 1;
+            visibility: visible;
+            -webkit-transition: opacity .2s ease-in;
+            transition: opacity .2s ease-in;
+        }
+
+        .player-video-control .video-progress {
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+        }
+
+        .player-video-control .video-progress-slider {
+            height: 16px;
+        }
+
+        .bui-slider {
+            height: 12px;
+            cursor: pointer;
+        }
+
+        .bui-slider .bui-track.bui-track-video-progress {
+            height: 4px !important;
+            border-radius: 0;
+        }
+
+        .bui-slider .bui-track {
+            position: relative;
+            width: 100%;
+            height: 2px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap {
+            background: hsla(0, 0%, 100%, .2);
+        }
+
+        .bui-slider .bui-track .bui-bar-wrap {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-radius: 0;
+        }
+
+        .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap .bui-bar-buffer {
+            will-change: transform;
+            background: hsla(0, 0%, 100%, .3);
+            -webkit-transition: -webkit-transform .1s;
+            transition: -webkit-transform .1s;
+            -o-transition: transform .1s;
+            transition: transform .1s, -webkit-transform .1s;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+
+        .bui-slider .bui-track .bui-bar-wrap .bui-bar {
+            position: absolute;
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #00a1d6;
+            will-change: transform;
+        }
+
+        .bui-slider .bui-track.bui-track-video-progress .bui-bar-normal.bui-bar.bui-bar-normal {
+            background: rgba(35, 173, 229, 1);
+        }
+
+        .player-layer .player-video-control .video-progress-detail {
+            position: absolute;
+            bottom: 7px;
+            left: 100px;
+            overflow: visible;
+            width: 20px;
+            height: 36px;
+            margin-left: -10px;
+            text-align: center;
+            z-index: 1;
+            pointer-events: none;
+            display: none;
         }
 
         .video-control-bottom {
@@ -868,10 +961,38 @@
                     <div class="player-video-control-wrap">
                         <div class="player-video-control-mask"></div>
                         <div class="player-video-control">
+                            <!-- 控制栏顶部（进度条控制区） -->
                             <div class="video-control-top">
-                                <div class="video-progress"></div>
+                                <div class="video-progress">
+                                    <div class="video-progress-slider bui bui-slider">
+                                        <div class="bui-track bui-track-autohide-thumb bui-track-video-progress">
+                                            <!-- 完整进度 -->
+                                            <div class="bui-bar-wrap">
+                                                <!-- 加载进度 -->
+                                                <div class="bui-bar bui-bar-buffer"></div>
+                                                <!-- 播放进度 -->
+                                                <div class="bui-bar bui-bar-normal"></div>
+                                            </div>
+                                            <div class="bui-thumb">
+                                                <div class="bui-thumb-dot-special"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 视频帧预览 -->
+                                    <div class="video-progress-detail">
+                                        <div class="video-progress-detail-container">
+                                            <div class="video-progress-detail-img">
+                                                <img alt="" class="detail-img-capture" src=""/>
+                                                <div class="detail-capture-time"></div>
+                                            </div>
+                                            <div class="video-progress-detail-content"></div>
+                                            <div class="video-progress-detail-skip_tips"></div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="video-control-bottom">
+                                <!-- 控制栏底部（参数控制区） -->
                                 <div class="control-bottom-left">
                                     <div class="video-btn video-btn-start video-state-pause">
                                         <button aria-label="播放" class="player-iconfont">
@@ -1128,13 +1249,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="video-control-slider">
-                                <div class="video-track"></div>
+                            <!-- 底部常驻进度条 -->
+                            <div class="video-control-shadow bui bui-slider">
+                                <div class="bui-track bui-track-video-progress"></div>
                             </div>
+                            <!-- 高能进度条 -->
+                            <div class="video-temp-distribution"></div>
                         </div>
                     </div>
-                    <div class="player-video-toast-wrap">高能分布</div>
-                    <div class="player-video-draggable-mask">进度条拖动缩略图</div>
+                    <!-- 未知 -->
+                    <div class="player-video-toast-wrap"></div>
+                    <div class="player-video-draggable-mask"></div>
                 </div>
                 <div class="player-bottom-area">
                     <div class="player-video-sendbar player-normal-mode">
@@ -1151,6 +1276,16 @@
     vp.addEventListener("loadeddata", handlePlay)
     displayBars()
     toolBar()
+
+    function captureFrame() {
+        let canvas = document.querySelector('canvas')
+        let scale = 0.2
+        canvas.getContext('2d').drawImage(vp, 0, 0, vp.videoWidth * scale, vp.videoHeight * scale)
+        let img = new Image()
+        img.src = canvas.toDataURL("image/png")
+        let view = document.createElement('div')
+        view.appendChild(img)
+    }
 
     function parseTime(t) {
         let m, s
@@ -1175,55 +1310,82 @@
         xhr.send()
     }
 
+    class player {
+        constructor() {
+            this.player = document.querySelector('.player-video video');
+        }
+
+        get state() {
+            return this.player.paused;
+        }
+
+        play() {
+            if (this.state) {
+                this.player.play()
+                console.log(this.state + '，已播放')
+            } else {
+                this.player.pause()
+                console.log(this.state + '，已暂停')
+            }
+        }
+    }
+
     function handlePlay() {
-        console.log(vp.readyState)
+        console.log('缓冲开始')
         let now = document.querySelector('.video-time-now')
         let total = document.querySelector('.video-time-total')
+        let vtt = document.querySelector('.video-top-title')
         now.innerHTML = parseTime(vp.currentTime)
         total.innerHTML = parseTime(vp.duration)
-        let start = document.querySelector('.video-btn-start button')
-        vp.onclick = function () {
-
-        }
+        vtt.innerHTML = data[vp.getAttribute('data-id')].name
+        let buffer = document.querySelector('.bui-bar-buffer')
+        let normal = document.querySelector('.bui-bar-normal')
+        normal.style.transform = 'scaleX(0)'
         vp.addEventListener("timeupdate", function () {
-            now.innerHTML = parseTime(vp.currentTime)
+            // 进度变化时自动更新显示播放时间，设定200毫秒延时降低性能消耗
+            setTimeout(function () {
+                now.innerHTML = parseTime(vp.currentTime)
+                let normalLength = vp.currentTime / vp.duration
+                normal.style.transform = 'scaleX(' + normalLength + ')'
+            }, 200)
+        })
+        vp.addEventListener('progress', function () {
+            let duration = vp.duration // 视频总长度
+            if (duration > 0) {
+                for (let i = 0; i < vp.buffered.length; i++) {
+                    // 寻找当前时间之后最近的点
+                    if (vp.buffered.start(vp.buffered.length - 1 - i) < vp.currentTime) {
+                        let bufferedLength = (vp.buffered.end(vp.buffered.length - 1 - i) / duration)
+                        console.log(bufferedLength)
+                        buffer.style.transform = 'scaleX(' + bufferedLength + ')'
+                        break;
+                    }
+                }
+            }
         })
         vp.addEventListener("play", function () {
+            /* 播放时切替暂停图标 */
             document.querySelectorAll('.video-state-pause span')[0].style.display = 'none'
             document.querySelectorAll('.video-state-pause span')[1].style.display = ''
         })
         vp.addEventListener("pause", function () {
+            /* 暂停时切替播放图标 */
             document.querySelectorAll('.video-state-pause span')[1].style.display = 'none'
             document.querySelectorAll('.video-state-pause span')[0].style.display = ''
         })
         vp.addEventListener("ended", function (e) {
+            /* 播放时切替暂停图标 */
             document.querySelectorAll('.video-state-pause span')[1].style.display = 'none'
             document.querySelectorAll('.video-state-pause span')[0].style.display = ''
+            /* 定义播放结束后的行为 *****
+            if(data[i+1]){
+                console.log('5秒后自动播放下一个视频')
+                setTimeout(next(),5000)
+            } else {
+                console.log('当前唯一视频，展示视频推荐')
+            }
+            */
         })
-        start.addEventListener('click', function () {
-            let instance = new player
-            instance.play()
-        })
-
-        class player {
-            constructor() {
-                this.player = document.querySelector('.player-video video');
-            }
-
-            get state() {
-                return this.player.paused;
-            }
-
-            play() {
-                if (this.state) {
-                    this.player.play()
-                    console.log(this.state + '，已播放')
-                } else {
-                    this.player.pause()
-                    console.log(this.state + '，已暂停')
-                }
-            }
-        }
     }
 
     let data
@@ -1242,14 +1404,22 @@
             vp.setAttribute('data-id', id)
         }
     }
-
     changePlay()
-
     function displayBars() {
-        let pw = document.querySelector('.player-wrap')
-        let pl = document.querySelector('.player-layer')
-        let vcm = document.querySelector('.player-video-control-mask')
-        let vcw = document.querySelector('.player-video-control-wrap')
+        const pw = document.querySelector('.player-wrap')
+        const pl = document.querySelector('.player-layer')
+        const vcm = document.querySelector('.player-video-control-mask')
+        const vcw = document.querySelector('.player-video-control-wrap')
+        const pvp = document.querySelector('.video-progress')
+        const start = document.querySelector('.video-btn-start button')
+        start.addEventListener('click', function () {
+            let instance = new player
+            instance.play()
+        })
+        vp.addEventListener('click', function () {
+            let instance = new player
+            instance.play()
+        })
         let timer = null, isMove = false
         vp.addEventListener("mousemove", function () {
             isMove = true
@@ -1276,6 +1446,11 @@
         vcw.addEventListener("mouseleave", function () {
             pl.classList.remove('video-control-show')
         })
+        pvp.addEventListener("click", function (e) {
+            console.log((e.offsetX / this.clientWidth) * vp.duration)
+            vp.currentTime = (e.offsetX / this.clientWidth) * vp.duration
+            vp.play()
+        })
     }
 
     function moveNode(on, nn) {
@@ -1301,15 +1476,14 @@
             }
         });
     }
-
     function toolBar() {
-        let fs = document.querySelector('.video-btn-fullscreen button')
-        let pl = document.querySelector('.player-layer')
+        const fs = document.querySelector('.video-btn-fullscreen button')
+        const pl = document.querySelector('.player-layer')
         fs.addEventListener("click", function () {
             if (document.fullscreenElement === null) {
-                pl.requestFullscreen.call(pl)
+                pl.requestFullscreen.call(pl) || pl.webkitEnterFullscreen
             } else {
-                document.exitFullscreen()
+                document.exitFullscreen() || document.webkitExitFullscreen
             }
         })
         fsListen(pl)
@@ -1363,7 +1537,7 @@
                     for (let i = 0; i < len; i++) {
                         li[i].classList.remove('player-active')
                     }
-                    index = Array.prototype.indexOf.call(li, target)
+                    Array.prototype.indexOf.call(li, target)
                     vp.playbackRate = target.getAttribute('data-value')
                     target.classList.add('player-active')
                     vbs.classList.remove('player-speed-show')
