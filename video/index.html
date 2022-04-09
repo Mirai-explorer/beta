@@ -839,6 +839,26 @@
             border-radius: 4px;
         }
 
+        .player-video-control .video-btn .video-quality-menu .bui-select-list {
+            border-radius: 4px;
+        }
+
+        .bui-select.bui-select-quality-menu .bui-select-list {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none;
+            position: absolute;
+            left: 0;
+            font-size: 12px;
+            width: auto;
+            text-align: left;
+        }
+
+        .bui-select.bui-select-quality-menu .bui-select-unfold .bui-select-list {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .bui-select .bui-select-item {
             padding: 0 22px 0 7px;
             height: 22px;
@@ -966,7 +986,7 @@
                         <div class="danmaku-block">4</div>
                     </div>
                     <div class="player-video">
-                        <video controlslist="nodownload" data-id="0">
+                        <video controlslist="nodownload" data-id="0" preload="metadata">
                             <source src="./source.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -984,7 +1004,8 @@
                                                 <!-- 加载进度 -->
                                                 <div class="bui-bar bui-bar-buffer"></div>
                                                 <!-- 播放进度 -->
-                                                <div class="bui-bar bui-bar-normal" role="progressbar"></div>
+                                                <div class="bui-bar bui-bar-normal" role="progressbar"
+                                                     style="transform: scaleX(0)"></div>
                                             </div>
                                             <div class="bui-thumb">
                                                 <div class="bui-thumb-dot-special"></div>
@@ -995,7 +1016,6 @@
                                     <div class="video-progress-detail">
                                         <div class="video-progress-detail-container">
                                             <div class="video-progress-detail-img">
-                                                <img alt="" class="detail-img-capture" src=""/>
                                                 <div class="detail-capture-time"></div>
                                             </div>
                                             <div class="video-progress-detail-content"></div>
@@ -1121,7 +1141,8 @@
                                                     </span>
                                                     </div>
                                                     <div class="bui-select-list-wrap">
-                                                        <ul class="bui-select-list">
+                                                        <ul class="bui-select-list"
+                                                            style="bottom: 41px;left: -47.5px;height: 0;border: none;">
                                                             <li class="bui-select-item">
                                                                 <span class="video-quality-value">1080P</span>
                                                                 <span class="video-quality-desc">超高清</span>
@@ -1286,18 +1307,27 @@
 </div>
 <script>
     const vp = document.querySelector('.player-video video')
+    const now = document.querySelector('.video-time-now')
+    const total = document.querySelector('.video-time-total')
+    const vtt = document.querySelector('.video-top-title')
+    vp.addEventListener("loadedmetadata", () => {
+        now.innerHTML = parseTime(vp.currentTime)
+        total.innerHTML = parseTime(vp.duration)
+        vtt.innerHTML = data[vp.getAttribute('data-id')].name
+    })
     vp.addEventListener("loadeddata", handlePlay)
     displayBars()
     toolBar()
 
     function captureFrame() {
-        let canvas = document.querySelector('canvas')
-        let scale = 0.2
-        canvas.getContext('2d').drawImage(vp, 0, 0, vp.videoWidth * scale, vp.videoHeight * scale)
+        let canvas = document.createElement('canvas')
+        canvas.getContext('2d').drawImage(vp, 0, 0, vp.videoWidth, vp.videoHeight)
         let img = new Image()
         img.src = canvas.toDataURL("image/png")
-        let view = document.createElement('div')
-        view.appendChild(img)
+        img.className = 'detail-img-capture'
+        let view = document.querySelector('.video-progress-detail-img')
+        view.replaceChild(img, view.childNodes[0])
+        URL.revokeObjectURL(vp.src)
     }
 
     function parseTime(t) {
@@ -1344,23 +1374,15 @@
     }
 
     function handlePlay() {
-        console.log('缓冲开始')
-        let now = document.querySelector('.video-time-now')
-        let total = document.querySelector('.video-time-total')
-        let vtt = document.querySelector('.video-top-title')
-        now.innerHTML = parseTime(vp.currentTime)
-        total.innerHTML = parseTime(vp.duration)
-        vtt.innerHTML = data[vp.getAttribute('data-id')].name
-        let buffer = document.querySelector('.bui-bar-buffer')
-        let normal = document.querySelector('.bui-bar-normal')
-        normal.style.transform = 'scaleX(0)'
+        const buffer = document.querySelector('.bui-bar-buffer')
+        const normal = document.querySelector('.bui-bar-normal')
         vp.addEventListener("timeupdate", function () {
             // 进度变化时自动更新显示播放时间，设定200毫秒延时降低性能消耗
             setTimeout(function () {
                 now.innerHTML = parseTime(vp.currentTime)
                 let normalLength = vp.currentTime / vp.duration
                 normal.style.transform = 'scaleX(' + normalLength + ')'
-            }, 200)
+            }, 1000)
         })
         vp.addEventListener('progress', function () {
             let duration = vp.duration // 视频总长度
@@ -1375,6 +1397,10 @@
                     }
                 }
             }
+        })
+        vp.addEventListener("waiting", () => {
+            now.innerHTML = '加载中...'
+            console.log('正在缓冲')
         })
         vp.addEventListener("play", function () {
             /* 播放时切替暂停图标 */
@@ -1412,7 +1438,7 @@
             let id = vp.getAttribute('data-id')
             id < data.length - 1 ? id++ : id = 0
             vp.src = data[id].url
-            vp.onloadeddata = vp.play()
+            vp.oncanplay = vp.play()
             console.log('当前播放' + id)
             vp.setAttribute('data-id', id)
         }
@@ -1423,7 +1449,7 @@
         const pl = document.querySelector('.player-layer')
         const vcm = document.querySelector('.player-video-control-mask')
         const vcw = document.querySelector('.player-video-control-wrap')
-        const pvp = document.querySelector('.video-progress')
+        const pvp = document.querySelector('.video-progress-slider')
         const start = document.querySelector('.video-btn-start button')
         start.addEventListener('click', function () {
             let instance = new player
@@ -1459,8 +1485,35 @@
         vcw.addEventListener("mouseleave", function () {
             pl.classList.remove('video-control-show')
         })
+        /* 进度条拖动条件功能
+        pvp.addEventListener("mousedown", function (e) {
+            let left = e.clientX - this.offsetLeft
+            let normal = document.querySelector('.bui-bar-normal')
+            console.log('落点位置：'+e.clientX+'\n左侧：'+this.offsetLeft)
+            normal.style.transform = 'scaleX(' + e.clientX / 776 + ')'
+            document.addEventListener("mousemove", function (e) {
+                let px = e.clientX - left
+                if(px <= 0){
+                    px = 0;
+                }
+                else if(px >= 776){
+                    px = 776;
+                }
+                normal.style.transform = 'scaleX(' + px / 776 + ')'
+            })
+            document.addEventListener("mouseup", function (e) {
+                document.onmousemove = null
+                document.onmouseup = null
+            })
+            return false
+        })
+        */
+        pvp.addEventListener("mouseover", function (e) {
+            console.log('当前位置：' + e.offsetX + '\n总长：' + this.clientWidth)
+            captureFrame()
+        })
         pvp.addEventListener("click", function (e) {
-            console.log((e.offsetX / this.clientWidth) * vp.duration)
+            console.log('当前位置：' + e.offsetX + '\n总长：' + this.clientWidth)
             vp.currentTime = (e.offsetX / this.clientWidth) * vp.duration
             vp.play()
         })
@@ -1555,17 +1608,22 @@
         setTime()
 
         function switchSelect() {
-            let sl = document.querySelector('.video-btn-speed')
-            sl.addEventListener('mouseover', function () {
-                sl.classList.add('player-speed-show')
+            let vbs = document.querySelector('.video-btn-speed')
+            let vqs = document.querySelector('.video-quality-menu > div')
+            vbs.addEventListener('mouseover', function () {
+                this.classList.add('player-speed-show')
             }, true)
-            sl.addEventListener('mouseleave', function () {
-                sl.classList.remove('player-speed-show')
+            vbs.addEventListener('mouseleave', function () {
+                this.classList.remove('player-speed-show')
+            }, false)
+            vqs.addEventListener('mouseover', function () {
+                this.classList.add('bui-select-unfold')
+            }, true)
+            vqs.addEventListener('mouseleave', function () {
+                this.classList.remove('bui-select-unfold')
             }, false)
         }
-
         switchSelect()
-
         function bubbleList() {
             let ul = document.querySelector(".video-btn-speed-menu")
             let vbs = document.querySelector('.video-btn-speed')

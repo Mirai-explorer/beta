@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="player-video">
+    <video controls height="450px" width="800px">
+        <source src="./source.mp4">
+    </video>
+    <div class="bui-bar-buffer"></div>
+    <div class="bui-bar-normal"></div>
+    <div class="video-time-now"></div>
+    <div class="video-time-total"></div>
+    <div class="video-top-title"></div>
+</div>
+<script type="module">
+    import('./v1.js').then(({vplayer,}) => {
+        vplayer.init()
+        vplayer.events()
+    })
+</script>
+</body>
+</html>

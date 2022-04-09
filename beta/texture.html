@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片纹理</title>
+    <style>
+        .container {
+            width: 959px;
+            height: 1594px;
+        }
+
+        .base, .eye {
+            width: inherit;
+            height: inherit;
+            position: relative;
+        }
+
+        .base {
+            z-index: 1;
+        }
+
+        .eye {
+            z-index: 2;
+        }
+
+        .base img {
+            position: absolute;
+            clip: rect(624px 959px 1594px 4px);
+        }
+
+        .eye img {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="base">
+        <img alt="" src="./assets/120612.bmp">
+    </div>
+    <div class="eye">
+        <img alt="" src="./assets/120612.bmp">
+    </div>
+</div>
+</body>
+</html>
