@@ -2,8 +2,8 @@
 <html lang="zh-cmn-Hans" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
-          name="viewport"/>
+    <meta content="width=device-width" name="viewport"/>
+    <meta content="yes" name="mobile-web-app-capable"/>
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <title>小程序主页排版测试</title>
     <style>
@@ -260,11 +260,11 @@
 
         .shop.info_card {
             overflow: hidden;
-            background: linear-gradient(0deg, #FFF3D8, #EBEFE7);
+            background: #FFF3D8;
         }
 
         section.cover_img {
-            background: url('//pic2.zhimg.com/v2-06ce526eb78c63b19602a61d4744e8a0_720w.jpg?source=172ae18b') no-repeat;
+            background: linear-gradient(to bottom, transparent 0%, #FFF3D820 50%, #FFF3D890 75%, #FFF3D8FF 100%), url('https://pic2.zhimg.com/v2-06ce526eb78c63b19602a61d4744e8a0_720w.jpg?source=172ae18b') no-repeat;
             background-size: cover;
             width: 100%;
             height: 160px;
@@ -338,13 +338,14 @@
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            background: #80a7b3;
-            box-shadow: 0 1px 2px #638d9b;
-            text-shadow: 0 1px #0000004c;
-            color: white;
+            box-shadow: 0 0 3px 1px #638d9b;
+            text-shadow: 1px 2px 1px #DDDDDD;
+            color: #638d9b;
             border-radius: 15px;
             line-height: 30px;
             margin: 10px 0;
+            font-size: 18px;
+            font-weight: bold;
         }
 
         .cv_title .icon {
@@ -580,11 +581,11 @@
                         <svg class="icon" height="25" p-id="3955" t="1649512802826" version="1.1"
                              viewBox="0 0 1024 1024" width="25" xmlns="http://www.w3.org/2000/svg">
                             <path d="M697.936842 889.263158H326.063158c-51.2 0-94.315789-43.115789-94.31579-94.31579v-24.252631c0-24.252632 8.084211-45.810526 24.252632-61.978948C164.378947 633.263158 107.789474 522.778947 107.789474 398.821053 107.789474 177.852632 288.336842 0 512 0s404.210526 177.852632 404.210526 398.821053c0 123.957895-56.589474 234.442105-148.210526 309.894736 16.168421 16.168421 24.252632 37.726316 24.252632 61.978948v24.252631c0 51.2-43.115789 94.315789-94.31579 94.31579z m0-80.842105c8.084211 0 13.473684-5.389474 13.473684-13.473685v-24.252631c0-2.694737 0-5.389474-2.694737-8.084211l-56.589473-64.673684 67.368421-53.894737c75.452632-59.284211 118.568421-150.905263 118.568421-245.221052C835.368421 223.663158 689.852632 80.842105 512 80.842105S188.631579 223.663158 188.631579 398.821053c0 94.315789 43.115789 185.936842 118.568421 245.221052l67.368421 53.894737-56.589474 64.673684c-2.694737 2.694737-2.694737 5.389474-2.694736 8.084211v24.252631c0 8.084211 5.389474 13.473684 13.473684 13.473685h369.178947z"
-                                  fill="#ffffff" p-id="3956"></path>
+                                  fill="#638d9b" p-id="3956"></path>
                             <path d="M256 943.157895h512c21.557895 0 40.421053 18.863158 40.421053 40.421052s-18.863158 40.421053-40.421053 40.421053h-512c-21.557895 0-40.421053-18.863158-40.421053-40.421053S234.442105 943.157895 256 943.157895z"
-                                  fill="#ffffff" p-id="3957"></path>
+                                  fill="#638d9b" p-id="3957"></path>
                             <path d="M700.631579 485.052632c0 21.557895-18.863158 40.421053-40.421053 40.421052S619.789474 506.610526 619.789474 485.052632c0-118.568421-97.010526-215.578947-215.578948-215.578948-21.557895 0-40.421053-18.863158-40.421052-40.421052S382.652632 188.631579 404.210526 188.631579c164.378947 0 296.421053 132.042105 296.421053 296.421053z"
-                                  fill="#ffffff" p-id="3958"></path>
+                                  fill="#638d9b" p-id="3958"></path>
                         </svg>
                         <span>会员公约</span>
                     </header>
