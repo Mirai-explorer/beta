@@ -13,6 +13,14 @@
             box-sizing: border-box;
         }
 
+        select {
+            appearance: none;
+            border: none;
+            background: transparent;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
         body {
             font-family: apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, Roboto, Noto Sans SC, Helvetica, sans-serif;
             letter-spacing: .03rem;
@@ -52,12 +60,15 @@
             display: block;
         }
 
-        .unlock.wrap {
-
+        .home .inner {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .inner {
-            padding: 10px;
+        .unlock .inner {
+            padding: 10px 32px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -395,6 +406,194 @@
             font-weight: bold;
         }
 
+        .unlock.wrap .operation_tips {
+            min-height: 100px;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #BE935B;
+        }
+
+        .unlock.wrap .operation_form {
+            flex-grow: 1;
+            width: 100%;
+            display: grid;
+            grid-template-rows: max-content 1fr;
+            grid-gap: 16px;
+        }
+
+        .operation_items {
+            display: inline-flex;
+            font-size: 17px;
+        }
+
+        .operation_items .name {
+            margin-right: 24px;
+        }
+
+        .operation_items .content {
+            flex-grow: 1;
+        }
+
+        .modal_switch {
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal_switch::after {
+            content: "";
+            background: url("data:image/svg+xml,%3Csvg t='1650027254646' class='icon' viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg' p-id='2071' width='20' height='20'%3E%3Cpath d='M890.335385 330.911222c-12.576374-12.416396-32.800753-12.352748-45.248112 0.192662L517.248327 661.951458 184.831931 332.512727c-12.576374-12.447359-32.800753-12.352748-45.280796 0.192662-12.447359 12.576374-12.352748 32.831716 0.192662 45.280796l353.311652 350.112082c0.543583 0.543583 1.247144 0.672598 1.792447 1.183497 0.127295 0.127295 0.159978 0.287273 0.287273 0.416288 6.239161 6.175514 14.399785 9.280473 22.527725 9.280473 8.224271 0 16.479505-3.168606 22.720387-9.471415l350.112082-353.311652C902.975407 363.615643 902.880796 343.360301 890.335385 330.911222z' p-id='2072' fill='%238a8a8a'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+            width: 20px;
+            height: 20px;
+        }
+
+        .extra-text {
+            font-size: 14px;
+        }
+
+        .operation_items label {
+            display: inline-flex;
+            width: 100%;
+        }
+
+        .operation_items select {
+            margin-left: 24px;
+            flex-grow: 1;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .modal-wrap {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50%;
+            background: #FFFFFF;
+            box-shadow: 0 0 3px rgb(0 0 0 / 16%);
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal.fade {
+            opacity: 0;
+            transition: opacity .15s linear;
+        }
+
+        .modal.fade.in {
+            opacity: 1;
+        }
+
+        .modal-backdrop.fade {
+            opacity: 0;
+            transition: opacity .15s linear;
+        }
+
+        .modal-backdrop.in {
+            opacity: 0.5;
+        }
+
+        .modal.fade .modal-wrap {
+            transition: transform .3s ease-out;
+            transform: translate(0, 100%);
+        }
+
+        .modal.in .modal-wrap {
+            transform: translate(0, 0);
+        }
+
+        .component {
+            padding: 24px 16px;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .picker {
+            flex-grow: 1;
+            height: calc(100% - 50px);
+            position: relative;
+        }
+
+        .picker::before {
+            content: '';
+            position: absolute;
+            top: calc(40% - 1px);
+            width: 100%;
+            height: 20%;
+            pointer-events: none;
+            border-top: 1px solid rgba(0, 0, 0, .12);
+            border-bottom: 1px solid rgba(0, 0, 0, .12);
+        }
+
+        ul.picker_list {
+            list-style: none;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            scroll-snap-type: y mandatory;
+        }
+
+        ul.picker_list::-webkit-scrollbar {
+            display: none;
+        }
+
+        li.picker_options {
+            width: 100%;
+            height: 20%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: center;
+        }
+
+        .selections {
+            height: 50px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .selections button {
+            width: 120px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        .selections button#cancel {
+            background: #f2f2f2;
+            color: #00c853;
+        }
+
+        .selections button#ok {
+            background: #00c853;
+            color: #FFFFFF;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgb(0 0 0);
+            z-index: 999;
+            opacity: 0.5;
+        }
+
         .bottom_navbar {
             position: fixed;
             bottom: 0;
@@ -673,8 +872,44 @@
         </div>
     </div>
     <div class="wrap unlock">
-        <div>
-            这是开门页面
+        <div class="inner">
+            <div class="operation_tips">
+                <p>请选择要使用的套餐</p>
+            </div>
+            <div class="operation_form">
+                <div class="operation_items">
+                    <span class="name">有效套餐</span>
+                    <span class="content modal_switch">123</span>
+                    <!--<label>有效套餐
+                        <select>
+                            <option>50小时多次学习卡</option>
+                            <option>单日不限时畅学卡</option>
+                        </select>
+                    </label>-->
+                    <div class="modal package_selection fade">
+                        <div class="modal-wrap">
+                            <div class="component">
+                                <div class="picker">
+                                    <ul class="picker_list">
+                                        <li class="picker_options"></li>
+                                        <li class="picker_options"></li>
+                                        <li class="picker_options">A</li>
+                                        <li class="picker_options">B</li>
+                                        <li class="picker_options">C</li>
+                                        <li class="picker_options"></li>
+                                        <li class="picker_options"></li>
+                                    </ul>
+                                </div>
+                                <div class="selections">
+                                    <button id="cancel">取消</button>
+                                    <button id="ok">确定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="extra-text">温馨提示：除随到随学模式外，您在开门前需提前预约订座；使用随到随学模式时</div>
+            </div>
         </div>
     </div>
     <div class="wrap profile">
@@ -757,6 +992,84 @@
             profile_.classList.add('show')
         }
     }, false)
+    const ms = document.querySelector('.modal_switch')
+    const modal = document.querySelector('.modal')
+    const mw = document.querySelector('.modal-wrap')
+    const node = '<div class="modal-backdrop fade"></div>'
+    ms.addEventListener('click', () => {
+        modal.insertAdjacentHTML("afterend", node)
+        let mb = document.querySelector('.modal-backdrop')
+        setTimeout(() => {
+            mb.classList.add('in')
+        }, 1)
+        modal.style.display = 'block'
+        setTimeout(() => {
+            modal.classList.add('in')
+        }, 1)
+        mw.addEventListener('click', e => {
+            e.stopPropagation()
+        })
+        modal.addEventListener('click', () => {
+            modal.classList.remove('in')
+            mb.classList.remove('in')
+            setTimeout(
+                () => {
+                    modal.removeAttribute('style')
+                    mb.remove()
+                }, 200)
+        })
+    })
+    const cancel = document.querySelector('#cancel')
+    const ok = document.querySelector('#ok')
+    cancel.addEventListener('click', () => {
+        let mb = document.querySelector('.modal-backdrop')
+        modal.classList.remove('in')
+        mb.classList.remove('in')
+        setTimeout(
+            () => {
+                modal.removeAttribute('style')
+                mb.remove()
+            }, 200)
+    })
+    const content = document.querySelector('.content')
+    ok.addEventListener('click', () => {
+        content.innerHTML = 'Changed'
+        let mb = document.querySelector('.modal-backdrop')
+        modal.classList.remove('in')
+        mb.classList.remove('in')
+        setTimeout(
+            () => {
+                modal.removeAttribute('style')
+                mb.remove()
+            }, 200)
+    })
+    // 获取ul
+    const ul = document.querySelector('ul')
+    ul.addEventListener('scroll', ajacs(1000))
+
+    // 防抖定时器
+    function ajacs(times) {
+        let time = null
+        return function () {
+            if (time !== null) {
+                clearTimeout(time);
+            }
+            /*获取滚动条高度*/
+            let scrollTop = this.scrollTop
+            time = setTimeout(() => {
+                /* 事件结束开始执行最终方法*/
+                return ajas(scrollTop)
+            }, times);
+        }
+    }
+
+    // 最终输出位置
+    function ajas(scrollTop) {
+        //读取滚动条的位置
+        /*60是每一块的高度，前面两个是空的从0开始算起，需要＋1才能符合当前位置*/
+        let list = scrollTop / (ul.offsetHeight / 5) + 1
+        console.log('选中第' + list + '个元素');
+    }
 </script>
 </body>
 </html>
