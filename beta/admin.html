@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width" name="viewport"/>
+    <meta content="yes" name="mobile-web-app-capable"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        * {
+            font-family: apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, Roboto, Noto Sans SC, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            display: grid;
+            justify-content: center;
+            grid-template-columns: .85fr;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .form-wrap {
+            display: grid;
+            grid-template-rows: 80px 1fr;
+        }
+
+        .form-header {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            font-size: 24px;
+        }
+
+        #package {
+            display: grid;
+            grid-template-rows: 1fr 80px;
+            height: calc(100vh - 80px);
+        }
+
+        .scroll-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: scroll;
+        }
+
+        .scroll-form::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            appearance: none;
+        }
+
+        div.p-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        div.p-icon {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tags-field {
+            display: inline-flex;
+            gap: 4px;
+        }
+
+        .icon-field {
+            display: inline-flex;
+            gap: 12px;
+        }
+
+        .icon-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        select[name="type"] {
+            border-radius: 4px;
+            border: 1px solid #6ac0fd;
+            width: 50%;
+            height: 36px;
+            font-size: 16px;
+            color: #2a82c1;
+            outline-style: none;
+            padding: 0 10px;
+        }
+
+        input[type="text"] {
+            height: 36px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            border: 1px solid #6ac0fd;
+            color: #2a82c1;
+            outline-style: none;
+            padding: 0 10px;
+        }
+
+        input[type="text"]::placeholder {
+            font-size: 16px;
+            color: rgba(18, 33, 55, .3);
+        }
+
+        input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        button.p-button {
+            background: #6ac0fd;
+            color: #ffffff;
+            width: 100px;
+            height: 36px;
+            border-radius: 4px;
+            font-size: 16px;
+            flex: 0 0 100px;;
+        }
+
+        .p-button:hover {
+            background: #2a82c1;
+        }
+
+        .tips {
+            font-size: 14px;
+        }
+
+        .rules-field {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        button.p-i-button {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 21px;
+            background: deepskyblue;
+            color: #ffffff;
+            padding-bottom: 3px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            flex: 0 0 28px
+        }
+
+        div.p-button_set {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+            flex: 0 0 10%;
+        }
+
+        button.p-outline-button {
+            border: 1px solid #6ac0fd;
+            background: #FFFFFF;
+            color: #6ac0fd;
+        }
+
+        .p-outline-button:hover {
+            background: #fcfcfc;
+            color: #2a82c1;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-wrap">
+        <div class="form-header">套餐管理</div>
+        <form id="package">
+            <div class="scroll-form">
+                <div class="p-item p-type">
+                    <label>套餐类型</label>
+                    <select id="type" name="type">
+                        <option value="1">时卡</option>
+                        <option value="2">日卡</option>
+                        <option value="3">周卡</option>
+                        <option value="4">月卡</option>
+                        <option value="5">次卡</option>
+                        <option value="6">特别</option>
+                    </select>
+                </div>
+                <div class="p-item p-title">
+                    <label for="title">套餐名称</label>
+                    <input autocomplete="on" form="package" id="title" name="title" placeholder="请输入套餐名称" required
+                           type="text">
+                </div>
+                <div class="p-item p-tags">
+                    <label for="tag">套餐标签</label>
+                    <div class="tags-field">
+                        <input autocomplete="on" form="package" id="tag" name="title" placeholder="请输入要添加的标签" required
+                               type="text">
+                        <button class="p-button" id="tag-add" type="button">添加</button>
+                    </div>
+                    <div class="tags-extra">
+                        <span class="tips">此项支持输入最多4组套餐标签名称，以“/”分割</span>
+                        <div class="op_area"></div>
+                    </div>
+                </div>
+                <div class="p-item p-keys">
+                    <label for="keys">关键规则</label>
+                    <input autocomplete="on" form="package" id="keys" name="keys" placeholder="" required type="text">
+                </div>
+                <div class="p-item p-text">
+                    <label for="text">背景文字</label>
+                    <input autocomplete="on" form="package" id="text" name="text" required type="text">
+                </div>
+                <div class="p-item p-icon">
+                    <span>背景图标</span>
+                    <div class="icon-field">
+                        <div class="icon-group">
+                            <input checked form="package" id="icon1" name="icon" type="radio">
+                            <label for="icon1">不适用</label>
+                        </div>
+                        <div class="icon-group">
+                            <input form="package" id="icon2" name="icon" type="radio">
+                            <label for="icon2">icon</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-item p-rules">
+                    <label for="rule1">套餐规则</label>
+                    <div class="rules-field">
+                        <input autocomplete="on" form="package" id="rule1" name="rules" required type="text"
+                               v-model="message">
+                        <button class="p-i-button" data-id="1" onclick="createLine(this)" type="button">+</button>
+                        <button class="p-i-button p-outline-button" onclick="removeLine(this)" type="button">-</button>
+                    </div>
+                </div>
+            </div>
+            <div class="p-button_set">
+                <button class="p-button p-outline-button" id="save" type="button">保存</button>
+                <button class="p-button" id="submit" type="submit">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                message: ''
+            }
+        }
+    }).mount('.container')
+    let rule = document.querySelector('.p-rules')
+    let node = rule.children
+
+    function createLine(e) {
+        console.log(e)
+    }
+
+    function removeLine(e) {
+        console.log(e)
+    }
+</script>
+</body>
+</html>
