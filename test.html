@@ -3,147 +3,67 @@
 <meta charset='UTF-8'>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
 <title>测试</title>
-<style type="text/css">
+    <style>
 .container {
-    width: 90%;
-    height: auto;
-    margin: 5%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #00b0ff;
 }
-.left {
-    height: 75px;
-    width: 120px;
-    float: left;
-}
-.right{
-    width: auto;
-    overflow-x: auto;
-    white-space: nowrap;
-}
-.right::-webkit-scrollbar {
-    display: none; /*不展示横向滚动条*/
-}
-.slide_son{
-    width: 60px;
-    height: 60px;
-    display: inline-block;
-}
-.avatar{
-    width: 50px;
-    height: 50px;
-    margin:0 5px;
-    display: block;
-    border-radius: 50%;
-    background: url('https://s1.ax1x.com/2020/04/18/JmCZ6g.jpg') no-repeat center;
-    background-size:cover;
-}
-#1 {
 
+.box {
+    display: flex;
+    justify-content: center;
 }
-.slide_price{
-    color: red;
-    font-size: 16px;
-    letter-spacing: 0.1em;
 
-    line-height: 30px;
-    width: 60px;
-display: flex;
-    justify-content:center;
-    align-items:center;
+.box > button {
+    flex: 1;
+    -webkit-appearance: none;
+    height: 30px;
+    background: #ffffff;
+    border: 1px solid #0d47a1;
 }
 </style>
-<script type="text/javascript" src="./js/fun.js"></script>
-<script type="text/javascript">
-var $$ = mdui.JQ;
-$$(document).ready(function(){
-$$.ajax({
-  method: 'GET',
-  url: './data/blackboard.json',
-  dataType: "json",
-  success: function (data) {
-var string = JSON.stringify(data); 
-var arr = JSON.parse(string);
-  function changeContent({src:src,alt:alt,name:name,identify:identify,code:code,description:description}) {
-  $$('.avatar-l').prop({
-     src: src,
-     alt: alt
-  });
-  $$('.name').html(name);
-  $$('.identify').html(identify);
-  $$('.code').html(code);
-  $$('.description').html(description);
-}
-function getDataFromArr(id) {
-  let res;
-  $$.each(arr, function(i, item){
-    if (item.id == id) {
-      res = item;
-    }
-  });
-  return res;
-}
-$$(".avatar").on('click',function(){
-  let id = $$(this).data('id');
-  let item = getDataFromArr(id);
-  changeContent(item)
-  })
-}
-});
-});
-</script>
 </head>
 <body>
-<div class="warp">
-	<img class="avatar-l" src="https://q2.qlogo.cn/headimg_dl?dst_uin=2959497679&spec=640" alt="H树" width="100px" height="100px"/>
-	<p class="name">
-		H树
-	</p>
-	<p class="identify">
-		小黑板最强甲方
-	</p>
-	<p class="code">
-		B000001
-	</p>
-	<p class="description">
-		稳重可靠
-	</p>
-</div>
 <div class="container">
-<div class="left">
-<div class="slide_son">
-<div class="avatar" data-id="1"></div>
-<span class="slide_price">1</span>
+    <div class="box">
+        <button onclick="toggleFullscreen()">测试容器全屏</button>
+        <button onclick="windowFullscreen()">测试窗口全屏</button>
+    </div>
 </div>
-</div>
-<div class="right">
-            <div class="slide_son">
-                <div class="avatar" data-id="2"></div>
-                <span class="slide_price">2</span>
-            </div>
-            <div class="slide_son">
-                <div class="avatar" data-id="3"></div>
-                <span class="slide_price">3</span>
-            </div>
-            <div class="slide_son">
-                <div class="avatar" data-id="4"></div>
-                <span class="slide_price">4</span>
-            </div>
-            <div class="slide_son">
-                <div class="avatar" data-id="5"></div>
-                <span class="slide_price">5</span>
-            </div>
-            <div class="slide_son">
-                <div class="avatar" data-id="6"></div>
-                <span class="slide_price">6</span>
-            </div>
-            <div class="slide_son">
-                <div class="avatar" data-id="7"></div>
-                <span class="slide_price">7</span>
-            </div>
-            <div class="slide_son">
-                <div class="avatar" data-id="8"></div>
-                <span class="slide_price">8</span>
-            </div>
-</div>
-</div>
+<script>
+    const toggleFullscreen = () => {
+        let elem = document.querySelector(".container");
+
+        if (!document.fullscreenElement) {
+            elem.requestFullscreen().catch((err) => {
+                alert(
+                    `Error attempting to enable fullscreen mode: ${err.message} (${err.name})`,
+                );
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    const windowFullscreen = () => {
+        let elem = document.documentElement;
+        if (!document.fullscreenElement) {
+            elem
+                .requestFullscreen({navigationUI: "hide"})
+                .then(() => {
+                })
+                .catch((err) => {
+                    alert(
+                        `An error occurred while trying to switch into fullscreen mode: ${err.message} (${err.name})`,
+                    );
+                });
+        } else {
+            document.exitFullscreen();
+        }
+    }
+</script>
 </body>
 </html>
