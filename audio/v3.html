@@ -1953,26 +1953,11 @@
         nc.forEach(ele => {
             ele.onclick = () => {
                 let id = ele.getAttribute('data-id')
-                let obj1
-                let obj2
-                let obj3
-                $.ajax({
-                    type:"GET",
-                    url:"https://api.imjad.cn/cloudmusic/?",
-                    data:{
-                        type:'song',
-                        id:id,
-                        br:320000
-                    },
-                    dataType:"json",
-                    async:false,
-                    success: function(data){
-                        let url = data.data[0].url
-                        let nid = data.data[0].id
-                        let timestamp = toTimestamp(url.split('/')[3])
-                        obj1 = {src: url, code: nid, timestamp: timestamp}
-                    }
-                })
+                let obj1 = {
+                    src: `https://music.163.com/song/media/outer/url?id=${id}.mp3`,
+                    code: id,
+                    timestamp: new Date().getTime() + 900000
+                }
                 if(obj1.src!==''){
                     $.ajax({
                         type:"GET",
