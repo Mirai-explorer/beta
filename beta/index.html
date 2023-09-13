@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .app {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+
+        .header {
+            height: 200px;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+        }
+
+        .banner {
+            overflow: hidden;
+        }
+
+        .banner-container {
+            height: 100%;
+            position: relative;
+            transform: translateY(0px);
+            transition: transform 0.2s ease-out;
+        }
+
+        .banner-module {
+            width: 50vw;
+            height: 100%;
+        }
+
+        #bm1 {
+            background: rgba(255 0 0 / 50%);
+        }
+
+        #bm2 {
+            background: rgba(255 128 0 / 50%);
+        }
+
+        #bm3 {
+            background: rgba(0 128 255 / 50%);
+        }
+
+        #bm4 {
+            background: rgba(255 192 203 / 100%);
+        }
+
+        .switch-tab {
+            width: 33.3%;
+            height: 20px;
+            position: relative;
+            bottom: 40px;
+            background: rgba(255 255 255 / 50%);
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="header">
+        <div class="banner">
+            <div class="banner-container">
+                <div class="banner-module" id="bm1">1</div>
+                <div class="banner-module" id="bm2">2</div>
+                <div class="banner-module" id="bm3">3</div>
+                <div class="banner-module" id="bm4">4</div>
+            </div>
+            <div class="switch-tab">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let count = 0
+    let timer1 = () => {
+        count < -400 ? count = 0 : count -= 200
+        const target = document.querySelector('.banner-container')
+        target.setAttribute("style", `transform: translateY(${count}px)`)
+    }
+    document.querySelector(".banner").addEventListener("mouseover", () => {
+        clearInterval(timer1)
+        console.log("clear")
+    })
+    document.querySelector(".banner").addEventListener("mouseout", () => {
+        setInterval(timer1, 3000)
+        console.log("reset")
+    })
+</script>
+</body>
+</html>

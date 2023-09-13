@@ -1380,17 +1380,18 @@
             let t = parseFloat($(this).attr("data-time")) - 0.18;
             let pt = parseFloat($(this).prev().attr("data-time"));
             let nt = parseFloat($(this).next().attr("data-time"));
-            if(ct >= t && ct <= nt){
+            if (ct >= t && ct <= nt) {
                 $(this).prev().removeClass('bubble');
                 $(this).attr("class","bubble");//高亮
                 $(this).next().addClass("await");
                 let x = index*sc/pList.length;
                 sh = x > 0 ? x : 0;
-            } else if(ct >= t && isNaN(nt)){
+            } else if (ct >= t && isNaN(nt)) {
                 $(this).prev().removeClass('bubble');
                 $(this).attr("class","bubble");
                 sh = sc-sc/pList.length;
             }
+            console.log(sh)
         })
         if(document.querySelector('.bubble')!==null){
             if(document.querySelector('.bubble').scrollWidth > document.querySelector('.bubble').clientWidth){

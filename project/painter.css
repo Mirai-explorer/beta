@@ -1,0 +1,49 @@
+.main-wrap {
+    width: 1400px;
+    height: 700px;
+    background-color: #8F2424;
+}
+
+.bus_stop-wrap {
+    height: 280px;
+    width: 100%;
+    border-bottom: 1px solid yellow;
+    display: flex;
+    flex-direction: row;
+    padding-top: 40px;
+}
+
+.name-area {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.name-ch {
+    font-size: 120px;
+    flex: 3;
+    background-color: rgba(255, 255, 255, .15);
+    color: #FFFFFF;
+    font-family: "方正大黑简体", "Microsoft YaHei";
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 60px;
+    letter-spacing: .5rem;
+}
+
+.name-en {
+    font-size: 60px;
+    flex: 2;
+    color: #FFFFFF;
+    font-family: "Arial Rounded MT", "Microsoft YaHei";
+    box-sizing: border-box;
+    display: inline-flex;
+    padding: 0 60px;
+    letter-spacing: .5rem;
+}
+
+.city_graph-area {
+    flex: 1;
+}
+
